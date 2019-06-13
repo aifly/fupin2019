@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta name="viewport" content="width=750,user-scalable=no" />
+	<title>MeshLine 线</title>
+	<style>
+		html,
+		body,
+		#container {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		.inputs {
+			position: absolute;
+			bottom: 20px;
+			right: 40px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="container"></div>
+	<div class="inputs">
+		<label>宽度
+			<input type="text" placeholder="请输入meshline的宽度" value="20" id="widthInput">
+		</label>
+
+		<label>高度
+			<input type="text" placeholder="请输入meshline的高度" value="2000000" id="heightInput">
+		</label>
+		<button onclick="update()">更新</button>
+	</div>
+	<script
+		src="https://webapi.amap.com/maps?v=1.4.15&key=b174dc1e3ab2942b72916080eabdcc75&plugin=Map3D,AMap.DistrictSearch"></script>
+	<script>
+		var points = [
+			new AMap.LngLat(116.400433, 39.908084),
+			new AMap.LngLat(113.52412, 34.777709),
+			new AMap.LngLat(108.821972, 34.270829),
+			new AMap.LngLat(104.067108, 30.65769)
+		];
+
+		var map = new AMap.Map('container', {
+			center: [108.011931, 37.071694],
+			zoom: 6,
+			viewMode: '3D',
+			pitch: 70
+		});
+
+		var object3Dlayer = new AMap.Object3DLayer();
+		var numberOfPoints = 180;
+		var minHeight = 20;
+
+		var meshLine = new AMap.Object3D.MeshLine({
+			path: computeBezier(points, numberOfPoints, minHeight),
+			height: getEllipseHeight(numberOfPoints, 2000000, minHeight),
+			color: 'rgba(55,129,240, 0.9)',
+			width: 20
+		});
+
+		meshLine.transparent = true;
+		object3Dlayer.add(meshLine);
+		meshLine['backOrFront'] = 'both';
+		map.add(object3Dlayer);
+
+		function pointOnCubicBezier(cp, t) {
+			var ax, bx, cx;
+			var ay, by, cy;
+			var tSquared, tCubed;
+
+			cx = 3.0 * (cp[1].lng - cp[0].lng);
+			bx = 3.0 * (cp[2].lng - cp[1].lng) - cx;
+			ax = cp[3].lng - cp[0].lng - cx - bx;
+
+			cy = 3.0 * (cp[1].lat - cp[0].lat);
+			by = 3.0 * (cp[2].lat - cp[1].lat) - cy;
+			ay = cp[3].lat - cp[0].lat - cy - by;
+
+			tSquared = t * t;
+			tCubed = tSquared * t;
+
+			var lng = (ax * tCubed) + (bx * tSquared) + (cx * t) + cp[0].lng;
+			var lat = (ay * tCubed) + (by * tSquared) + (cy * t) + cp[0].lat;
+
+			return new AMap.LngLat(lng, lat);
+		}
+
+		function computeBezier(points, numberOfPoints) {
+			var dt;
+			var i;
+			var curve = [];
+
+			dt = 1.0 / (numberOfPoints - 1);
+
+			for (i = 0; i < numberOfPoints; i++) {
+				curve[i] = pointOnCubicBezier(points, i * dt);
+			}
+
+			return curve;
+		}
+
+		function getEllipseHeight(count, maxHeight, minHeight) {
+			var height = [];
+			var radionUnit = Math.PI / 180;
+
+			for (var i = 0; i < count; i++) {
+				var radion = i * radionUnit;
+
+				height.push(minHeight + Math.sin(radion) * maxHeight);
+			}
+
+			return height;
+		}
+
+		function update() {
+			var width = +document.querySelector('#widthInput').value;
+			var maxHeight = +document.querySelector('#heightInput').value;
+
+			if (width > 0) {
+				meshLine.setWidth(width);
+			} else {
+				document.querySelector('#widthInput').value = 20;
+			}
+
+			if (maxHeight >= 1000) {
+				meshLine.setHeight(getEllipseHeight(numberOfPoints, maxHeight, minHeight));
+			} else {
+				document.querySelector('#heightInput').value = 2000000;
+			}
+		}
+	</script>
+</body>
+
+</html>

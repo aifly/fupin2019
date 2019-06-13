@@ -1,0 +1,51 @@
+﻿@import "../css/base.scss";
+
+$baseColor: #fcffb4;
+$viewW: 750px;
+$bgColor: #f23426;
+
+.zmiti-index-main-ui {
+		.zmiti-input-C{
+			width: 600px;
+			margin: 100px auto;
+			&>div{
+				margin: 20px 0;
+			}
+		}
+      .zmiti-input{
+		  width: 300px;
+		  height: 50px;
+	  }
+
+	  select{
+		width: 400px;
+		height: 50px;
+		font-size:30px;
+	  }
+
+	  .zmiti-next-btn{
+		  width: 350px;
+		  height: 60px;
+		  line-height: 60px;
+		  background: #f23426;
+		  margin:20px auto;
+		  color:#fff;
+		  text-align: center;
+		  
+
+	  }
+}
+#container,#container1,#smap{
+	width: 100%;
+	height: 400px;
+
+}
+
+#smap{
+	width: 100%;
+	height: 600px;
+}
+
+input{
+	font-size:30px;
+}
