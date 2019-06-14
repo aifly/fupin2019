@@ -1,9 +1,11 @@
 <template>
 	<div class="lt-full zmiti-index-main-ui">
-		<div class="zmiti-input-C" v-if='step === 0'>
-			<div class='zmiti-search-C'>
-				<input class="zmiti-input" @change='search' v-model="keyword">
-				<div>搜索</div>
+		<div class="zmiti-input-C">
+			<div class='zmiti-search-C' :class="{'hide':hideSearchBox}">
+				<input placeholder="搜索扶贫位置" class="zmiti-input" @change='search' v-model="keyword">
+				<div>
+					<img :src="imgs.search" alt="">
+				</div>
 
 				<section>
 					{{formUser.pos1}}
@@ -17,9 +19,35 @@
 			<div class='zmiti-tip lt-full' v-if='showTip' v-tap='[hideTip]'>
 				<img :src="imgs.tip" alt="">
 			</div>
+			<div class='zmiti-tip lt-full' v-if='showTip1' v-tap='[hideTip]'>
+				<template v-if='showDrag'>
+					<img :src="imgs.drag" alt="">
+					<div class='zmiti-tip-text'>可拖动放大地图后点击定位</div>
+				</template>
+			</div>
+
+			<div class='zmiti-wish-C'>
+				<div class='zmiti-input-name'>
+					<input type="text" placeholder="请输入他的名字">
+				</div>
+				<div class='zmiti-wish-text'>
+					{{wishes[currentWishIndex].text}}
+				</div>
+				<div class='zmiti-input-name'>
+					<input type="text" placeholder="请输入我的名字">
+				</div>
+				<div class='zmiti-wish-btns'>
+					<div>
+						<img :src="imgs.refresh" alt="">换祝福语
+					</div>
+					<div>
+						<img :src="imgs.heart" alt="">生成贺卡
+					</div>
+				</div>
+			</div>
 
 			 
-			<section v-tap='[next]' v-press class='zmiti-next-btn'>下一步</section>
+			<section v-tap='[next]' v-press class='zmiti-next-btn' v-if='showNextBtn'>下一步</section>
 		</div>
 
 		 
@@ -44,29 +72,23 @@ export default {
 		host: window.config.host,
 		viewH: window.innerHeight,
 		viewW: window.innerWidth,
-		showTip:true,
+		showTip:false,
+		currentWishIndex:0,
+		hideSearchBox:true,
+		showTip1:false,
 		keyword:'',
-		polygons:[],
+		showNextBtn:false,
+		wishes:window.config.wishes,
 		provinceList:[],
+		showDrag:false,
 		step:0,
-		cityList:[],
-		districtList:[],
-		streetList:[],
 		p1:[],
 		p2:[],
 		p3:[],
 		p4:[],
-		points :[
-		/* 	new AMap.LngLat(116.400433, 39.908084),
-			new AMap.LngLat(113.52412, 34.777709),
-			new AMap.LngLat(108.821972, 34.270829),
-			new AMap.LngLat(104.067108, 30.65769) */
-		],
+	
 
-		streetObj:-1,
-		districtObj:-1,
-		provinceObj:-1,
-		cityObj:-1,
+	
 
 		formUser: {
 			username: "",
@@ -134,6 +156,27 @@ export default {
 
 	hideTip(){
 		this.showTip = false;
+		var p = new Promise((resolve,reject)=>{
+
+			setTimeout(() => {
+				this.hideSearchBox = false;
+				this.showTip1 = true;
+				resolve();
+			}, 1000);
+		}).then(()=>{
+
+			return new Promise((resolve,reject)=>{
+
+				setTimeout(() => {
+					this.showDrag = true;
+					resolve();
+				}, 2000);
+			})
+		}).then(()=>{
+			setTimeout(() => {
+				this.showTip1 = false;
+			}, 2000);
+		})
 	},
 	next(){
 		this.step++;
@@ -212,8 +255,8 @@ export default {
 			})
 		
 			var gps = [e.lnglat.lng,e.lnglat.lat];
+			s.showNextBtn = true;
 			
-			 s[c==='container'?'p1':'p4'] = gps;
 			
 			 if(c === 'container1'){//第二次取位置
 			  	s.p4 = gps;
