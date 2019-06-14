@@ -1,574 +1,340 @@
 <template>
-	<transition name='main'>
-		<div class='zmiti-main-ui lt-full' ref='scene' :class="{'show':show}" :style="{background:'url('+imgs.main+') no-repeat center top',backgroundSize:'cover',height:viewH+'px'}" >
-		 	<div class="zmiti-zipcode">
-		 		<img :src="imgs.zipcode" alt="">
-		 	</div>
+	<div class="lt-full zmiti-index-main-ui">
+		<div class="zmiti-input-C" v-if='step === 0'>
+			<div class='zmiti-search-C'>
+				<input class="zmiti-input" @change='search' v-model="keyword">
+				<div>搜索</div>
 
-		 	<transition name='questionui'>
-				 <div v-if='showQuestionUI' class='zmiti-question-ui'>
-					<div class='zmiti-modal-C lt-full'>
-						
-						<div class='zmiti-modal-list' >
-							<ul >
-								<li :style='{height:viewH+"px"}' :class="hw.className" class='lt-full' v-for='(hw,i) in questionList' :key="i">
-									
-									<div class="zmiti-main-person">
-										<div class="zmiti-headimgurl"><img :src="hw.headimgurl" alt=""></div>
-										<div class="zmiti-name">
-											<h2>{{hw.name}} <span>向您提问：</span></h2>
-											<div v-for='(pos,k) in hw.position.split("、")' :key='k'>{{pos}}</div>
-											 
-										</div>
-									</div>
+				<section>
+					{{formUser.pos1}}
+				</section>
+			</div>
 
-									<div class="zmiti-main-question" :style="{'WebkitBoxPack':!hw.showResult?'start':'start'}">
-										<div class="zmiti-question-img">
-											<img :src="hw.img" alt="">
-										</div>
-										<transition name='question'>
-											<div v-if='!hw.showResult' class="zmiti-trans-question">
-												<div class="zmiti-question-title">
-													{{hw.qTitle}}
-												</div>
-												<div class="zmiti-answer-C">
-													<div v-for='(an,l) in hw.answers' v-tap='[choose,i,l]' :key='l' class="zmiti-answer-item" :class="{'error':an.className,'active':an.itemPress}" @touchstart='an.itemPress = true;questionList = questionList.concat([])' @touchend='an.itemPress = false;questionList = questionList.concat([])'>
-														{{an.name}}
-														<img v-if='myAnswers[l]' class='zmiti-result' :src="imgs[l===hw.rAnswer?'right':'error']" alt="">
-													</div>
-												</div>
-											</div>
-										</transition>
-										<transition name='question1'>
-											<div v-if='hw.showResult' class='zmiti-right-remark zmiti-trans-question'>
-												<h2>正确解释：</h2>
-												<div>{{hw.remark}}</div>
-												<section v-show='showNextBtn' class='zmiti-next-btn' :class="{'active':nextPress}" @touchstart='nextPress = true' @touchend='nextPress = false' v-tap='[nextQuestion]'>
-													{{currentIndex>=questionList.length-1?'完成':'下一题'}}
-												</section>
-											</div>
-										</transition>
+			<div id='panel'></div>
+			
+			<div id='container' class='lt-full'></div>
 
+			<div class='zmiti-tip lt-full' v-if='showTip' v-tap='[hideTip]'>
+				<img :src="imgs.tip" alt="">
+			</div>
 
-									</div>
-
-								</li>
-							</ul>
-							
-						</div>
-					</div>
-				 </div>
-
-			 </transition>
-
-			<transition name='questionui'>
-				 <div v-if='!showQuestionUI' class="lt-full zmiti-form-ui" :style="{background:'url('+imgs.index+') no-repeat center bottom',backgroundSize:'cover'}">
-				 	 <input type="text" style="width:0;height:0;position:absolute;opacity:0" ref='button' @focus='focus1'>
-
-				 	 <transition name='result'>
-						<template v-if='!showResultPage'>
-						 	 <div class="zmiti-mobile">
-						 	 	<div class="zmiti-input-tip">输入您的电话，方便大礼到家！</div>
-						 	 	<input @blur='blur1'  @focus='focus' type="text" v-model='mobile' ref='mobile'>
-								<div class="zmiti-mobile-tip">
-									<div style="text-indent:0">说明：</div>
-									<div>诚邀您留下手机号码。</div>
-									<div>2019年3月16日，我们将从得到三颗星的选手中抽取10名参与者，每人获得C919大飞机模型一台。</div>
-									<div>
-										另从得到三颗星的选手中抽取70名参与者，每人获得两会纪念封一枚。
-									</div>
-									<div>
-										本次活动为随机抽取，两种奖品只能获得一个。
-									</div>
-								</div>
-						 	 	<div class="zmiti-submit-btn" v-tap='[submit]' :class="{'active':nextPress,'disabled':isSubmit}" @touchstart='nextPress = true' @touchend='nextPress = false'> 
-						 	 		提交
-						 	 	</div>
-						 	 	<div class="zmiti-result-btns">
-						 	 		<div :class="{'active':teamPress}" @touchstart='teamPress = true' @touchend='teamPress = false' v-tap='[showTeamPage]'><img :src="imgs.teamBtn" alt=""></div>
-									<div :class="{'active':sharePress,'flash':isSubmit}" @touchstart='sharePress = true' @touchend='sharePress = false' v-tap='[showRemarkPage]'><img :src="imgs.share" alt=""></div>
-									<div :class="{'active':restartPress}" @touchstart='restartPress = true' @touchend='restartPress = false' v-tap='[init]'><img :src="imgs.restart" alt=""></div>
-								</div>
-						 	 </div>
-						</template>
-				 	 </transition>
-					
-					<transition name='result'>
-						<div v-if='showResultPage' class="lt-full zmiti-result-page">
-							<div class="zmiti-result-bg">
-								<img :src="imgs.result" alt="">
-								<div class="zmiti-passed" v-if='rightCount>1'>
-									<img :src="imgs.passed" alt="">
-								</div>
-
-								<div class="lt-full">
-									<div class="zmiti-result-radio">
-										<div>
-											超过了 <span>{{parseInt(rightRadio)}}%</span>的人
-										</div>
-										<div class="zmiti-star-C">
-											<img :src="imgs.star" alt=""  v-for='(star,i) in new Array(level+1)'>
-										</div>
-									</div>
-									<div class="zmiti-result-title">
-										{{result[level].level}}
-									</div>
-									<div class="zmiti-result-content">
-										{{result[level].content}}
-									</div>
-								</div>
-								<div class="zmiti-get flash" v-tap='[gotoSubmitPage]'>
-									<img :src="imgs.get" alt="">
-								</div>
-							</div>
-						</div>
-					</transition>
-					
-
-				 </div>
-			</transition>
-			 <div class="zmiti-mask" @touchstart='showRemark = false' v-if='showRemark'>
-			 	<img :src="imgs.arrow" alt="">
-			 </div>
-
-			 <div class="zmiti-team-page lt-full" v-tap='[closeTeamPage]' v-if='showTeam'>
-			 	 <div>
-			 	 	<img :src="imgs.team" alt="">
-			 	 </div>
-			 </div>
-
-			<Toast :errorMsg='errorMsg' :msg='successMsg'></Toast>
+			 
+			<section v-tap='[next]' v-press class='zmiti-next-btn'>下一步</section>
 		</div>
 
-	</transition>
+		 
+  	</div>
 </template>
 
+<style lang='scss' scoped>
+@import "./index.scss";
+
+</style>
+
+
 <script>
-	import './index.css';
-	
-	import zmitiUtil from '../lib/util';
-	import IScroll from 'iscroll';
-	import Toast from '../toast/toast';
-	import '../lib/html2canvas';
-	export default {
-		props: ['obserable', 'pv', 'randomPv', 'nickname', 'headimgurl'],
-	
-		name: 'zmitiindex',
-	
-		data() {
-			return {
-				errorMsg:'',
-				showResultPage:true,
-				teamPress:false,
-				successMsg:'',
-				rightRadio:0,
-				restartPress:false,
-				sharePress:false,
-				showQuestionUI:true,
-				nextPress:false,
-				myAnswers:[0,0,0],
-				result:[{
-					level:'啊？！',
-					content:'不甘心，再来一遍！'
-				},{
-					level:'只差一点点',
-					content:"给你45度角明媚的疼痛忧伤"
-				},{
-					level:'“硬核”科迷',
-					content:"给你C位，下一部科幻电影邀你来做编剧！"
-				}],
-				isAndroid :navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1,
-				createImg:'',
-				ZIMU:['A','B','C'],
-				imgs:window.imgs,
-				showNextBtn:true,
-				secretKey: "e9469538b0623783f38c585821459454",
-                host:window.config.host, 
-                show:false,
-                level:0,
-				viewW:Math.min( window.innerWidth,750),
-				viewH: window.innerHeight,
-				currentIndex:0,
-				mobile:'',
-				showRemark:false,
-				rightCount:0,
-				isSubmit:false,
-				questionList:window.config.questionList,
-				lastChooseIndex:-1,
-				nextQuestionIndex:-1,
-				showTeam:false,
-			}
-		},
-	
-		components: {
-			Toast
-		},
-		watch:{
+import zmitiUtil from "../lib/util";
+export default {
+  props: ["obserable"],
+  name: "zmiti-index-page",
+  data() {
+    return {
+		imgs: window.imgs,
+		secretKey: "e9469538b0623783f38c585821459454",
+		host: window.config.host,
+		viewH: window.innerHeight,
+		viewW: window.innerWidth,
+		showTip:true,
+		keyword:'',
+		polygons:[],
+		provinceList:[],
+		step:0,
+		cityList:[],
+		districtList:[],
+		streetList:[],
+		p1:[],
+		p2:[],
+		p3:[],
+		p4:[],
+		points :[
+		/* 	new AMap.LngLat(116.400433, 39.908084),
+			new AMap.LngLat(113.52412, 34.777709),
+			new AMap.LngLat(108.821972, 34.270829),
+			new AMap.LngLat(104.067108, 30.65769) */
+		],
 
-		},
-		methods: {
+		streetObj:-1,
+		districtObj:-1,
+		provinceObj:-1,
+		cityObj:-1,
 
+		formUser: {
+			username: "",
+			pos: "",
+			pos1:"请选择收信人的位置",
+		}
+    };
+  },
+  components: {},
 
-			closeTeamPage(){
-				this.showTeam = false;
-			},
+  methods: {
 
-			showTeamPage(){
-				this.showTeam = true;
-			},
-
-			showRemarkPage(){
-				this.showRemark = true;
-			},
-
-			init(){
-				this.rightCount = 0;
-				this.rightRadio = 0;
-				this.currentIndex = 0;
-				this.showResultPage = true;
-				this.lastChooseIndex = -1;
-				this.nextQuestionIndex = -1;
-				this.isSubmit = false;
-
-				this.swipeLeft();
-				this.swipeRight();
-				this.showQuestionUI = true;
-				this.questionList.forEach((q)=>{
-					q.showResult = false;
-					q.showAnswer = false;
-				})
-			},
-
-			nextQuestion(){
-
-				if(this.nextQuestionIndex === this.currentIndex){
-
-					return;
-				}
-				this.nextQuestionIndex = this.currentIndex;
-
-				if(this.currentIndex>=this.questionList.length-1){
-					this.rightRadio = this.rightCount/(this.questionList.length-1)*100;
-					this.showQuestionUI = false;
-					if(this.rightRadio>=100){
-						this.rightRadio = this.rightRadio - ((Math.random()*5|0)+1);
-					}else{
-						this.rightRadio = this.rightRadio + ((Math.random()*10|0)+1);
-						if(this.rightRadio>95){
-							this.rightRadio = 95;
-						}
-					}
-
-					if(this.rightRadio>30){
-						this.level = 1;
-					}
-					if(this.rightRadio>70){
-						this.level = 2;
-					}
-				}else{
-					this.swipeLeft();
-					this.questionList[this.currentIndex].answers = this.questionList[this.currentIndex].answers.sort(()=>{
-						return Math.random()>.5;
-					});
-
-					this.questionList[this.currentIndex].answers.forEach((item,i)=>{
-						if(item.isRight){
-							this.questionList[this.currentIndex].rAnswer = i;
-						}
-					})
-
-
-					//this.questionList[this.currentIndex].answers[rightIndex] = this.questionList[this.currentIndex].answers[lastRightIndex];
-
-
-					
-					
-				}
-			},
-
-			choose(qindex,aindex){
-
-
-				if(this.lastChooseIndex === qindex){
-					return;
-				}
-
-				this.lastChooseIndex = qindex;
+	search(){
+		var {map,keyword} = this;
+		var s =this;
+		if(!keyword){
+			document.getElementById('panel').innerHTML = '';
+			return;
+		}
+		clearTimeout(this.searchTimer);
+		this.searchTimer = setTimeout(() => {
 				
-				this.questionList[qindex].showAnswer = true;
-				
-				this.showNextBtn = false;
-				this.obserable.trigger({
-					type:'playVoice',
-					data:aindex === this.questionList[qindex].rAnswer?'right':'error'
-				})
 
-				if(aindex === this.questionList[qindex].rAnswer){
-					//
-					this.myAnswers[aindex] = 1;
-					if(qindex>0){
-						this.rightCount++;
-					}
-					setTimeout(()=>{
-						this.questionList[qindex].showResult = true;
-
-						this.questionList = this.questionList.concat([]);
-						setTimeout(()=>{
-							this.showNextBtn = true;
-						},1500);
-						this.myAnswers = [0,0,0];
-					},1000)
-				}
-				else{
-					this.myAnswers[aindex] = 1;
-					this.myAnswers[this.questionList[qindex].rAnswer] = 1;
-
-					this.questionList[qindex].answers[aindex].className='error';
-					setTimeout(()=>{
-						this.questionList[qindex].answers[aindex].className='';
-						this.questionList[qindex].showResult = true;
-						//this.showNextBtn = true;
-						this.questionList = this.questionList.concat([]);
-						setTimeout(()=>{
-							this.showNextBtn = true;
-						},1500)
-						this.myAnswers = [0,0,0];
-					},1000);		
-				}
-				this.questionList = this.questionList.concat([]);
-			},
-			
-			swipeLeft(){
-				var s = this;
-				this.isLeftFirst = true;
-				this.iNow = (s.currentIndex + 1) % s.questionList.length;
-				this.initLeft();
-			},
-			swipeRight(){
-				var s = this;
-				this.iNow = s.currentIndex-1;
-				if(this.iNow<0){
-					this.iNow = this.questionList.length - 1;
-				}
-				this.isRightFirst=  true;
-				this.initRight();
-			},
-			initLeft: function(flag) {
-				var s = this;
-				
-				s.currentIndex = (s.currentIndex + 1) % s.questionList.length;
-				
-				//s.loadMusic(s.questionList[s.currentIndex].audio);
-				//this.iNow = s.currentIndex;
-				var classList = [
-					'left1 transition',
-					'left transition',
-					'active transition',
-					'right ',
-					'right1 '
-				]
-				var questionList = s.questionList,
-					currentIndex = s.currentIndex;
-
-
-				questionList.forEach(function(list, i) {
-
-					if (currentIndex > i) {
-						questionList[i].className = classList[0]
-					} else if (currentIndex < i) {
-						questionList[i].className = classList[4]
-					}
-					(questionList[currentIndex + 1] || questionList[0])['className'] = classList[3];
-					(questionList[currentIndex + 2] || questionList[1])['className'] = classList[4];
-					(questionList[currentIndex - 1] || questionList[questionList.length - 1])['className'] = classList[1];
-					//(questionList[currentIndex - 2] || questionList[questionList.length - 2])['className'] = classList[0];
-				});
-
-				questionList[currentIndex].className = classList[2];
-				s.questionList = questionList.concat([]);
-			},
-			initRight: function() {
-				this.person = this.imgs.personR;
-				var s = this;
-				s.currentIndex = s.currentIndex - 1;
-
-				if (s.currentIndex < 0) {
-					s.currentIndex = s.questionList.length - 1;
-				}
-				//this.iNow = s.currentIndex;
-				
-				var questionList = s.questionList,
-					currentIndex = s.currentIndex;
-
-
-				//console.log(s.currentIndex)
-
-				s.currentIndex = s.currentIndex % questionList.length;
-
-				var classList = [
-					'left1 ',
-					'left ',
-					'active transition',
-					'right transition',
-					'right1 transition'
-				]
-
-				questionList.forEach(function(list, i) {
-
-					if (currentIndex > i) {
-						questionList[i].className = classList[0]
-					} else if (currentIndex < i) {
-						questionList[i].className = classList[4]
-					}
-
-					(questionList[currentIndex + 1] || questionList[0])['className'] = classList[3];
-					(questionList[currentIndex + 2] || questionList[1])['className'] = classList[4];
-					(questionList[currentIndex - 1] || questionList[questionList.length - 1])['className'] = classList[1];
-					//(questionList[currentIndex - 2] || questionList[questionList.length - 2])['className'] = classList[0];
-				})
-
-
-
-				questionList[currentIndex].className = classList[2];
-				s.questionList = questionList.concat([]);
-			},
-
-			pass(){
-				this.showResultPage = false;
-			},
-
-			gotoSubmitPage(){
-				this.showResultPage = false;
-			},
-
-			submit(){
-				var  s = this;
-
-				if(this.isSubmit){
-					return;
-				}
-
-				if(this.isAndroid){
-					this.$refs['mobile'].blur();
-				}
-
-
-				if(!(/^1[34578]\d{9}$/.test(this.mobile))){ 
-					this.errorMsg = this.mobile.length<=0 ? '手机号不能为空':'手机号格式不正确';
-
-					setTimeout(() => {
-						this.errorMsg = '';
-					}, 1200);
-					return;
-				}
-
-				axios.post(this.host+'/xhs-security-activity/activity/user/saveUser',{
-					"secretKey": s.secretKey, // 请求秘钥
-					"nm": "meeting2019", // 活动某组图片点赞标识 或者活动某组图片浏览量标识 标识由更新接口定义
-					uname:s.nickname||"新华社网友",
-					unickName:s.nickname||"新华社网友",
-					uphone:s.mobile,
-					zipCode:'100031',
-					correctRatio:parseInt(s.rightCount / (s.questionList.length - 1)*100)+'%'
-
-				}).then((data)=>{
-					
-					if(typeof data.data === 'string'){
-						data = JSON.parse(data.data);
-					}
-					else {
-						data = data.data;
-					}
-
-					console.log(data);
-
-					s.successMsg = '提交成功';
-					s.mobile = '';
-					if(data.rc === 0){
-
-					}else{
-						///s.errorMsg =  data.msg;
-					}
-					s.isSubmit = true;
-					setTimeout(() => {
-						
-						s.successMsg = '';
-						s.errorMsg = '';
-						s.showPrize = false;
-					}, 2000);
- 
-				})
-
-				
-			},
-			
-			photo(){
-				this.showSharePage = true;
-				this.html2img();
-			},
-			blur(e){
-				this.$refs['scene'].style.position = 'fixed';
-				this.$refs['scene'].style.top = 0;
-				//document.body.style.position = 'relative';
-
-			},
-			blur1(e){
-				this.$refs['scene'].style.position = 'fixed';
-				this.$refs['scene'].style.top = 0;
-				//document.body.style.position = 'relative';
-				if(!this.isAndroid){
-					this.$refs['button'].focus();
-				}
-			},
-
-			focus1(){
-				if(!this.isAndroid){
-					setTimeout(()=>{
-						this.$refs['button'].blur();
-					},100)
-				}
-			},
-			focus(e){
-				this.$refs['scene'].style.position = 'relative';
-				//document.body.style.position = 'fixed';
-			},
-			
-			
-		},
-	
-		mounted() {
-			
-			var {obserable } = this;
-			obserable.on('toggleMain',(data)=>{
-				this.show = data.show;
-				
-			});
-
-			//this.questionList.length = 2;
-
-
-
-
-
-			
-			this.swipeLeft();
-			this.swipeRight();
-
-			this.questionList[this.currentIndex].answers = this.questionList[this.currentIndex].answers.sort(()=>{
-				return Math.random()>.5;
-			});
-
-			this.questionList[this.currentIndex].answers.forEach((item,i)=>{
-				if(item.isRight){
-					this.questionList[this.currentIndex].rAnswer = i;
-				}
+			var placeSearch = new AMap.PlaceSearch({
+			// city 指定搜索所在城市，支持传入格式有：城市名、citycode和adcode
+				city: keyword
 			})
+			s.placeSearch = placeSearch;
 
-			var  s = this;
-			window.VConsole && new VConsole();
-			//this.initRankScroll();
+		
+
+			placeSearch.search(keyword, function (status, result) {
+		// 查询成功时，result即对应匹配的POI信息
+	 
+			var pois = result.poiList.pois;
+				for(var i = 0; i < pois.length; i++){
+					var poi = pois[i];
+					var marker = [];
+					marker[i] = new AMap.Marker({
+						position: poi.location,   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+						title: poi.name,
+						//content:"122344"
+						//icon:'//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png'
+					});
+					//marker[i].setIcon('//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png')
+				/* 	marker[i].on('touchstart',function(e){
+						this.setIcon(s.imgs.marker)
+							console.log(e,'marker')
+						})
+					// 将创建的点标记添加到已有的地图实例：
+					*/
+					map.add(marker[i])
+					
+					
+				}
+				map.setFitView();
+
+			})
 			
+
+
+			 
+		}, 500);
+	},
+
+	hideTip(){
+		this.showTip = false;
+	},
+	next(){
+		this.step++;
+		this.initPos('container1');
+	},
+    updatePv() {
+      var s = this;
+      axios
+        .post(s.host + "/xhs-security-activity/activity/num/updateNum", {
+          secretKey: s.secretKey, // 请求秘钥
+          nm: "fupin2019" // 活动某组图片点赞标识 或者活动某组图片浏览量标识 标识由更新接口定义
+        })
+        .then(function(data) {
+          var dt = data.data;
+          if (typeof dt === "string") {
+            dt = JSON.parse(dt);
+          }
+          console.log(dt);
+        });
+	},
+	
+ 
+    initPos(c='container') {
+		var map = new AMap.Map(c, {
+			resizeEnable: true,
+			zoom:12
+		});
+		this.map = map;
+		var s = this;
+		if(c === 'container'){
+			map.plugin("AMap.Geolocation", function() {
+				var geolocation = new AMap.Geolocation({
+				// 是否使用高精度定位，默认：true
+				enableHighAccuracy: true,
+				// 设置定位超时时间，默认：无穷大
+				timeout: 10000,
+				// 定位按钮的停靠位置的偏移量，默认：Pixel(10, 20)
+				buttonOffset: new AMap.Pixel(10, 20),
+				//  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+				zoomToAccuracy: true,
+				//  定位按钮的排放位置,  RB表示右下
+				buttonPosition: "RB",
+				});
+	
+				geolocation.getCurrentPosition();
+				AMap.event.addListener(geolocation, "complete", data=>{
+					 s.formUser[c==='container'? 'pos':'pos1'] = data.formattedAddress;
+					 var gps = [data.position.lng,data.position.lat];
+					 map.setCenter(data.position);
+					 s.p1 = gps;
+					 var  marker = new AMap.Marker({
+						position: data.position,
+						map: map,
+						//icon:s.imgs.marker
+					})
+				});
+				AMap.event.addListener(geolocation, "error", data=>{
+					console.log("获取位置出错了");	
+				});　
+			});
 		}
 	
-	}
+		var s = this;
+
+		var {placeSearch} = this;
+
+	  	this.clickListener = AMap.event.addListener(map, "touchstart", function(e) {
+
+			   
+		   if(s.marker){
+			   map.remove(s.marker);
+		   }
+            s.marker = new AMap.Marker({
+                position: e.lnglat,
+                map: map
+			})
+		
+			var gps = [e.lnglat.lng,e.lnglat.lat];
+			
+			 s[c==='container'?'p1':'p4'] = gps;
+			
+			 if(c === 'container1'){//第二次取位置
+			  	s.p4 = gps;
+				var disLng = Math.abs(s.p4[0] - s.p1[0]) / 3;
+				var disLat = Math.abs(s.p4[1] - s.p1[1]) / 3;
+				s.p2[0] = Math.min(s.p1[0],s.p4[0])+disLng; 
+				s.p2[1] = Math.min(s.p1[1],s.p4[1])+disLat; 
+			  
+
+				s.p3[0] = Math.min(s.p1[0],s.p4[0])+disLng*2; 
+				s.p3[1] = Math.min(s.p1[1],s.p4[1])+disLat*2; 
+
+				s.points = [
+					new AMap.LngLat(s.p1[0],s.p1[1]),
+					new AMap.LngLat(s.p2[0],s.p2[1]),
+					new AMap.LngLat(s.p3[0],s.p3[1]),
+					new AMap.LngLat(s.p4[0],s.p4[1]),
+				];
+				//s.initMap();
+			 }
+			 var geocoder = new AMap.Geocoder({
+					radius: 1000,
+					extensions: "all"
+				});
+				geocoder.getAddress(gps, function(status, result) {
+					if (status === 'complete' && result.info === 'OK') {
+						var address = result.regeocode.formattedAddress; //返回地址描述
+						
+						 s.formUser.pos1 = address;
+						
+					
+					}
+				});
+        });
+	},
+	initMap(){
+		/**
+		 * new AMap.LngLat(116.400433, 39.908084),
+			new AMap.LngLat(113.52412, 34.777709),
+			new AMap.LngLat(108.821972, 34.270829),
+			new AMap.LngLat(104.067108, 30.65769)
+		 */
+		var {computeBezier,getEllipseHeight,points,p1, p2,p3, p4} = this;
+
+		var dis = AMap.GeometryUtil.distance(p1, p4);
+		var map = new AMap.Map('smap', {
+			center: [(p1[0]+p2[0]+p3[0]+p4[0])/4, (p1[1]+p2[1]+p3[1]+p4[1])/4],
+			zoom: -dis/1000/750+7.6,
+			viewMode: '3D',
+			pitch: 40
+			
+		});
+		
+		
+		var object3Dlayer = new AMap.Object3DLayer();
+		var numberOfPoints = 180;
+		var minHeight = 20;
+
+		var meshLine = new AMap.Object3D.MeshLine({
+			path: computeBezier(points, numberOfPoints, minHeight),
+			height: getEllipseHeight(numberOfPoints, 2000000, minHeight),
+			color: 'rgba(55,129,240, 0.9)',
+			width: 5
+		});
+
+		meshLine.transparent = true;
+		object3Dlayer.add(meshLine);
+		meshLine['backOrFront'] = 'both';
+		map.add(object3Dlayer);
+	},
+	pointOnCubicBezier(cp,t){
+  		var ax, bx, cx;
+        var ay, by, cy;
+        var tSquared, tCubed;
+
+        cx = 3.0 * (cp[1].lng - cp[0].lng);
+        bx = 3.0 * (cp[2].lng - cp[1].lng) - cx;
+        ax = cp[3].lng - cp[0].lng - cx - bx;
+
+        cy = 3.0 * (cp[1].lat - cp[0].lat);
+        by = 3.0 * (cp[2].lat - cp[1].lat) - cy;
+        ay = cp[3].lat - cp[0].lat - cy - by;
+
+        tSquared = t * t;
+        tCubed = tSquared * t;
+
+        var lng = (ax * tCubed) + (bx * tSquared) + (cx * t) + cp[0].lng;
+        var lat = (ay * tCubed) + (by * tSquared) + (cy * t) + cp[0].lat;
+
+        return new AMap.LngLat(lng, lat);
+	},
+	computeBezier(points, numberOfPoints){
+
+ 		var dt;
+        var i;
+		var curve = [];
+		var {pointOnCubicBezier}=  this;
+
+        dt = 1.0 / (numberOfPoints - 1);
+
+        for (i = 0; i < numberOfPoints; i++) {
+            curve[i] = pointOnCubicBezier(points, i * dt);
+        }
+
+        return curve;
+	},
+	getEllipseHeight(count, maxHeight, minHeight) {
+        var height = [];
+        var radionUnit = Math.PI / 180;
+
+        for (var i = 0; i < count; i++) {
+            var radion = i * radionUnit;
+
+            height.push(minHeight + Math.sin(radion) * maxHeight);
+        }
+
+        return height;
+    }
+  },
+  mounted() {
+	  this.initPos();
+  }
+};
 </script>

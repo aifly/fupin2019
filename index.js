@@ -57,9 +57,10 @@ new Vue({
 		<Music :obserable='obserable'></Music>
 		<Main :width='width' :obserable='obserable'></Main>
 		<Loading :width='width' :obserable='obserable'></Loading>
+		<Index :pv='pv' :nickname='nickname' :headimgurl='headimgurl'  :obserable='obserable'></Index>
 		*/
 		template: `<div id='app1'>
-		<Index :pv='pv' :nickname='nickname' :headimgurl='headimgurl'  :obserable='obserable'></Index>
+		<Main :width='width' :obserable='obserable'></Main>
 	</div>`,
 	methods: {	
 
