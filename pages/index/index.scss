@@ -20,7 +20,7 @@ $color: #fffb88;
 	@include displayBox(horizontal);
 	
 	.zmiti-title{
-		height:800px;
+		height:70vh;
 
 		margin-top: -30px;
 		
@@ -32,42 +32,48 @@ $color: #fffb88;
 		@include pos(r);
 		canvas{
 			@include pos(a);
-			top: 40px;
+			top: .5rem;
 			left: 0;;
-			margin-left: 10px;
+			margin-left: 5px;
 		}
 
 		&>div{
 			color:#fff;
-			margin-top: -60px;
-			letter-spacing: 10px;
+			margin-top: -.8rem;
+			margin-left: .1rem;
+			letter-spacing: .3rem;
 		}
 
 		&>span{
 			@include pos(a);
-			width: 100px;
-			height: 100px;
+			width: 1.2rem;
+			height: 1.2rem;
 			left: 0;
-			bottom: 75px;
+			bottom: 1rem;
 			
 			z-index: 102;
 		}
 	}
 	.zmiti-video{
 		z-index: 1000;
+		overflow: hidden;
+		
 		video{
-			width: 100%;
-			height: 100%;
-			@include pos(a);
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			object-fit: cover;
+			-webkit-object-fit: cover;
+			@include transform(translate3d(-50%, -50%, 0) );
 			z-index: 1020;
-			@include transform(scale(1.01));
+			//@include transform( scale(1.01) );
 		}
 	}
 
 
     @include transform3d;
 
-    width: $viewW !important;
+    width:10rem;
     left: 0;
     top: 0;
     overflow: hidden;

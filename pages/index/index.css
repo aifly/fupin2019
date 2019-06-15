@@ -45,7 +45,7 @@
   transform-style: preserve-3d;
   perspective: 800px;
   -webkit-perspective: 800px;
-  width: 750px !important;
+  width: 10rem;
   left: 0;
   top: 0;
   overflow: hidden;
@@ -62,7 +62,7 @@
 }
 
 .zmiti-main-ui .zmiti-title {
-  height: 800px;
+  height: 70vh;
   margin-top: -30px;
   text-align: center;
   position: relative;
@@ -75,35 +75,39 @@
 
 .zmiti-main-ui .zmiti-title canvas {
   position: absolute;
-  top: 40px;
+  top: .5rem;
   left: 0;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 .zmiti-main-ui .zmiti-title > div {
   color: #fff;
-  margin-top: -60px;
-  letter-spacing: 10px;
+  margin-top: -.8rem;
+  margin-left: .1rem;
+  letter-spacing: .3rem;
 }
 
 .zmiti-main-ui .zmiti-title > span {
   position: absolute;
-  width: 100px;
-  height: 100px;
+  width: 1.2rem;
+  height: 1.2rem;
   left: 0;
-  bottom: 75px;
+  bottom: 1rem;
   z-index: 102;
 }
 
 .zmiti-main-ui .zmiti-video {
   z-index: 1000;
+  overflow: hidden;
 }
 
 .zmiti-main-ui .zmiti-video video {
-  width: 100%;
-  height: 100%;
   position: absolute;
+  left: 50%;
+  top: 50%;
+  object-fit: cover;
+  -webkit-object-fit: cover;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
   z-index: 1020;
-  -webkit-transform: scale(1.01);
-  transform: scale(1.01);
 }

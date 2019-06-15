@@ -26,94 +26,47 @@ var zmitiUtil = {
 		}
 	},
 	wxConfig: function(title, desc, url, isDebug = false) {
-		var s = this;
-
-
-		var img = 'http://www.zhongguowangshi.com/h5/'+window.h5name+'/assets/images/301.jpg';
-		var appId = this.wxInfo().wxappid;
-		var durl = url || location.href.split('#')[0];
-		var code_durl = encodeURIComponent(durl);
-
-		if(durl.indexOf('localhost:')>-1){//本地调用，不用请远程请求接口。
-			return;
-		}
-		//alert(title+' \n' + desc + '\n')
-
-		$.ajax({
-			type: 'get',
-			//url: "http://api.zmiti.com/weixin/jssdk.php?type=signature&durl=" + code_durl,
-			url: 'http://openapi.zhongguowangshi.com/wxHandler.ashx',
-			//?callback=jsonFlickrFeed&action=getWeixinConfig&debug=0&site=xhsh5&_=1534295743434
-			data:{
-				action: "getWeixinConfig",
-				debug:1,
-				site: "xhsh5",
-				url: code_durl,
-				callback: "jsonFlickrFeed"
-			},
-			dataType: 'jsonp',
-			jsonp: "callback",
-			jsonpCallback: "jsonFlickrFeed",
-			error: function() {
-				alert('error')
-			},
-			success: function(data) {
+		axios.get(window.config.get_weixinConfig,{}).then((res)=>{
+			
+			if(typeof res === 'object'){
+				var result = res;
+			}else{
+				var result = JSON.parse(res);
+			}
+			var dt = result.data;
+			if(typeof dt === 'string'){
+				dt = JSON.parse(dt);
+			}
+			var data = dt.data;
+			if (dt.rc === 0) {
 				wx.config({
-					debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-					appId: appId, // 必填，公众号的唯一标识
-					timestamp: data.timestamp, // 必填，生成签名的时间戳
-					nonceStr: data.nonceStr, // 必填，生成签名的随机串
-					signature: data.signature, // 必填，签名，见附录1
-					jsApiList: ['checkJsApi',
-						'onMenuShareTimeline',
-						'onMenuShareAppMessage',
-						'onMenuShareQQ',
-						'onMenuShareWeibo',
-						'hideMenuItems',
-						'showMenuItems',
-						'hideAllNonBaseMenuItem',
-						'showAllNonBaseMenuItem'
-					] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+					debug: false,
+					appId: data.appId,
+					timestamp: data.timestamp,
+					nonceStr: data.nonceStr,
+					signature: data.signature,
+					jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage", "onMenuShareQQ", "onMenuShareQZone",
+						"onMenuShareWeibo"
+					]
 				});
 
-				wx.ready(function() {
-
-					//朋友圈
-
-					wx.onMenuShareTimeline({
-						title: title, // 分享标题
-						link: durl, // 分享链接
-						imgUrl: img, // 分享图标
+				var linkUrl = window.location.protocol+'//h5.zhongguowangshi.com/h5/'+window.h5name+'/assets/images/300.jpg';
+				var durl = url || window.location.href.split('#')[0];
+			
+				wx.ready(function () {
+					var config = {
+						title: title,
 						desc: desc,
-						success: function() {},
-						cancel: function() {}
-					});
-					//朋友
-					wx.onMenuShareAppMessage({
-						title: title, // 分享标题
 						link: durl,
-						imgUrl: img, // 分享图标
-						type: "link",
-						dataUrl: "",
-						desc: desc,
-						success: function() {},
-						cancel: function() {}
-					});
-					//qq
-					wx.onMenuShareQQ({
-						title: title, // 分享标题
-						link: durl, // 分享链接
-						imgUrl: img, // 分享图标
-						desc: desc,
-						success: function() {},
-						cancel: function() {}
-					});
+						imgUrl: linkUrl,
+						error: function () { },
+						success() { }
+					};
+					wx.onMenuShareAppMessage(config);
+					wx.onMenuShareTimeline(config);
 				});
 			}
 		});
-
-
-
 	},
 
 	saveWxUserInfo(option) {

@@ -1,0 +1,61 @@
+@import "../css/base.scss";
+.zmiti-share1-ui{
+	height: 100vh;
+	@include pos(r);
+	z-index: 2001;
+	&.active{
+		z-index: 2000;
+	}
+}
+.zmiti-copyright{
+	width: 100%;
+	text-align: center;
+	@include pos(a);
+	bottom: .5rem;
+	color:#fff;
+	letter-spacing: .2rem;
+}
+.zmiti-wish-btns{
+		@include displayBox(horizontal);
+		@include pos(a);
+		bottom: 1rem;
+		left: 50%;
+		width: 80%;
+		-webkit-box-pack: justify;
+		@include transform(translateX(-50%));
+		div{
+			text-align: center;
+			color:#fff;
+			width: 3rem;
+			height:1rem;
+			line-height: 1rem;
+			margin: 0 10px;
+			font-weight: bold;
+			@include br(.1rem);
+			&:nth-of-type(1){
+				background:#3190ea;
+				img{
+					height: .45rem;;
+					width: auto;
+				}
+			}
+			&:nth-of-type(2){
+				background:#ed8324;
+				img{
+					width:.45rem;
+					min-width: 0;
+				}
+			}
+			img{
+				
+				margin-right: .3rem;
+			}
+		}
+	}
+
+
+.zmiti-creatImg-C{
+	.zmiti-createimg{
+		@include transformOrigin(center 14%);
+	}
+}

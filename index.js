@@ -23,6 +23,7 @@ var obserable = new Obserable();
 
 //Vue.config.productionTip = false
 
+
 /* eslint-disable no-new */
 new Vue({
 	data: {
@@ -31,15 +32,16 @@ new Vue({
 		imgs:window.imgs,
 		showMask: false,
 		viewH: document.documentElement.clientHeight,
-		isShare: false,
+		isShare: zmitiUtil.getQueryString('id'),
 		show: false,
 		username: '',
 		pv:820121,
 		width:0,
 		loaded: false,
 		nickname: '',
+		src:'./assets/images/d.png',
 		headimgurl: '',
-
+		shareBg:'./assets/images/share.jpg',
 		playStyle: {
 
 		}
@@ -56,11 +58,18 @@ new Vue({
 		
 		<Music :obserable='obserable'></Music>
 		<Main :width='width' :obserable='obserable'></Main>
-		<Loading :width='width' :obserable='obserable'></Loading>
-		<Index :pv='pv' :nickname='nickname' :headimgurl='headimgurl'  :obserable='obserable'></Index>
 		*/
 		template: `<div id='app1'>
-		<Main :width='width' :obserable='obserable'></Main>
+		<Loading :width='width' :obserable='obserable' v-if='!loaded'></Loading>
+		<Index :pv='pv' :nickname='nickname' v-if='!isShare && loaded' :headimgurl='headimgurl'  :obserable='obserable'></Index>
+		
+		<Main :width='width' :obserable='obserable' v-if='!isShare &&loaded'></Main>
+		<div class='lt-full zmiti-share-page' v-if='isShare　&&loaded' :style="{background:'url('+shareBg+') no-repeat center',backgroundSize:'cover'}">
+			<div class='zmiti-share-img' :style="{WebkitTransform:'scale('+(viewH/800)+')'}">
+				<img :src='src' />
+			</div>
+			<div class='zmiti-share-btn' v-press v-tap='[restart]'>我也要送祝福</div>
+		</div>
 	</div>`,
 	methods: {	
 
@@ -95,6 +104,9 @@ new Vue({
 	
 		updatePv() {
 			
+		},
+		restart(){
+			window.location.href = window.location.href.split('?')[0];
 		}
 	},
 	components: {
@@ -103,56 +115,33 @@ new Vue({
 		Music,
 		Main
 	},
-	mounted() {
-
-		var s = this;
-		var src = (zmitiUtil.getQueryString('src'));
-		var num = (zmitiUtil.getQueryString('num'));
-
+	created(){
 		
+		var s = this;
+		var url = window.location.href.split('#')[0];
+		url = zmitiUtil.changeURLPar(url, 'id', '1234');
+		zmitiUtil.wxConfig(document.title, document.title, url);
 
-		this.isShare = src && !isNaN(num);
-
-		this.src = src;
-
-		obserable.on("setUserInfo",(data)=>{
-
-			this.nickname = data.nickname;
-			this.headimgurl = data.headimgurl;
-		})
-
-		if(this.isShare){
-			 
+		if (this.isShare) {
+			arr = [arr.pop()];
 		}
-
-	
-
 		s.loading(arr, (scale) => {
-			s.width = scale;
-
+			s.width = scale * 100 | 0;
 		}, () => {
 
 			obserable.trigger({
-				type:'hideloading'
+				type: 'hideloading'
 			});
-			
 			s.show = true;
 			s.loaded = true;
-			
 		})
+	},
+	mounted() {
+
+
+		
 		
 
-
-		obserable.on('showShare', () => {
-			this.showMask = true;
-		})
-
-		obserable.on('updatePv', (data) => {
-			this.randomPv += data;
-			this.pv += data;
-
-		});
-		this.updatePv();
 		//zmitiUtil.getOauthurl(obserable);
 		//zmitiUtil.wxConfig(document.title, window.desc);
 		

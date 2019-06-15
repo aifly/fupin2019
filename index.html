@@ -11,7 +11,7 @@
 <script>
 	document.getElementsByTagName('html')[0].style.fontSize = window.innerWidth / 10 + 'px';
 	window.protocol = location.protocol;
-	window.h5name = 'fupin2019';
+	window.h5name = 'fupin';
 	window.customid = '1697340893'; //改革开放40周年.
 
 	window.baseUrl = window.protocol + '//api.zmiti.com/v2';
@@ -34,44 +34,16 @@
 	<!-- -->
 	<script src="https://cdn.bootcss.com/vConsole/3.2.2/vconsole.min.js"></script>
 	<script>
-		window.VConsole && new VConsole()
-		function wxHandlercallback(res,title,desc) {
-			arguments.callee.res = arguments.callee.res || res;
-
-			wx.config({
-				debug: false,
-				appId: arguments.callee.res.appId,
-				timestamp: arguments.callee.res.timestamp,
-				nonceStr: arguments.callee.res.nonceStr,
-				signature: arguments.callee.res.signature,
-				jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage", "onMenuShareQQ", "onMenuShareQZone",
-					"onMenuShareWeibo"
-				]
-			});
-
-			//window.location.href = encodeURI(window.location.href)
-			wx.ready(function () {
-				var config = {
-					title:title||'代表委员喊你来答题！测测你的“科技含金量”',
-					desc: desc|| window.desc,
-					//link: encodeURIComponent(window.location.href.split('?')[0].split('#')[0]),
-					link: 'http://h5.zhongguowangshi.com/h5/'+window.h5name+'/index.html',
-					imgUrl: "http://h5.zhongguowangshi.com/h5/"+window.h5name+"/assets/images/301.jpg",
-					error:function(){
-					},
-					success(){
-					}
-				};
-				wx.onMenuShareAppMessage(config);
-				wx.onMenuShareTimeline(config);
-			});
-		}
+		///window.VConsole && new VConsole()
+	 
 	</script>
-	<script src="//openapi.zhongguowangshi.com/wxHandler.ashx?callback=wxHandlercallback&action=getWeixinConfig&debug=1&site=xhsh5"></script>
-	<script src="https://webapi.amap.com/maps?v=1.4.15&key=2afa3ab6fe19ef45aa4d157f5f784918&plugin=Map3D,AMap.DistrictSearch,AMap.PlaceSearch"></script>
+	<script src="https://webapi.amap.com/maps?v=1.4.15&key=2afa3ab6fe19ef45aa4d157f5f784918&plugin=AMap.DistrictSearch,AMap.PlaceSearch"></script>
 	<script type="text/javascript" src="https://cache.amap.com/lbs/static/PlaceSearchRender.js"></script>
 	<script>
 		function loadScript(src) {
+			if(window.location.protocol === 'http:'){
+				//window.location.href = 'https://'+ window.location.href.split('http:')[1];
+			}
 			var script = document.createElement('script');
 			script.src = src + "?t=" + new Date().getTime();
 			document.body.appendChild(script)
@@ -79,15 +51,15 @@
 
 		/*
 		
+		*/
 		loadScript('./assets/js/base.js');
 		loadScript('./assets/js/app.js');
-		*/
 	</script>
 
 	<!-- 
+		<script src='./assets/js/base.js'></script>
+		<script src='http://localhost:4063/app.js' onerror="loadScript('./assets/js/app.js')"></script>
 	-->
-	<script src='./assets/js/base.js'></script>
-	<script src='http://localhost:4063/app.js' onerror="loadScript('./assets/js/app.js')"></script>
 
 </body>
 

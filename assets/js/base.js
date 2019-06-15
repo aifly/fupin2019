@@ -9,8 +9,20 @@
   marker:"./assets/images/marker.png",
   search:"./assets/images/search.png",
   drag:"./assets/images/drag.png",
+  subtitle:"./assets/images/subtitle.png",
   refresh:"./assets/images/refresh.png",
   heart:"./assets/images/heart.png",
+  qrcode:"./assets/images/qrcode.png",
+  text1:"./assets/images/text1.png",
+  text2:"./assets/images/text2.png",
+  text3:"./assets/images/text3.png",
+  text4:"./assets/images/text4.png",
+  text5:"./assets/images/text5.png",
+  text6:"./assets/images/text6.png",
+  text7:"./assets/images/text7.png",
+  text8:"./assets/images/text8.png",
+  shareBg:'./assets/images/share-bg.jpg',
+  share:'./assets/images/share.jpg',
   
 
 };
@@ -29,25 +41,53 @@ for (var attr in imgs) {
 
    host:"https://xlive.xinhuaapp.com", //正式域名：https://testxlive.xinhuaapp.com
    secretKey: "e9469538b0623783f38c585821459454",
+	 anm:'2019扶贫贺卡',
+	 get_weixinConfig: 'https://testopen.xinhuaapp.com/xhs-security-wechat/wx/getWXConfig',
    wishes:[
 	   {
-		   text:"奋斗在一线的你，用生命书写时代赞歌。",
+		   text:"奋斗在一线的你，用生命书写时代赞歌",
+		   img:imgs.text1
 	   },
 	   {
-		   text: "扶贫路上你最美。"
+		   text: "扶贫路上你最美",
+		   img:imgs.text2
 	   },{
-		   text: "扶贫路上感谢有你。"
+		   text: "扶贫路上感谢有你",
+		   img:imgs.text3
 	   },{
-		   text: "平凡之中透出伟大，细节之处彰显精神。"
+		   text: "平凡之中透出伟大，细节之处彰显精神",
+		   img:imgs.text4
 	   },{
-		   text: "在平凡工作岗位上，展现出自己光彩的人生价值。"
+		   text: "在平凡工作岗位上，展现出自己光彩的人生价值",
+		   img:imgs.text5
 	   },{
-		   text: "书写无愧于时代的新荣光，不负人民，不负时代！"
+		   text: "书写无愧于时代的新荣光，不负人民，不负时代！",
+		   img:imgs.text6
 	   },{
-		   text: "翻过一山又一山，山山水水脚量勘。"
+		   text: "翻过一山又一山，山山水水脚量勘",
+		   img:imgs.text7
 	   },{
-		   text: "帮穷济困解民难，风雨兼程多少累，扶贫事业驻心间，几多辛苦几多甜。"
+		   text: "帮穷济困解民难，风雨兼程多少累，扶贫事业驻心间，几多辛苦几多甜",
+		   img:imgs.text8
 	   }
+   ],
+   points:[
+	   {
+		   "slgt": "116.401969", //
+		   "slat": "39.929101", // 
+		   "rlgt": "116.558346", //
+		   "rlat": "39.995021" // 
+	   }, {
+		   "slgt": "117.057948", //
+		   "slat": "39.697209", // 
+		   "rlgt": "118.233075", //
+		   "rlat": "40.340822" // 
+	   }, {
+		   "slgt": "116.239268", //
+		   "slat": "38.588702", // 
+		   "rlgt": "114.643303", //
+		   "rlat": "36.812731" // 
+	   },
    ]
  };
  

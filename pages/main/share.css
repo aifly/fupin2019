@@ -1,0 +1,108 @@
+.lt-full {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+}
+
+.zmiti-play {
+  width: .8rem;
+  height: .8rem;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 1223000 !important;
+  right: .5rem;
+  top: .5rem;
+}
+
+.zmiti-play.rotate {
+  -webkit-animation: rotate 5s linear infinite;
+  animation: rotate 5s linear infinite;
+}
+
+@-webkit-keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.zmiti-share1-ui {
+  height: 100vh;
+  position: relative;
+  z-index: 2001;
+}
+
+.zmiti-share1-ui.active {
+  z-index: 2000;
+}
+
+.zmiti-copyright {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom: .5rem;
+  color: #fff;
+  letter-spacing: .2rem;
+}
+
+.zmiti-wish-btns {
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-box-orient: horizontal;
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  width: 80%;
+  -webkit-box-pack: justify;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.zmiti-wish-btns div {
+  text-align: center;
+  color: #fff;
+  width: 3rem;
+  height: 1rem;
+  line-height: 1rem;
+  margin: 0 10px;
+  font-weight: bold;
+  border-radius: 0.1rem;
+}
+
+.zmiti-wish-btns div:nth-of-type(1) {
+  background: #3190ea;
+}
+
+.zmiti-wish-btns div:nth-of-type(1) img {
+  height: .45rem;
+  width: auto;
+}
+
+.zmiti-wish-btns div:nth-of-type(2) {
+  background: #ed8324;
+}
+
+.zmiti-wish-btns div:nth-of-type(2) img {
+  width: .45rem;
+  min-width: 0;
+}
+
+.zmiti-wish-btns div img {
+  margin-right: .3rem;
+}
+
+.zmiti-creatImg-C .zmiti-createimg {
+  -webkit-transform-origin: center 14%;
+  transform-origin: center 14%;
+}
