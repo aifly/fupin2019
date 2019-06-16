@@ -11,7 +11,7 @@
 						<div>新华社客户端</div>
 						<div>出品</div>
 					</div>
-					<span></span>
+					<span v-if='false'></span>
 				</template>
 			</div>
 			<div class='lt-full zmiti-video'  v-show="showVideo" >

@@ -39,7 +39,8 @@ new Vue({
 		width:0,
 		loaded: false,
 		nickname: '',
-		src:'./assets/images/d.png',
+		host: window.config.host, 
+		src:'',
 		headimgurl: '',
 		shareBg:'./assets/images/share.jpg',
 		playStyle: {
@@ -66,7 +67,7 @@ new Vue({
 		<Main :width='width' :obserable='obserable' v-if='!isShare &&loaded'></Main>
 		<div class='lt-full zmiti-share-page' v-if='isShare　&&loaded' :style="{background:'url('+shareBg+') no-repeat center',backgroundSize:'cover'}">
 			<div class='zmiti-share-img' :style="{WebkitTransform:'scale('+(viewH/800)+')'}">
-				<img :src='src' />
+				<img :src='src' v-if='src' />
 			</div>
 			<div class='zmiti-share-btn' v-press v-tap='[restart]'>我也要送祝福</div>
 		</div>
@@ -119,11 +120,29 @@ new Vue({
 		
 		var s = this;
 		var url = window.location.href.split('#')[0];
-		url = zmitiUtil.changeURLPar(url, 'id', '1234');
-		zmitiUtil.wxConfig(document.title, document.title, url);
-
+		url = zmitiUtil.changeURLPar(url, 'time', new Date().getTime());
+		zmitiUtil.wxConfig(document.title, document.title,url);
 		if (this.isShare) {
 			arr = [arr.pop()];
+			axios({
+				headers: {
+					'content-type': 'application/json'
+				},
+				method: 'post',
+				url: s.host + "/xhs-security-activity/activity/giftcard/getGiftCardByIdAndAnm",
+				data: JSON.stringify({
+					secretKey: window.config.secretKey,  // 请求秘钥(string, 必填)
+					id : s.isShare,   //贺卡ID (long, 必填)
+					anm: window.config.anm // 活动标识（string, 必填）
+				})
+			}).then(data => {
+				var dt = data.data;
+				if (typeof dt === "string") {
+					dt = JSON.parse(dt);
+					console.log(dt);
+					s.src = dt.data.imgUrl;
+				}
+			});
 		}
 		s.loading(arr, (scale) => {
 			s.width = scale * 100 | 0;

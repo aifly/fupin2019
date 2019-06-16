@@ -13,14 +13,14 @@
   refresh:"./assets/images/refresh.png",
   heart:"./assets/images/heart.png",
   qrcode:"./assets/images/qrcode.png",
-  text1:"./assets/images/text1.png",
-  text2:"./assets/images/text2.png",
-  text3:"./assets/images/text3.png",
-  text4:"./assets/images/text4.png",
-  text5:"./assets/images/text5.png",
-  text6:"./assets/images/text6.png",
-  text7:"./assets/images/text7.png",
-  text8:"./assets/images/text8.png",
+  text1:"./assets/images/text-21.png",
+  text2:"./assets/images/text-22.png",
+  text3:"./assets/images/text-23.png",
+  text4:"./assets/images/text-24.png",
+  text5:"./assets/images/text-25.png",
+  text6:"./assets/images/text-26.png",
+  text7:"./assets/images/text-27.png",
+  text8:"./assets/images/text-28.png",
   shareBg:'./assets/images/share-bg.jpg',
   share:'./assets/images/share.jpg',
   
@@ -39,7 +39,7 @@ for (var attr in imgs) {
    indexvideo: './assets/video/1.mp4',
    baseUrl: "https://testxlive.xinhuaapp.com",
 
-   host:"https://xlive.xinhuaapp.com", //正式域名：https://testxlive.xinhuaapp.com
+	 host:"https://testactivity.xhsxmt.com", //正式域名：https://testxlive.xinhuaapp.com
    secretKey: "e9469538b0623783f38c585821459454",
 	 anm:'2019扶贫贺卡',
 	 get_weixinConfig: 'https://testopen.xinhuaapp.com/xhs-security-wechat/wx/getWXConfig',

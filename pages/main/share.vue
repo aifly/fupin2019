@@ -187,8 +187,7 @@
 							obserable.trigger({
 								type:'getCreateImg',
 								data:src
-							});
-							 
+							}); 
 					      },
 					      width: dom.clientWidth,
 					      height:dom.clientHeight
@@ -201,7 +200,7 @@
 		mounted() {
 			
 			if(this.isPage){
-			 	//
+				 //
 			}
 			var {obserable} = this;
 			obserable.on('createImg',()=>{

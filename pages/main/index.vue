@@ -299,81 +299,110 @@ export default {
 	},
 	saveGiftCard(){
 		var s = this;
-		var {myName,rName,province,wishes,currentWishIndex,sPositionData,myPositionData} = this;
-		axios.post(s.host+'/xhs-security-activity/activity/giftcard/saveGiftCard',JSON.stringify({
-			secretKey: s.secretKey, // 请求秘钥
-			anm: window.config.anm,// 活动某组图片点赞标识 或者活动某组图片浏览量标识 标识由更新接口定义
-			source:zmitiUtil.isWeiXin()?0:1,
-			sender:myName,
-			swnm:"",//微信昵称
-			swid:'',
-			sLongitudes:sPositionData.position.lng,
-			sLatitudes:sPositionData.position.lat,
-			sProvince:sPositionData.addressComponent.province,
-			sCity:sPositionData.addressComponent.city || sPositionData.addressComponent.district,
-			sDistrict:sPositionData.addressComponent.district,
-			sStreet:sPositionData.addressComponent.street,
-			blessingWords:wishes[currentWishIndex].text,
+		var {myName,rName,province,wishes,currentWishIndex,sPositionData,myPositionData,createImg} = this;
+		var base64 = createImg;
+		axios({
+		  headers:{
+			  'content-type': 'application/json'
+		  },
+		  method:'post',
+		  url:s.host+'/xhs-security-activity/activity/giftcard/saveGiftCard',
+		  data:JSON.stringify({
+				secretKey: s.secretKey, // 请求秘钥
+				anm: window.config.anm,// 活动某组图片点赞标识 或者活动某组图片浏览量标识 标识由更新接口定义
+				source:zmitiUtil.isWeiXin()?0:1,
+				sender:myName,
+				swnm:"",//微信昵称
+				swid:'',
+				imgData:base64.replace('data:image/png;base64,',''),
+				sLongitudes:sPositionData.position.lng,
+				sLatitudes:sPositionData.position.lat,
+				sProvince:sPositionData.addressComponent.province,
+				sCity:sPositionData.addressComponent.city || sPositionData.addressComponent.district,
+				sDistrict:sPositionData.addressComponent.district,
+				sStreet:sPositionData.addressComponent.street,
+				blessingWords:wishes[currentWishIndex].text,
 
-			receiver:rName,
-			rwnm:"",
-			rLongitudes:myPositionData.position.lng,
-			rLatitudes:myPositionData.position.lat,
-			rProvince:myPositionData.addressComponent.province,
-			rCity:myPositionData.addressComponent.city || myPositionData.addressComponent.district,
-			rDistrict:myPositionData.addressComponent.district,
-			rStreet:myPositionData.addressComponent.street,
+				receiver:rName,
+				rwnm:"",
+				rLongitudes:myPositionData.position.lng,
+				rLatitudes:myPositionData.position.lat,
+				rProvince:myPositionData.addressComponent.province,
+				rCity:myPositionData.addressComponent.city || myPositionData.addressComponent.district,
+				rDistrict:myPositionData.addressComponent.district,
+				rStreet:myPositionData.addressComponent.street,
 
 
-		})).then(data=>{
-			if(typeof data === 'string'){
-				data = JSON.parse(data);
+			})
+		  }).then((data)=>{
+			  var dt;
+			if(typeof data.data === 'string'){
+				dt = JSON.parse(data.data);
+			}else{
+				dt = data.data;
 			}
-			if(data.rc*1 === 0){
-
-				var cardid = data.data.id;//获取到的贺卡的id.
+			console.log(dt,'dt....');
+			if(dt.rc*1 === 0){
+				var cardid = dt.data.id;//获取到的贺卡的id.
 				var url = window.location.href.split('#')[0];
 				url = zmitiUtil.changeURLPar(url,'id',cardid);
-				zmitiUtil.wxConfig(document.title,document.title,url);
-
+				zmitiUtil.wxConfig(myName+'送你一张贺卡',document.title,url);
 			}
-		});
+			else{
+				console.log(dt,'保存接口出错了');
+			}
+		  })
+		
+	},
+	getAllPoints(){
+		var s = this;
+		axios({
+				headers: {
+					'content-type': 'application/json'
+				},
+				method: 'post',
+				url: s.host + "/xhs-security-activity/activity/giftcard/getAllGiftCardPoints",
+				data: JSON.stringify({
+					secretKey: window.config.secretKey,  // 请求秘钥(string, 必填)
+					///anm: window.config.anm // 活动标识（string, 必填）
+				})
+			}).then(data => {
+				var dt = data.data;
+				if (typeof dt === "string") {
+					dt = JSON.parse(dt);
+					
+					if(dt.rc*1 === 0){
+						s.points = dt.data.points;
+						s.createPoint();
+						console.log(dt.data.points);
+					}
+					
+				}
+			});
 	},
     updatePv() {
 	  var s = this;
 	 
 		
 		var data = {
-          secretKey : s.secretKey, // 请求秘钥
-          anm: window.config.anm // 活动某组图片点赞标识 或者活动某组图片浏览量标识 标识由更新接口
+          	secretKey : s.secretKey, // 请求秘钥
+         	nm: window.config.anm // 活动某组图片点赞标识 或者活动某组图片浏览量标识 标识由更新接口
 		};
-		/* console.log(JSON.stringify(data));
-
-		$.ajax({
-			type:'get',
-			dataType:'json',
-			url:s.host + "/xhs-security-activity/activity/num/updateNum",
-			data:JSON.stringify(data),
-			success(data){
-				console.log(data);
-			}
-		});
-		return; */
+	
 	  axios({
-		  method:'post',
 		  headers:{
-			  "content-type":'application/json',
+			  'content-type': 'application/json'
 		  },
+		  method:'post',
 		  url:s.host + "/xhs-security-activity/activity/num/updateNum",
-		  data
+		  data:JSON.stringify(data)
 	  }).then(data=>{
+		  console.log(data);
 		  var dt = data.data;
           if (typeof dt === "string") {
             dt = JSON.parse(dt);
           }
-          console.log(dt);
 	  });
-      
 	},
 	removePoint(){
 		var {map } = this;
@@ -487,51 +516,47 @@ export default {
 
 		var {placeSearch} = this;
 
-	  	this.clickListener = AMap.event.addListener(map, "click", function(e) {
+		var mouse = {
+			x:0,
+			y:0
+		};
+		var time = 0;
+	  	AMap.event.addListener(map, "touchstart", function(e) {
 
-			   
-		   if(s.marker){
-			   map.remove(s.marker);
-		   }
-            s.marker = new AMap.Marker({
-                position: e.lnglat,
-                map: map
-			})
+			mouse = e.pixel;
+			time = new Date().getTime();
+		});
 		
-		 
-			var gps = [e.lnglat.lng,e.lnglat.lat];
-			s.showNextBtn = true;
 
-			s.searchMarkers.forEach((marker,i)=>{
-				map.remove(marker);
-				s.searchMarkers.splice(i,1);
-			})
+		AMap.event.addListener(map,'touchend',(e)=>{
+			var mouse1 = e.pixel;
+			var disTime = new Date().getTime() -  time;
+			var dis =  Math.sqrt(Math.pow((mouse1.x - mouse.x),2) + Math.pow((mouse1.y - mouse.y),2));
+			if(dis < 5 && disTime<= 200){
+				time = 0;
+				if(s.marker){
+					map.remove(s.marker);
+				}
+				s.marker = new AMap.Marker({
+					position: e.lnglat,
+					map: map
+				})
 			
-			
-			 if(c === 'container1'){//第二次取位置
-			  	s.p4 = gps;
-				var disLng = Math.abs(s.p4[0] - s.p1[0]) / 3;
-				var disLat = Math.abs(s.p4[1] - s.p1[1]) / 3;
-				s.p2[0] = Math.min(s.p1[0],s.p4[0])+disLng; 
-				s.p2[1] = Math.min(s.p1[1],s.p4[1])+disLat; 
-			  
-
-				s.p3[0] = Math.min(s.p1[0],s.p4[0])+disLng*2; 
-				s.p3[1] = Math.min(s.p1[1],s.p4[1])+disLat*2; 
-
-				s.points = [
-					new AMap.LngLat(s.p1[0],s.p1[1]),
-					new AMap.LngLat(s.p2[0],s.p2[1]),
-					new AMap.LngLat(s.p3[0],s.p3[1]),
-					new AMap.LngLat(s.p4[0],s.p4[1]),
-				];
-				//s.initMap();
-			 }
-			 var geocoder = new AMap.Geocoder({
+				
+				var gps = [e.lnglat.lng,e.lnglat.lat];
+				s.showNextBtn = true;
+	
+				s.searchMarkers.forEach((marker,i)=>{
+					map.remove(marker);
+					s.searchMarkers.splice(i,1);
+				})
+				
+					
+				var geocoder = new AMap.Geocoder({
 					radius: 1000,
 					extensions: "all"
 				});
-		
+			
 				geocoder.getAddress(gps, function(status, result) {
 					if (status === 'complete' && result.info === 'OK') {
 						
@@ -539,21 +564,23 @@ export default {
 						s.sPositionData.position = e.lnglat;
 						var address = result.regeocode.formattedAddress; //返回地址描述
 						
-						 s.formUser.pos1 = address;
-						 s.keyword = address;
-						 
-						 
-						
-					
+							s.formUser.pos1 = address;
+							s.keyword = address;
 					}
 				});
-        });
+
+			}
+
+		})
 	},
+
+	
 	
   },
   mounted() {
 	  this.updatePv();
 	  this.initPos();
+	  this.getAllPoints();
 	  var {obserable} = this;
 	  obserable.on('getCreateImg',data=>{
 		  this.createImg = data;

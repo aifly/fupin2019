@@ -52,7 +52,6 @@ var zmitiUtil = {
 
 				var linkUrl = window.location.protocol+'//h5.zhongguowangshi.com/h5/'+window.h5name+'/assets/images/300.jpg';
 				var durl = url || window.location.href.split('#')[0];
-			
 				wx.ready(function () {
 					var config = {
 						title: title,
