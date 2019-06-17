@@ -85,15 +85,25 @@
   margin-top: -.8rem;
   margin-left: .1rem;
   letter-spacing: .3rem;
+  margin-left: .25rem;
 }
 
 .zmiti-main-ui .zmiti-title > span {
   position: absolute;
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1.3rem;
+  height: 1.3rem;
   left: 0;
   bottom: 1rem;
+  -webkit-animation: scale 1s infinite alternate;
+  animation: scale 1s infinite alternate;
   z-index: 102;
+}
+
+@-webkit-keyframes scale {
+  to {
+    -webkit-transform: scale(1.08);
+    transform: scale(1.08);
+  }
 }
 
 .zmiti-main-ui .zmiti-video {

@@ -4,23 +4,24 @@
   play: "./assets/images/play.png",
   arrow: "./assets/images/arrow.png",
   play1:'./assets/images/play1.png',
-  tip:'./assets/images/tip.png',
-  title:'./assets/images/title.png',
+  tip:'./assets/images/tip1.png',
+  title:'./assets/images/title1.png',
   marker:"./assets/images/marker.png",
+  video:"./assets/images/video.png",
   search:"./assets/images/search.png",
   drag:"./assets/images/drag.png",
   subtitle:"./assets/images/subtitle.png",
   refresh:"./assets/images/refresh.png",
   heart:"./assets/images/heart.png",
   qrcode:"./assets/images/qrcode.png",
-  text1:"./assets/images/text-21.png",
-  text2:"./assets/images/text-22.png",
-  text3:"./assets/images/text-23.png",
-  text4:"./assets/images/text-24.png",
-  text5:"./assets/images/text-25.png",
-  text6:"./assets/images/text-26.png",
-  text7:"./assets/images/text-27.png",
-  text8:"./assets/images/text-28.png",
+  text1:"./assets/images/text_1.png",
+  text2:"./assets/images/text_2.png",
+  text3:"./assets/images/text_3.png",
+  text4:"./assets/images/text_4.png",
+  text5:"./assets/images/text_5.png",
+  text6:"./assets/images/text_6.png",
+  text7:"./assets/images/text_7.png",
+  text8:"./assets/images/text_8.png",
   shareBg:'./assets/images/share-bg.jpg',
   share:'./assets/images/share.jpg',
   
@@ -36,7 +37,7 @@ for (var attr in imgs) {
 }
 
  window.config = {
-   indexvideo: './assets/video/1.mp4',
+   indexvideo: './assets/video/index1.mp4',
    baseUrl: "https://testxlive.xinhuaapp.com",
 
 	 host:"https://testactivity.xhsxmt.com", //正式域名：https://testxlive.xinhuaapp.com

@@ -62,38 +62,38 @@
 
 	.zmiti-toast-main-ui .error{
 		display: inline-block;
-		width: 34px;
-		height: 34px;
+		width: .5rem;
+		height: .5rem;
 		vertical-align: middle;
 		margin-right: 10px;
 		border-radius: 50%;
 		background:#f00;
 		position: absolute;
-		left: 12px;
-		top: .4rem;
+		left: .1rem;
+		top: .34rem;
 		
 	}
 	.zmiti-toast-main-ui .error:before{
 		content:"";
 		position: absolute;
-		width:1px;
-		height: 18px;
-		border:4px solid #fff;
+		width:0px;
+		height: .3rem;
+		border:2px solid #fff;
 		-webkit-transform: translateX(4px) rotate(45deg);
 		border-top: none;
 		border-left: none;
-		left: 10px;
-		top: 4px;
+		left: .11rem;
+		top: .05rem;
 	}.zmiti-toast-main-ui .error:after{
 		content:"";
 		position: absolute;
-		width:1px;
-		height: 18px;
-		border:4px solid #fff;
+		width:0px;
+		height: .3rem;
+		border:2px solid #fff;
 		-webkit-transform:translateX(4px) rotate(-45deg);
 		border-top: none;
 		border-left: none;
-		left: 10px;
-		top: 4px;
+		left: .11rem;
+		top: .05rem;
 	}
 </style>

@@ -216,7 +216,7 @@ input{
 	background: rgba(4,19,42,0.9);
 	z-index: 1300;
 	.zmiti-createimg{
-		@include transformOrigin(center 14%);
+		@include transformOrigin(center 20%);
 		@include pos(r);
 		box-shadow: 0 0 .2rem rgba(255,255,255,.8);
 		span{

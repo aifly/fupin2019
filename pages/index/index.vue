@@ -11,7 +11,9 @@
 						<div>新华社客户端</div>
 						<div>出品</div>
 					</div>
-					<span v-if='false'></span>
+					<span v-tap='[playVideo]'> 
+						<img :src='imgs.video' />
+					</span>
 				</template>
 			</div>
 			<div class='lt-full zmiti-video'  v-show="showVideo" >
@@ -20,14 +22,12 @@
 				 ref='video1'  :style="{width:videoWidth,height:'100%'}" :src="videoUrl"></video>
 			</div>
 
-			<Toast :errorMsg='errorMsg' :msg='successMsg'></Toast>
 		</div>
 
 	</transition>
 </template>
 <style lang="scss" scoped>
 	@import './index.scss';
-	
 </style>
 <script>
 	
@@ -44,7 +44,6 @@
 			return {
 				showVideo:false,
 				successMsg:"",
-				errorMsg:"",
 				isAndroid :navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1,
 				imgs:window.imgs,
 				secretKey: "e9469538b0623783f38c585821459454",

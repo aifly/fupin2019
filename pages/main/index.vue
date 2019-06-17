@@ -25,13 +25,13 @@
 			<transition name='form'>
 				<div class='zmiti-wish-C' v-if='showForm'>
 					<div class='zmiti-input-name'>
-						<input @blur='blur' @focus='focus' type="text" v-model="rName" placeholder="请输入他的名字">
+						<input @blur='blur("rName")' @focus='focus' type="text" v-model="rName" placeholder="请输入他的名字">
 					</div>
 					<div class='zmiti-wish-text'>
 						{{wishes[currentWishIndex].text}}
 					</div>
 					<div class='zmiti-input-name'>
-						<input @blur='blur' @focus='focus' type="text" v-model="myName" placeholder="请输入我的名字">
+						<input @blur='blur("myName")' @focus='focus' type="text" v-model="myName" placeholder="请输入我的名字">
 					</div>
 					<div class='zmiti-wish-btns'>
 						<div v-press v-tap='[changeWish]'>
@@ -52,7 +52,7 @@
 			<Share :obserable='obserable' :rName='rName' v-if='!createImg && showShare' :isPage='isPage' :province='myPositionData.addressComponent.province' :city='myPositionData.addressComponent.city' :myName='myName' :index='currentWishIndex'></Share>
 
 			<div class='zmiti-createimg-C lt-full' v-if='showShare'>
-				<div class='zmiti-createimg' :style="{webkitTransform:'scale('+viewH/750+')'}">
+				<div class='zmiti-createimg' :style="{webkitTransform:'scale('+viewH/840+')'}">
 					<img :src="createImg" alt="">
 					<span>长按保存图片</span>
 				</div>
@@ -71,7 +71,8 @@
 				<img :src="imgs.arrow" alt="">
 			</div>
 		</div>
-
+		
+		<Toast :errorMsg='errorMsg' ></Toast>
 		 
   	</div>
 </template>
@@ -85,6 +86,7 @@
 <script>
 import zmitiUtil from "../lib/util";
 import Share from './share';
+import Toast from '../toast/toast';
 export default {
   props: ["obserable"],
   name: "zmiti-index-page",
@@ -92,6 +94,7 @@ export default {
     return {
 		showForm:false,
 		isPage:true,
+		errorMsg:"",
 		imgs: window.imgs,
 		showShare:false,
 		secretKey: "e9469538b0623783f38c585821459454",
@@ -110,14 +113,10 @@ export default {
 		provinceList:[],
 		showDrag:false,
 		rName:'',
-		myName:'',
-		step:0,
-		p1:[],
-		p2:[],
-		p3:[],
-		p4:[],
+		myName:'', 
 		points:window.config.points,
 		searchMarkers:[],
+		checkName:window.checkName,
 		fresh:false,
 		province:"",
 		city:'',
@@ -139,7 +138,8 @@ export default {
     };
   },
   components: {
-	  Share
+	  Share,
+	  Toast
   },
   watch:{
 	  rName(val){
@@ -182,8 +182,16 @@ export default {
 		window.scrollTo(0,300);
 		
 	},
-	blur(){
+	blur(key){
 		window.scrollTo(0,0);
+		if(!this.checkName(this[key])){
+			this.errorMsg = '输入不合法'; 
+			this[key] = '';
+
+			setTimeout(() => {
+				this.errorMsg = '';
+			}, 2000);
+		}
 		
 	},
 	init(){
@@ -374,7 +382,7 @@ export default {
 					if(dt.rc*1 === 0){
 						s.points = dt.data.points;
 						s.createPoint();
-						console.log(dt.data.points);
+						////console.log(dt.data.points);
 					}
 					
 				}
