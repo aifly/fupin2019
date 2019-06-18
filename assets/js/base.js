@@ -23,7 +23,20 @@
   text7:"./assets/images/text_7.png",
   text8:"./assets/images/text_8.png",
   shareBg:'./assets/images/share-bg.jpg',
+  
+  shareBg1: './assets/images/bg1.jpg',
+  shareBg2: './assets/images/bg2.jpg',
+  shareBg3: './assets/images/bg3.jpg',
+  shareBg4: './assets/images/bg4.jpg',
+  shareBg5: './assets/images/bg5.jpg',
+  shareBg6: './assets/images/bg6.jpg',
+  shareBg7: './assets/images/bg7.jpg',
+  shareBg8: './assets/images/bg8.jpg',
+  
+
+
   share:'./assets/images/share.jpg',
+  
   
 
 };
@@ -47,29 +60,37 @@ for (var attr in imgs) {
    wishes:[
 	   {
 		   text:"奋斗在一线的你，用生命书写时代赞歌",
-		   img:imgs.text1
+		   img:imgs.text1,
+		   bg:imgs.shareBg1
 	   },
 	   {
 		   text: "扶贫路上你最美",
-		   img:imgs.text2
+		   img:imgs.text2,
+		   bg:imgs.shareBg2
 	   },{
 		   text: "扶贫路上感谢有你",
-		   img:imgs.text3
+		   img:imgs.text3,
+		   bg:imgs.shareBg3
 	   },{
 		   text: "平凡之中透出伟大，细节之处彰显精神",
-		   img:imgs.text4
+		   img:imgs.text4,
+		   bg:imgs.shareBg4
 	   },{
 		   text: "在平凡工作岗位上，展现出自己光彩的人生价值",
-		   img:imgs.text5
+		   img:imgs.text5,
+		   bg:imgs.shareBg5
 	   },{
 		   text: "书写无愧于时代的新荣光，不负人民，不负时代！",
-		   img:imgs.text6
+		   img:imgs.text6,
+		   bg:imgs.shareBg6
 	   },{
 		   text: "翻过一山又一山，山山水水脚量勘",
-		   img:imgs.text7
+		   img:imgs.text7,
+		   bg:imgs.shareBg7
 	   },{
 		   text: "帮穷济困解民难，风雨兼程多少累，扶贫事业驻心间，几多辛苦几多甜",
-		   img:imgs.text8
+		   img:imgs.text8,
+		   bg:imgs.shareBg8
 	   }
    ],
    points:[

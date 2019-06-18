@@ -115,7 +115,7 @@ input {
   position: absolute;
   bottom: 0%;
   left: .5rem;
-  height: 7.7rem;
+  height: 5rem;
   z-index: 1200;
   background: rgba(4, 19, 42, 0.9);
 }
@@ -142,9 +142,17 @@ input {
   text-align: center;
 }
 
+.zmiti-wish-C .zmiti-wish-form-input {
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-box-orient: horizontal;
+  width: 100%;
+}
+
 .zmiti-wish-C .zmiti-input-name {
-  width: 5rem;
-  margin: .5rem auto 0;
+  width: 3.5rem;
+  margin: 1rem .5rem;
 }
 
 .zmiti-wish-C .zmiti-input-name input {
@@ -161,13 +169,13 @@ input {
   -webkit-box-align: center;
   -webkit-box-pack: center;
   -webkit-box-orient: horizontal;
-  margin-top: 1rem;
+  margin-top: 0rem;
 }
 
 .zmiti-wish-C .zmiti-wish-btns div {
   text-align: center;
   color: #fff;
-  width: 3rem;
+  width: 4rem;
   height: 1rem;
   line-height: 1rem;
   margin: 0 10px;
@@ -178,7 +186,7 @@ input {
 }
 
 .zmiti-wish-C .zmiti-wish-btns div:nth-of-type(1) {
-  background: #3190ea;
+  background: #ed8324;
 }
 
 .zmiti-wish-C .zmiti-wish-btns div:nth-of-type(1) img {
@@ -200,7 +208,7 @@ input {
 }
 
 .zmiti-wish-C .zmiti-wish-btns div img {
-  margin-right: .3rem;
+  margin-right: .6rem;
 }
 
 .zmiti-wish-C .zmiti-wish-btns div img.rotate {
@@ -281,6 +289,8 @@ input {
   -webkit-transform-origin: center 20%;
   transform-origin: center 20%;
   position: relative;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
   box-shadow: 0 0 0.2rem rgba(255, 255, 255, 0.8);
 }
 
@@ -297,9 +307,9 @@ input {
   -webkit-box-align: center;
   -webkit-box-pack: center;
   -webkit-box-orient: horizontal;
-  width: 80%;
+  width: 90%;
   position: absolute;
-  left: 10%;
+  left: 5%;
   -webkit-box-pack: justify;
   bottom: 1rem;
 }
@@ -308,7 +318,7 @@ input {
   text-align: center;
   z-index: 1020;
   color: #fff;
-  width: 3rem;
+  width: 2.5rem;
   height: 1rem;
   line-height: 1rem;
   margin: 0 10px;
@@ -326,10 +336,19 @@ input {
 }
 
 .zmiti-createimg-C .zmiti-wish-btns div:nth-of-type(2) {
-  background: #ed8324;
+  background: #3190ea;
 }
 
 .zmiti-createimg-C .zmiti-wish-btns div:nth-of-type(2) img {
+  width: .45rem;
+  min-width: 0;
+}
+
+.zmiti-createimg-C .zmiti-wish-btns div:nth-of-type(3) {
+  background: #ed8324;
+}
+
+.zmiti-createimg-C .zmiti-wish-btns div:nth-of-type(3) img {
   width: .45rem;
   min-width: 0;
 }

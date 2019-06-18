@@ -76,7 +76,7 @@ input{
 	@include pos(a);
 	bottom: 0%;
 	left:.5rem;
-	height:7.7rem;
+	height:5rem;
 	z-index:1200;
 	background: rgba(4,19,42,0.9);
 	 
@@ -100,9 +100,13 @@ input{
 		font-size:.45rem;
 		text-align: center;
 	}
+	.zmiti-wish-form-input{
+		@include displayBox(horizontal);
+		width: 100%;
+	}
 	.zmiti-input-name{
-		width: 5rem;
-		 margin: .5rem auto 0;
+		width: 3.5rem;
+		margin: 1rem .5rem;
 		input{
 			height: .8rem;
 			@include br(4px);
@@ -114,11 +118,11 @@ input{
 	}
 	.zmiti-wish-btns{
 		@include displayBox(horizontal);
-		margin-top:1rem;
+		margin-top:0rem;
 		div{
 			text-align: center;
 			color:#fff;
-			width: 3rem;
+			width: 4rem;
 			height:1rem;
 			line-height: 1rem;
 			margin: 0 10px;
@@ -127,7 +131,7 @@ input{
 			user-select: none;
 			-webkit-user-select: none;
 			&:nth-of-type(1){
-				background:#3190ea;
+				background:#ed8324;
 				img{
 					height: .45rem;;
 					width: auto;
@@ -145,7 +149,7 @@ input{
 			}
 			img{
 				
-				margin-right: .3rem;
+				margin-right: .6rem;
 				&.rotate{
 					@include animation(rotate 500ms linear);
 				}
@@ -218,6 +222,7 @@ input{
 	.zmiti-createimg{
 		@include transformOrigin(center 20%);
 		@include pos(r);
+		@include transition(.3s);
 		box-shadow: 0 0 .2rem rgba(255,255,255,.8);
 		span{
 			@include pos(a);
@@ -229,17 +234,19 @@ input{
 	}
 	.zmiti-wish-btns{
 		@include displayBox(horizontal);
-		width: 80%;
+		width: 90%;
 		@include pos(a);
-		left: 10%;
+		
+		left: 5%;
 		-webkit-box-pack:justify;
 		bottom: 1rem;
 		div{
 			text-align: center;
 			z-index: 1020;
 			color:#fff;
-			width: 3rem;
+			width: 2.5rem;
 			height:1rem;
+			
 			line-height: 1rem;
 			margin: 0 10px;
 			font-weight: bold;
@@ -252,6 +259,13 @@ input{
 				}
 			}
 			&:nth-of-type(2){
+				background:#3190ea;
+				img{
+					width:.45rem;
+					min-width: 0;
+				}
+			}
+			&:nth-of-type(3){
 				background:#ed8324;
 				img{
 					width:.45rem;

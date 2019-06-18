@@ -24,19 +24,15 @@
 
 			<transition name='form'>
 				<div class='zmiti-wish-C' v-if='showForm'>
-					<div class='zmiti-input-name'>
-						<input @blur='blur("rName")' @focus='focus' type="text" v-model="rName" placeholder="请输入他的名字">
-					</div>
-					<div class='zmiti-wish-text'>
-						{{wishes[currentWishIndex].text}}
-					</div>
-					<div class='zmiti-input-name'>
-						<input @blur='blur("myName")' @focus='focus' type="text" v-model="myName" placeholder="请输入我的名字">
+					<div class='zmiti-wish-form-input'>
+						<div class='zmiti-input-name'>
+							<input @blur='blur("rName")' @focus='focus' type="text" v-model="rName" placeholder="请输入他的名字">
+						</div>
+						<div class='zmiti-input-name'>
+							<input @blur='blur("myName")' @focus='focus' type="text" v-model="myName" placeholder="请输入我的名字">
+						</div>
 					</div>
 					<div class='zmiti-wish-btns'>
-						<div v-press v-tap='[changeWish]'>
-							<img :class="{'rotate':fresh}" :src="imgs.refresh" alt="">换祝福语
-						</div>
 						<div v-press v-tap='[createWish]' :class="{'active':!isFocus}" >
 							<img :src="imgs.heart" alt="">生成贺卡
 						</div>
@@ -45,20 +41,23 @@
 			</transition>
 
 			<div class='zmiti-share-ui lt-full' v-if="!createImg && showShare">
-				<Share :obserable='obserable' :rName='rName' :province='myPositionData.addressComponent.province' :city='myPositionData.addressComponent.city' :myName='myName' :index='currentWishIndex'></Share>
+				<Share :obserable='obserable' :rName='rName' :province='myPositionData.addressComponent.province' :city='myPositionData.addressComponent.city||myPositionData.addressComponent.district' :myName='myName' :index='currentWishIndex'></Share>
 			</div>
 
 
-			<Share :obserable='obserable' :rName='rName' v-if='!createImg && showShare' :isPage='isPage' :province='myPositionData.addressComponent.province' :city='myPositionData.addressComponent.city' :myName='myName' :index='currentWishIndex'></Share>
+			<Share :obserable='obserable' :rName='rName' v-if='!createImg && showShare' :isPage='isPage' :province='myPositionData.addressComponent.province' :city='myPositionData.addressComponent.city||myPositionData.addressComponent.district' :myName='myName' :index='currentWishIndex'></Share>
 
 			<div class='zmiti-createimg-C lt-full' v-if='showShare'>
-				<div class='zmiti-createimg' :style="{webkitTransform:'scale('+viewH/840+')'}">
-					<img :src="createImg" alt="">
+				<div class='zmiti-createimg' :style="{webkitTransform:'scale('+scale+')'}">
+					<img :src="lastImg" alt="">
 					<span>长按保存图片</span>
 				</div>
 				<div class='zmiti-wish-btns'>
 					<div v-press v-tap='[init]'>
 						再次送祝福
+					</div>
+					<div v-press v-tap='[changeWish]'>
+						换一张贺卡
 					</div>
 					<div v-press v-tap='[showMaskPage]'>
 						发送祝福
@@ -80,6 +79,10 @@
 <style lang='scss' scoped>
 @import "./index.scss";
 
+.zmiti-createimg{
+	-webkit-transition:.5s;
+	transition:.5s;
+}
 </style>
 
 
@@ -97,13 +100,15 @@ export default {
 		errorMsg:"",
 		imgs: window.imgs,
 		showShare:false,
+		lastImg:'',
 		secretKey: "e9469538b0623783f38c585821459454",
 		host: window.config.host,
 		viewH: window.innerHeight,
 		viewW: window.innerWidth,
 		showTip:true,
 		showMask:false,
-		currentWishIndex:0,
+		scale:1,
+		currentWishIndex:(Math.random()*window.config.wishes.length )| 0,
 		hideSearchBox:true,
 		show:false,
 		showTip1:false,
@@ -142,6 +147,13 @@ export default {
 	  Toast
   },
   watch:{
+	  showShare(val){
+		  if(val){
+			  setTimeout(() => {
+				  this.scale = this.viewH / 840;
+			  }, 10);
+		  }
+	  },
 	  rName(val){
 		  
 		  this.isFocus = val && this.myName;
@@ -160,22 +172,30 @@ export default {
 
   methods: {
 	changeWish(){
-		this.fresh = true;
-		clearTimeout(this.freshTimer);
-		this.freshTimer =setTimeout(() => {
-			this.currentWishIndex = (Math.random()*this.wishes.length )| 0;
-			this.fresh = false;
-		}, 500);
+		var lastIndex = this.currentWishIndex;
+		this.currentWishIndex = (Math.random()*this.wishes.length )| 0;
+		if(lastIndex === this.currentWishIndex){
+			this.changeWish();
+		}else{
+			this.createWish();
+			/* this.showForm = false;
+			this.showShare = true;
+			this.createImg = '';
+			this.obserable.trigger({
+				type:'createImg'
+			}); */
+		}
 	},
 	createWish(){
 		if(this.rName && this.myName){
 			this.showForm = false;
 			this.showShare = true;
+			this.createImg = this.lastImg = '';
 			setTimeout(() => {
 				this.obserable.trigger({
 					type:'createImg'
 				});
-			}, 1000);
+			}, 100);
 		}
 	},
 	focus(){
@@ -280,14 +300,13 @@ export default {
 	},
 	hideTip(){
 		this.showTip = false;
-		var time = 2000;//1000
+		var time = 1000;//1000
 		var p = new Promise((resolve,reject)=>{
-
 			setTimeout(() => {
 				this.hideSearchBox = false;
 				this.showTip1 = true;
 				resolve();
-			}, 500);
+			}, 100);
 		}).then(()=>{
 
 			return new Promise((resolve,reject)=>{
@@ -499,6 +518,8 @@ export default {
 				AMap.event.addListener(geolocation, "complete", data=>{
 					 
 					 s.myPositionData  = data;
+
+					 
 					 
 					 s.formUser[c==='container'? 'pos':'pos1'] = data.formattedAddress;
 					 var gps = [data.position.lng,data.position.lat];
@@ -592,6 +613,7 @@ export default {
 	  var {obserable} = this;
 	  obserable.on('getCreateImg',data=>{
 		  this.createImg = data;
+		  this.lastImg = data;
 		  this.saveGiftCard();
 	  });
 

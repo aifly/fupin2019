@@ -1,6 +1,6 @@
 <template>
 	<section class='zmiti-share1-ui' :class="{'active':isPage}">
-		<div class='lt-full ' :class="{'active':isPage}" ref='page' :style="{background:'url('+imgs.shareBg+') no-repeat center top',backgroundSize:'cover'}">
+		<div class='lt-full ' :class="{'active':isPage}" ref='page' :style="{background:'url('+wishes[index].bg+') no-repeat center bottom',backgroundSize:'cover'}">
 			<div class='zmiti-share-info'>
 				<div>扶贫干部 {{rName}}：</div>
 				<div>
@@ -63,6 +63,7 @@
 					width:$viewW*.7;
 					margin: 0 auto;
 					&:before,&:after{
+						display: none;
 						content:'';
 						position:absolute;
 						width: $viewW*.24;
@@ -117,6 +118,7 @@
 			margin: 0 auto;
 			&:before,&:after{
 				content:'';
+				display: none;
 				position:absolute;
 				width: 2.4rem;
 				height: 1px;
