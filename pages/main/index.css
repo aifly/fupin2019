@@ -294,6 +294,16 @@ input {
   box-shadow: 0 0 0.2rem rgba(255, 255, 255, 0.8);
 }
 
+.zmiti-createimg-C .zmiti-createimg.create-enter-active, .zmiti-createimg-C .zmiti-createimg.create-leave-active {
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.zmiti-createimg-C .zmiti-createimg.create-leave-to, .zmiti-createimg-C .zmiti-createimg.create-enter {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
 .zmiti-createimg-C .zmiti-createimg span {
   position: absolute;
   width: .4rem;

@@ -224,6 +224,18 @@ input{
 		@include pos(r);
 		@include transition(.3s);
 		box-shadow: 0 0 .2rem rgba(255,255,255,.8);
+
+		&.create-enter-active,
+		&.create-leave-active {
+			@include transition(.4s);
+		}
+
+
+		&.create-leave-to,
+		&.create-enter {
+			@include transform(scale(1));
+		}
+
 		span{
 			@include pos(a);
 			width: .4rem;

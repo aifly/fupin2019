@@ -47,11 +47,13 @@
 
 			<Share :obserable='obserable' :rName='rName' v-if='!createImg && showShare' :isPage='isPage' :province='myPositionData.addressComponent.province' :city='myPositionData.addressComponent.city||myPositionData.addressComponent.district' :myName='myName' :index='currentWishIndex'></Share>
 
-			<div class='zmiti-createimg-C lt-full' v-if='showShare'>
-				<div class='zmiti-createimg' :style="{webkitTransform:'scale('+scale+')'}">
-					<img :src="lastImg" alt="">
-					<span>长按保存图片</span>
-				</div>
+			<div class='zmiti-createimg-C lt-full' v-show='showShare'>
+				<transition name='create'>
+					<div class='zmiti-createimg' v-if='showCreateImg' :style="{webkitTransform:'scale('+scale+')'}">
+						<img :src="lastImg" alt="">
+						<span>长按保存图片</span>
+					</div>
+				</transition>
 				<div class='zmiti-wish-btns'>
 					<div v-press v-tap='[init]'>
 						再次送祝福
@@ -99,6 +101,7 @@ export default {
 		isPage:true,
 		errorMsg:"",
 		imgs: window.imgs,
+		showCreateImg:false,
 		showShare:false,
 		lastImg:'',
 		secretKey: "e9469538b0623783f38c585821459454",
@@ -149,9 +152,10 @@ export default {
   watch:{
 	  showShare(val){
 		  if(val){
+			  this.scale = this.viewH / 840;
 			  setTimeout(() => {
-				  this.scale = this.viewH / 840;
-			  }, 10);
+				  this.showCreateImg = true;
+			  }, 100);
 		  }
 	  },
 	  rName(val){
@@ -177,6 +181,7 @@ export default {
 		if(lastIndex === this.currentWishIndex){
 			this.changeWish();
 		}else{
+			this.showCreateImg = false;
 			this.createWish();
 			/* this.showForm = false;
 			this.showShare = true;
@@ -190,6 +195,7 @@ export default {
 		if(this.rName && this.myName){
 			this.showForm = false;
 			this.showShare = true;
+			this.showCreateImg = true;
 			this.createImg = this.lastImg = '';
 			setTimeout(() => {
 				this.obserable.trigger({
