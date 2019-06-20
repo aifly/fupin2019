@@ -2,18 +2,13 @@
 	<section class='zmiti-share1-ui' :class="{'active':isPage}">
 		<div class='lt-full ' :class="{'active':isPage}" ref='page' :style="{background:'url('+wishes[index].bg+') no-repeat center bottom',backgroundSize:'cover'}">
 			<div class='zmiti-share-info'>
-				<div>扶贫干部 {{rName}}：</div>
-				<div>
+				<div>这是一张来自</div>
+				<div>{{province}} {{city}}的祝福</div>
+				<div class='zmiti-wish-img'>
 					<img :src="wishes[index].img" alt="">
 				</div>
-				<div class='zmiti-myname'>
-					{{myName}}
-				</div>
-				<div class='zmiti-address'>
-					从{{province}} {{city}} 给你发来贺卡
-				</div>
 			</div>
-			<div class='zmiti-share-logo'>
+			<div class='zmiti-share-logo'  v-if='false'>
 				<div>
 					<img :src="imgs.logo" alt="">
 				</div>
@@ -22,11 +17,11 @@
 				</div>
 			</div>
 
-			<div class='zmiti-subtitle'>
+			<div class='zmiti-subtitle' v-if='false'>
 				<img :src="imgs.subtitle" alt="">
 			</div>
 
-			<div class='zmiti-copyright'>
+			<div class='zmiti-copyright'  v-if='false'>
 				<span>新华社客户端</span>
 				<span>出品</span>
 			</div>
@@ -53,33 +48,15 @@
 				font-size:.45* $viewW/10;
 				&>div{
 					//font-size:30px !important;
-					
-					margin: $viewW*.1 0 ;
+					margin: .2rem auto ;
+					width:100%;
+					text-align: center;
+					&.zmiti-wish-img{
+						margin-top:6vh;
+					}
 				}
 				color:$color;
-				.zmiti-myname{
-					position: relative;
-					text-align: center;
-					width:$viewW*.7;
-					margin: 0 auto;
-					&:before,&:after{
-						display: none;
-						content:'';
-						position:absolute;
-						width: $viewW*.24;
-						height: 1px;
-						background:$color;
-						left: 0;
-						top:50%;
-					}
-					&:after{
-						left: auto;
-						right: 0;
-					}
-				}
-				.zmiti-address{
-					text-align: center;
-				}
+				 
 			}
 			.zmiti-share-logo{
 				position: absolute;
@@ -108,7 +85,13 @@
 		margin: 2rem auto;
 		font-size:.45rem;
 		&>div{
-			margin: 1rem 0 ;
+			margin: .2rem auto;
+			width:100%;
+			text-align: center;
+
+			&.zmiti-wish-img{
+				margin-top:6vh;
+			}
 		}
 		color:$color;
 		.zmiti-myname{
@@ -116,20 +99,7 @@
 			text-align: center;
 			width:7rem;
 			margin: 0 auto;
-			&:before,&:after{
-				content:'';
-				display: none;
-				position:absolute;
-				width: 2.4rem;
-				height: 1px;
-				background:$color;
-				left: 0;
-				top:50%;
-			}
-			&:after{
-				left: auto;
-				right: 0;
-			}
+			 
 		}
 		.zmiti-address{
 			text-align: center;

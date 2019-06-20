@@ -192,17 +192,16 @@ export default {
 		}
 	},
 	createWish(){
-		if(this.rName && this.myName){
-			this.showForm = false;
-			this.showShare = true;
-			this.showCreateImg = true;
-			this.createImg = this.lastImg = '';
-			setTimeout(() => {
-				this.obserable.trigger({
-					type:'createImg'
-				});
-			}, 100);
-		}
+		
+		this.showForm = false;
+		this.showShare = true;
+		this.showCreateImg = true;
+		this.createImg = this.lastImg = '';
+		setTimeout(() => {
+			this.obserable.trigger({
+				type:'createImg'
+			});
+		}, 100);
 	},
 	focus(){
 		window.scrollTo(0,300);
@@ -307,6 +306,10 @@ export default {
 	hideTip(){
 		this.showTip = false;
 		var time = 1000;//1000
+		this.createWish();
+
+		return;
+
 		var p = new Promise((resolve,reject)=>{
 			setTimeout(() => {
 				this.hideSearchBox = false;
@@ -625,6 +628,8 @@ export default {
 
 	  obserable.on('showMain',()=>{
 		  this.show = true;
+		  
+		 
 	  });
 	 
   }

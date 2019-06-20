@@ -24,14 +24,14 @@
   text8:"./assets/images/text_8.png",
   shareBg:'./assets/images/share-bg.jpg',
   
-  shareBg1: './assets/images/bg1.jpg',
-  shareBg2: './assets/images/bg2.jpg',
-  shareBg3: './assets/images/bg3.jpg',
-  shareBg4: './assets/images/bg4.jpg',
-  shareBg5: './assets/images/bg5.jpg',
-  shareBg6: './assets/images/bg6.jpg',
-  shareBg7: './assets/images/bg7.jpg',
-  shareBg8: './assets/images/bg8.jpg',
+  shareBg1: './assets/images/bg1-1.jpg',
+  shareBg2: './assets/images/bg2-1.jpg',
+  shareBg3: './assets/images/bg3-1.jpg',
+  shareBg4: './assets/images/bg4-1.jpg',
+  shareBg5: './assets/images/bg5-1.jpg',
+  shareBg6: './assets/images/bg6-1.jpg',
+  shareBg7: './assets/images/bg7-1.jpg',
+  shareBg8: './assets/images/bg8-1.jpg',
   
 
 
