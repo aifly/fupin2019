@@ -2,11 +2,12 @@
 	<transition name='loading'>
 		<section v-if='show' class="lt-full zmiti-loading1">
 			 <div class="zmiti-loading">
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
+				 	<div>
+						<img :src='imgs.loadingGif'/>
+					 </div>
+					<div class='zmiti-loading-bar'>
+						<span :style="{WebkitTransform:'translateX('+(width-100)+'%)'}"></span>
+					</div>
 					<div>{{width}}%</div>
 			</div>
 			<div class='zmiti-loading-logo'>

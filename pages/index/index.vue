@@ -20,6 +20,7 @@
 				<video x-webkit-airplay="allow"  v-show="showVideo" webkit-playsinline="true" preload="auto" playsinline
 				x5-video-player-type="h5" x5-video-player-fullscreen="true" 
 				 ref='video1'  :style="{width:videoWidth,height:'100%'}" :src="videoUrl"></video>
+				 <div class='zmiti-pass' v-tap='[pass]'>跳过</div>
 			</div>
 
 		</div>
@@ -66,6 +67,13 @@
 
 		},
 		methods: {
+			pass(){
+				this.$refs['video1'].pause();
+				this.showVideo = false;
+				this.obserable.trigger({
+					type:'showMain'
+				})
+			},
 			playVideo(){
 				clearInterval(this.t);
 				

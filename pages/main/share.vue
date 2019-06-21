@@ -7,6 +7,7 @@
 				<div class='zmiti-wish-img'>
 					<img :src="wishes[index].img" alt="">
 				</div>
+				<div>这是发往脱贫战场的第<span>{{pv}}</span>份祝福</div>
 			</div>
 			<div class='zmiti-share-logo'  v-if='false'>
 				<div>
@@ -43,8 +44,8 @@
 			height: 804px;
 			$viewW:500px;
 			.zmiti-share-info{
-				width:.8*$viewW;
-				margin: .2*$viewW auto;
+				width:1*$viewW;
+				margin: .1*$viewW auto;
 				font-size:.45* $viewW/10;
 				&>div{
 					//font-size:30px !important;
@@ -54,6 +55,7 @@
 					&.zmiti-wish-img{
 						margin-top:6vh;
 					}
+
 				}
 				color:$color;
 				 
@@ -81,16 +83,20 @@
 		}
 	}
 	.zmiti-share-info{
-		width: 8rem;
-		margin: 2rem auto;
+		width: 10rem;
+		margin: 10vh auto;
 		font-size:.45rem;
 		&>div{
 			margin: .2rem auto;
-			width:100%;
+			width:80%;
 			text-align: center;
 
 			&.zmiti-wish-img{
-				margin-top:6vh;
+				///margin-top:6vh;
+			}
+			span{
+				font-size:1rem;
+				font-family: Georgia;
 			}
 		}
 		color:$color;
@@ -131,7 +137,7 @@
 <script>
 	import '../lib/html2canvas';
 	export default {
-		props:['rName','myName','index','city','province','isPage','obserable'],
+		props:['rName','myName','index','city','province','isPage','obserable','pv'],
 		data(){
 			return {
 				viewH:window.innerHeight,

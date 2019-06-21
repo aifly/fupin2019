@@ -64,7 +64,21 @@ $color: #fffb88;
 	.zmiti-video{
 		z-index: 1000;
 		overflow: hidden;
-		
+		.zmiti-pass{
+			@include pos(a);
+			z-index: 1021;
+			width: 2rem;
+			height: .7rem;
+			line-height: .7rem;
+			text-align: center;
+			border:1px solid #fff;
+			color:#fff;
+			top: .5rem;
+			right: .5rem;
+			@include br(10px);
+
+
+		}
 		video{
 			position: absolute;
 			left: 50%;

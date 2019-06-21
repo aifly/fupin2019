@@ -3,38 +3,32 @@
   main:'./assets/images/main-bg.jpg',
   play: "./assets/images/play.png",
   arrow: "./assets/images/arrow.png",
-  play1:'./assets/images/play1.png',
-  tip:'./assets/images/tip1.png',
+  tip:'./assets/images/tip2.png',
   title:'./assets/images/title1.png',
-  marker:"./assets/images/marker.png",
   video:"./assets/images/video.png",
-  search:"./assets/images/search.png",
-  drag:"./assets/images/drag.png",
-  subtitle:"./assets/images/subtitle.png",
-  refresh:"./assets/images/refresh.png",
-  heart:"./assets/images/heart.png",
   qrcode:"./assets/images/qrcode.png",
-  text1:"./assets/images/text_1.png",
-  text2:"./assets/images/text_2.png",
-  text3:"./assets/images/text_3.png",
-  text4:"./assets/images/text_4.png",
-  text5:"./assets/images/text_5.png",
-  text6:"./assets/images/text_6.png",
-  text7:"./assets/images/text_7.png",
-  text8:"./assets/images/text_8.png",
+  text1:"./assets/images/text_1_1.png",
+  text2:"./assets/images/text_2_1.png",
+  text3:"./assets/images/text_3_1.png",
+  text4:"./assets/images/text_4_1.png",
+  text5:"./assets/images/text_5_1.png",
+  text6:"./assets/images/text_6_1.png",
+  text7:"./assets/images/text_7_1.png",
+  text8:"./assets/images/text_8_1.png",
+  text9:"./assets/images/text_9_1.png",
   shareBg:'./assets/images/share-bg.jpg',
   
-  shareBg1: './assets/images/bg1-1.jpg',
-  shareBg2: './assets/images/bg2-1.jpg',
-  shareBg3: './assets/images/bg3-1.jpg',
-  shareBg4: './assets/images/bg4-1.jpg',
-  shareBg5: './assets/images/bg5-1.jpg',
-  shareBg6: './assets/images/bg6-1.jpg',
-  shareBg7: './assets/images/bg7-1.jpg',
-  shareBg8: './assets/images/bg8-1.jpg',
+  shareBg1: './assets/images/bg1-2.jpg',
+  shareBg2: './assets/images/bg2-2.jpg',
+  shareBg3: './assets/images/bg3-2.jpg',
+  shareBg4: './assets/images/bg4-2.jpg',
+  shareBg5: './assets/images/bg5-2.jpg',
+  shareBg6: './assets/images/bg6-2.jpg',
+  shareBg7: './assets/images/bg7-2.jpg',
+  shareBg8: './assets/images/bg8-2.jpg',
+  shareBg9: './assets/images/bg9-2.jpg',
   
-
-
+  loadingGif:'./assets/images/loading.gif',
   share:'./assets/images/share.jpg',
   
   
@@ -59,38 +53,42 @@ for (var attr in imgs) {
 	 get_weixinConfig: 'https://testopen.xinhuaapp.com/xhs-security-wechat/wx/getWXConfig',
    wishes:[
 	   {
-		   text:"奋斗在一线的你，用生命书写时代赞歌",
+		   text: "扶贫路上你最美",
 		   img:imgs.text1,
 		   bg:imgs.shareBg1
 	   },
 	   {
-		   text: "扶贫路上你最美",
+		   text: "我理解你的每一滴眼泪每一个脚印谢谢你的付出",
 		   img:imgs.text2,
 		   bg:imgs.shareBg2
 	   },{
-		   text: "扶贫路上感谢有你",
+		   text: "你是凡人亦是英雄",
 		   img:imgs.text3,
 		   bg:imgs.shareBg3
 	   },{
-		   text: "平凡之中透出伟大，细节之处彰显精神",
+		   text: "因为你在那片土地每天都有新变化",
 		   img:imgs.text4,
 		   bg:imgs.shareBg4
 	   },{
-		   text: "在平凡工作岗位上，展现出自己光彩的人生价值",
+		   text: "希望你能平安健康一切顺利",
 		   img:imgs.text5,
 		   bg:imgs.shareBg5
 	   },{
-		   text: "书写无愧于时代的新荣光，不负人民，不负时代！",
+		   text: "我知道在这个世界上有人比我更需要你",
 		   img:imgs.text6,
 		   bg:imgs.shareBg6
 	   },{
-		   text: "翻过一山又一山，山山水水脚量勘",
+		   text: "不忘初心不负荣光",
 		   img:imgs.text7,
 		   bg:imgs.shareBg7
 	   },{
-		   text: "帮穷济困解民难，风雨兼程多少累，扶贫事业驻心间，几多辛苦几多甜",
+		   text: "既然选择远方就注定风雨兼程加油！",
 		   img:imgs.text8,
 		   bg:imgs.shareBg8
+	   },  {
+		   text: "你说过的话你做过的事有人一辈子记得",
+		   img: imgs.text9,
+		   bg: imgs.shareBg9
 	   }
    ],
    points:[

@@ -110,6 +110,20 @@
   overflow: hidden;
 }
 
+.zmiti-main-ui .zmiti-video .zmiti-pass {
+  position: absolute;
+  z-index: 1021;
+  width: 2rem;
+  height: .7rem;
+  line-height: .7rem;
+  text-align: center;
+  border: 1px solid #fff;
+  color: #fff;
+  top: .5rem;
+  right: .5rem;
+  border-radius: 10px;
+}
+
 .zmiti-main-ui .zmiti-video video {
   position: absolute;
   left: 50%;

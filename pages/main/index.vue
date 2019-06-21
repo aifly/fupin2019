@@ -15,12 +15,14 @@
 			<div class='zmiti-tip lt-full' v-if='showTip' v-tap='[hideTip]'>
 				<img :src="imgs.tip" alt="">
 			</div>
-			<div class='zmiti-tip lt-full' v-if='showTip1' v-tap='[closeTip1]'>
+			<div class='zmiti-tip lt-full' v-if='showTip1 && false' v-tap='[closeTip1]'>
 				<template v-if='showDrag'>
 					<img :src="imgs.drag" alt="">
 					<div class='zmiti-tip-text'>可拖动放大地图后点击定位</div>
 				</template>
 			</div>
+
+			
 
 			<transition name='form'>
 				<div class='zmiti-wish-C' v-if='showForm'>
@@ -41,11 +43,11 @@
 			</transition>
 
 			<div class='zmiti-share-ui lt-full' v-if="!createImg && showShare">
-				<Share :obserable='obserable' :rName='rName' :province='myPositionData.addressComponent.province' :city='myPositionData.addressComponent.city||myPositionData.addressComponent.district' :myName='myName' :index='currentWishIndex'></Share>
+				<Share :pv='pv' :obserable='obserable' :rName='rName' :province='myPositionData.addressComponent.province' :city='myPositionData.addressComponent.city||myPositionData.addressComponent.district' :myName='myName' :index='currentWishIndex'></Share>
 			</div>
 
 
-			<Share :obserable='obserable' :rName='rName' v-if='!createImg && showShare' :isPage='isPage' :province='myPositionData.addressComponent.province' :city='myPositionData.addressComponent.city||myPositionData.addressComponent.district' :myName='myName' :index='currentWishIndex'></Share>
+			<Share :pv='pv' :obserable='obserable' :rName='rName' v-if='!createImg && showShare' :isPage='isPage' :province='myPositionData.addressComponent.province' :city='myPositionData.addressComponent.city||myPositionData.addressComponent.district' :myName='myName' :index='currentWishIndex'></Share>
 
 			<div class='zmiti-createimg-C lt-full' v-show='showShare'>
 				<transition name='create'>
@@ -103,6 +105,7 @@ export default {
 		imgs: window.imgs,
 		showCreateImg:false,
 		showShare:false,
+		pv:12023,
 		lastImg:'',
 		secretKey: "e9469538b0623783f38c585821459454",
 		host: window.config.host,
@@ -111,7 +114,7 @@ export default {
 		showTip:true,
 		showMask:false,
 		scale:1,
-		currentWishIndex:(Math.random()*window.config.wishes.length )| 0,
+		currentWishIndex:0,
 		hideSearchBox:true,
 		show:false,
 		showTip1:false,
@@ -157,39 +160,16 @@ export default {
 				  this.showCreateImg = true;
 			  }, 100);
 		  }
-	  },
-	  rName(val){
-		  
-		  this.isFocus = val && this.myName;
-	  },
-	  myName(val){
-		  this.isFocus = val && this.rName;
-	  },
-	  showForm(val){
-		  if(val){
-			  setTimeout(() => {
-				  this.isFocus = false;
-			  }, 1000);
-		  }
 	  }
   },
 
   methods: {
 	changeWish(){
-		var lastIndex = this.currentWishIndex;
-		this.currentWishIndex = (Math.random()*this.wishes.length )| 0;
-		if(lastIndex === this.currentWishIndex){
-			this.changeWish();
-		}else{
-			this.showCreateImg = false;
-			this.createWish();
-			/* this.showForm = false;
-			this.showShare = true;
-			this.createImg = '';
-			this.obserable.trigger({
-				type:'createImg'
-			}); */
-		}
+		this.currentWishIndex++;
+		this.currentWishIndex %= this.wishes.length;
+
+		this.showCreateImg = false;
+		this.createWish();
 	},
 	createWish(){
 		
@@ -203,22 +183,7 @@ export default {
 			});
 		}, 100);
 	},
-	focus(){
-		window.scrollTo(0,300);
-		
-	},
-	blur(key){
-		window.scrollTo(0,0);
-		if(!this.checkName(this[key])){
-			this.errorMsg = '输入不合法'; 
-			this[key] = '';
-
-			setTimeout(() => {
-				this.errorMsg = '';
-			}, 2000);
-		}
-		
-	},
+	
 	init(){
 		this.formUser ={
 			username: "",
@@ -235,70 +200,7 @@ export default {
 		this.showMask = true;
 	},
 	search(time= 500){
-		var {map,keyword} = this;
-		var s =this;
-		if(!keyword){
-			return;
-		}
-		clearTimeout(this.searchTimer);
-
-		this.$refs['search'].blur();
 		
-		this.searchTimer = setTimeout(() => {
-				
-			map.remove(s.myMarker);
-
-			var placeSearch = new AMap.PlaceSearch({
-			// city 指定搜索所在城市，支持传入格式有：城市名、citycode和adcode
-				city: keyword
-			})
-			s.placeSearch = placeSearch;
-		
-			placeSearch.search(keyword, function (status, result) {
-		// 查询成功时，result即对应匹配的POI信息
-	 
-				var pois = result.poiList.pois;
-				var positions = [];
-				for(var i = 0; i < pois.length; i++){
-					var poi = pois[i];
-					var marker = [];
-					marker[i] = new AMap.Marker({
-						position: poi.location,   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
-						title: poi.name,
-					});
-					positions.push([
-						poi.location.lng,
-						poi.location.lat,
-					])
-				
-					map.add(marker[i])
-					s.searchMarkers.push(marker[i]);
-				}
-
-				//s.removePoint();
-				s.showNextBtn = false;
-		
-				var polygon = new AMap.Polygon({
-					path : positions,  //以5个点的坐标创建一个隐藏的多边形
-					map:map,
-					strokeOpacity:0,//透明
-					fillOpacity:.4,//透明
-					bubble:true//事件穿透到地图
-				});
-				var overlaysList = map.getAllOverlays('polygon');//获取多边形图层
-				//
-				try{
-					map.clearMap();
-					map.setFitView(overlaysList);
-				}catch(e){
-
-				}
-				setTimeout(() => {
-					s.createPoint();
-				}, 1000);
-
-			})
-		}, time);
 	},
 	closeTip1(){
 		this.showTip1 = false;
@@ -351,22 +253,23 @@ export default {
 				swnm:"",//微信昵称
 				swid:'',
 				imgData:base64.replace('data:image/png;base64,',''),
-				sLongitudes:sPositionData.position.lng,
-				sLatitudes:sPositionData.position.lat,
-				sProvince:sPositionData.addressComponent.province,
-				sCity:sPositionData.addressComponent.city || sPositionData.addressComponent.district,
-				sDistrict:sPositionData.addressComponent.district,
-				sStreet:sPositionData.addressComponent.street,
+				sLongitudes:myPositionData.position.lng,
+				sLatitudes:myPositionData.position.lat,
+				sProvince:myPositionData.addressComponent.province,
+				sCity:myPositionData.addressComponent.city || myPositionData.addressComponent.district,
+				sDistrict:myPositionData.addressComponent.district,
+				sStreet:myPositionData.addressComponent.street,
 				blessingWords:wishes[currentWishIndex].text,
+				gcnm:wishes[currentWishIndex].text,
 
-				receiver:rName,
+				/* receiver:rName,
 				rwnm:"",
 				rLongitudes:myPositionData.position.lng,
 				rLatitudes:myPositionData.position.lat,
 				rProvince:myPositionData.addressComponent.province,
 				rCity:myPositionData.addressComponent.city || myPositionData.addressComponent.district,
 				rDistrict:myPositionData.addressComponent.district,
-				rStreet:myPositionData.addressComponent.street,
+				rStreet:myPositionData.addressComponent.street, */
 
 
 			})
@@ -382,7 +285,7 @@ export default {
 				var cardid = dt.data.id;//获取到的贺卡的id.
 				var url = window.location.href.split('#')[0];
 				url = zmitiUtil.changeURLPar(url,'id',cardid);
-				zmitiUtil.wxConfig(myName+'送你一张贺卡',document.title,url);
+				zmitiUtil.wxConfig('这是发往脱贫战场的第'+s.pv+'份祝福','这是发往脱贫战场的第'+s.pv+'份祝福',url);
 			}
 			else{
 				console.log(dt,'保存接口出错了');
@@ -391,55 +294,9 @@ export default {
 		
 	},
 	getAllPoints(){
-		var s = this;
-		axios({
-				headers: {
-					'content-type': 'application/json'
-				},
-				method: 'post',
-				url: s.host + "/xhs-security-activity/activity/giftcard/getAllGiftCardPoints",
-				data: JSON.stringify({
-					secretKey: window.config.secretKey,  // 请求秘钥(string, 必填)
-					///anm: window.config.anm // 活动标识（string, 必填）
-				})
-			}).then(data => {
-				var dt = data.data;
-				if (typeof dt === "string") {
-					dt = JSON.parse(dt);
-					
-					if(dt.rc*1 === 0){
-						s.points = dt.data.points;
-						s.createPoint();
-						////console.log(dt.data.points);
-					}
-					
-				}
-			});
+		 
 	},
-    updatePv() {
-	  var s = this;
-	 
-		
-		var data = {
-          	secretKey : s.secretKey, // 请求秘钥
-         	nm: window.config.anm // 活动某组图片点赞标识 或者活动某组图片浏览量标识 标识由更新接口
-		};
-	
-	  axios({
-		  headers:{
-			  'content-type': 'application/json'
-		  },
-		  method:'post',
-		  url:s.host + "/xhs-security-activity/activity/num/updateNum",
-		  data:JSON.stringify(data)
-	  }).then(data=>{
-		  console.log(data);
-		  var dt = data.data;
-          if (typeof dt === "string") {
-            dt = JSON.parse(dt);
-          }
-	  });
-	},
+   
 	removePoint(){
 		var {map } = this;
 		var s = this;
@@ -528,27 +385,20 @@ export default {
 					 
 					 s.myPositionData  = data;
 
-					 
+					console.log(data);
 					 
 					 s.formUser[c==='container'? 'pos':'pos1'] = data.formattedAddress;
 					 var gps = [data.position.lng,data.position.lat];
-					 map.setCenter(data.position);
 					 s.p1 = gps;
-					 
-					 
-					 
-					 var  marker = new AMap.Marker({
-						position: data.position,
-						map: map,
-						//icon:s.imgs.marker
-					})
-					s.myMarker = marker;
+			 
 				});
 				AMap.event.addListener(geolocation, "error", data=>{
 					console.log("获取位置出错了");	
 				});　
 			});
 		}
+
+		return;
 	
 		var s = this;
 
@@ -611,12 +461,37 @@ export default {
 
 		})
 	},
+	getPv(){
+		var s = this;
+		var data = {
+			secretKey: s.secretKey, // 请求秘钥
+			nm: window.config.anm // 活动某组图片点赞标识 或者活动某组图片浏览量标识 标识由更新接口
+		};
 
+		axios({
+			headers: {
+				'content-type': 'application/json'
+			},
+			method: 'post',
+			url: s.host + "/xhs-security-activity/activity/num/getNum",
+			data: JSON.stringify(data)
+		}).then(data => {
+			var dt = data.data;
+			if (typeof dt === "string") {
+				dt = JSON.parse(dt);
+				if(typeof data.data === 'string'){
+					var res = JSON.parse(data.data);
+					s.pv = res.data.num;
+					zmitiUtil.wxConfig(document.title,'这是发往脱贫战场的第'+s.pv+'份祝福');
+				}
+			}
+		});
+	}
 	
 	
   },
-  mounted() {
-	  this.updatePv();
+  mounted() { 
+	  this.getPv();
 	  this.initPos();
 	  this.getAllPoints();
 	  var {obserable} = this;
