@@ -3,63 +3,38 @@
 		<div class="zmiti-input-C">
 			<div class='zmiti-search-C' :class="{'hide':hideSearchBox}">
 				<div class='zmiti-input-main'>
-					<input ref='search' placeholder="搜索扶贫位置" class="zmiti-input" @change='search' v-model="keyword">
-					<div v-tap='[search,0]'>
-						<img :src="imgs.search" alt="">
-					</div>
+					 
 				</div>
 			</div>
 
 			<div id='container' class='lt-full'></div>
 
-			<div class='zmiti-tip lt-full' v-if='showTip' v-tap='[hideTip]'>
-				<img :src="imgs.tip" alt="">
+			<div class='zmiti-mark-list lt-full' v-swipeup='swipeup' v-swipedown='swipedown'  >
+				<ul :style="{transform:'translateY('+-(markIndex*viewH)+'px)'}">
+					<li v-for='(mark,i) in markList' :key="i" :style="{background:'url('+mark+') no-repeat center center',backgroundSize:'cover'}">
+						<img :src="imgs.info" alt="">				
+					</li>
+				</ul>
 			</div>
-			<div class='zmiti-tip lt-full' v-if='showTip1 && false' v-tap='[closeTip1]'>
-				<template v-if='showDrag'>
-					<img :src="imgs.drag" alt="">
-					<div class='zmiti-tip-text'>可拖动放大地图后点击定位</div>
-				</template>
-			</div>
-
-			
-
-			<transition name='form'>
-				<div class='zmiti-wish-C' v-if='showForm'>
-					<div class='zmiti-wish-form-input'>
-						<div class='zmiti-input-name'>
-							<input @blur='blur("rName")' @focus='focus' type="text" v-model="rName" placeholder="请输入他的名字">
-						</div>
-						<div class='zmiti-input-name'>
-							<input @blur='blur("myName")' @focus='focus' type="text" v-model="myName" placeholder="请输入我的名字">
-						</div>
-					</div>
-					<div class='zmiti-wish-btns'>
-						<div v-press v-tap='[createWish]' :class="{'active':!isFocus}" >
-							<img :src="imgs.heart" alt="">生成贺卡
-						</div>
-					</div>
+			<transition name='tip'>
+				<div :style="{background:'url('+imgs.bg+') no-repeat center center',backgroundSize:'cover'}" :class="{'active':tipActive}" class='zmiti-tip lt-full' v-if='showTip' v-swipeup='hideTip'>
+					<img :src="imgs.tip" alt="">
+					<img :src="imgs.info" alt="" class="info">
 				</div>
 			</transition>
-
-			<div class='zmiti-share-ui lt-full' v-if="!createImg && showShare">
-				<Share :pv='pv' :obserable='obserable' :rName='rName' :province='myPositionData.addressComponent.province' :city='myPositionData.addressComponent.city||myPositionData.addressComponent.district' :myName='myName' :index='currentWishIndex'></Share>
+			 
+			<div class='zmiti-share-ui lt-full' v-if="showShare" :class='{"hide":createImg}'>
+				<Share :pv='pv' :obserable='obserable'  :isPage='true' :province='myPositionData.addressComponent.province' :city='myPositionData.addressComponent.city||myPositionData.addressComponent.district'  :index='currentWishIndex'></Share>
 			</div>
-
-
-			<Share :pv='pv' :obserable='obserable' :rName='rName' v-if='!createImg && showShare' :isPage='isPage' :province='myPositionData.addressComponent.province' :city='myPositionData.addressComponent.city||myPositionData.addressComponent.district' :myName='myName' :index='currentWishIndex'></Share>
-
-			<div class='zmiti-createimg-C lt-full' v-show='showShare'>
+		 
+			<div class='zmiti-createimg-C lt-full'  :style="{background:'url('+imgs.bg+') no-repeat center center',backgroundSize:'cover'}" v-show='showShare'>
 				<transition name='create'>
-					<div class='zmiti-createimg' v-if='showCreateImg' :style="{webkitTransform:'scale('+scale+')'}">
+					<div :class="{'opacity':isOpacity}" class='zmiti-createimg' v-if='showCreateImg' :style="{transform:'scale('+scale+')'}">
 						<img :src="lastImg" alt="">
 						<span>长按保存图片</span>
 					</div>
 				</transition>
 				<div class='zmiti-wish-btns'>
-					<div v-press v-tap='[init]'>
-						再次送祝福
-					</div>
 					<div v-press v-tap='[changeWish]'>
 						换一张贺卡
 					</div>
@@ -68,7 +43,6 @@
 					</div>
 				</div>
 			</div>
-			<section v-tap='[next]' v-press class='zmiti-next-btn' v-if='showNextBtn'>下一步</section>
 
 			<div class='zmiti-mask' v-if='showMask' @touchstart='showMask=false'>
 				<img :src="imgs.arrow" alt="">
@@ -106,6 +80,7 @@ export default {
 		showCreateImg:false,
 		showShare:false,
 		pv:12023,
+		isOpacity:false,
 		lastImg:'',
 		secretKey: "e9469538b0623783f38c585821459454",
 		host: window.config.host,
@@ -118,19 +93,19 @@ export default {
 		hideSearchBox:true,
 		show:false,
 		showTip1:false,
-		keyword:'',
-		showNextBtn:false,
+		markIndex:0,
+		markList:[
+			window.imgs.mark1,
+			window.imgs.mark2,
+			window.imgs.mark3,
+		],
+				
 		wishes:window.config.wishes,
-		provinceList:[],
 		showDrag:false,
-		rName:'',
-		myName:'', 
-		points:window.config.points,
-		searchMarkers:[],
-		checkName:window.checkName,
 		fresh:false,
 		province:"",
 		city:'',
+		tipActive:false,
 		createMarkers:[],
 		createImg:"",
 		formUser: {
@@ -155,15 +130,32 @@ export default {
   watch:{
 	  showShare(val){
 		  if(val){
-			  this.scale = this.viewH / 840;
 			  setTimeout(() => {
 				  this.showCreateImg = true;
 			  }, 100);
+			  setTimeout(() => {
+			  	 this.scale =  .7;
+			  }, 2002);
 		  }
 	  }
   },
 
   methods: {
+	swipeup(){
+		if(this.markIndex>=this.markList.length-1){
+			this.markerIndex = this.markList.length -1;
+			setTimeout(() => {
+				this.tipActive = true;
+			}, 400);
+		}
+		this.markIndex++;
+	},
+	swipedown(){
+		if(this.markIndex <= 0 ){
+			return;
+		}
+		this.markIndex--;
+	},
 	changeWish(){
 		this.currentWishIndex++;
 		this.currentWishIndex %= this.wishes.length;
@@ -176,11 +168,21 @@ export default {
 		this.showForm = false;
 		this.showShare = true;
 		this.showCreateImg = true;
-		this.createImg = this.lastImg = '';
+		
 		setTimeout(() => {
+			
 			this.obserable.trigger({
 				type:'createImg'
 			});
+
+			setTimeout(() => {
+				if(this.createImg){
+					this.isOpacity = true;
+					setTimeout(() => {
+						this.isOpacity = false;
+					}, 500);
+				}
+			}, 800);
 		}, 100);
 	},
 	
@@ -294,7 +296,33 @@ export default {
 		
 	},
 	getAllPoints(){
-		 
+		var s = this;
+		axios({
+				headers: {
+					'content-type': 'application/json'
+				},
+				method: 'post',
+				url: s.host + "/xhs-security-activity/activity/giftcard/getAllGiftCardPoints",
+				data: JSON.stringify({
+					secretKey: window.config.secretKey,  // 请求秘钥(string, 必填)
+					///anm: window.config.anm // 活动标识（string, 必填）
+				})
+			}).then(data => {
+				var dt = data.data;
+				if (typeof dt === "string") {
+					dt = JSON.parse(dt);
+					
+					if(dt.rc*1 === 0){
+						s.points = dt.data.points.filter(item=>{
+							return item.slat && item.slgt && item.rlat &&　item.rlgt;
+						});
+						console.log(s.points)
+						//s.createPoint();
+						////console.log(dt.data.points);
+					}
+					
+				}
+			});
 	},
    
 	removePoint(){
@@ -384,8 +412,6 @@ export default {
 				AMap.event.addListener(geolocation, "complete", data=>{
 					 
 					 s.myPositionData  = data;
-
-					console.log(data);
 					 
 					 s.formUser[c==='container'? 'pos':'pos1'] = data.formattedAddress;
 					 var gps = [data.position.lng,data.position.lat];

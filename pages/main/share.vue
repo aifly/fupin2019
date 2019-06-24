@@ -1,24 +1,21 @@
 <template>
-	<section class='zmiti-share1-ui' :class="{'active':isPage}">
-		<div class='lt-full ' :class="{'active':isPage}" ref='page' :style="{background:'url('+wishes[index].bg+') no-repeat center bottom',backgroundSize:'cover'}">
+	<section class='zmiti-share1-ui' >
+		<div class='lt-full ' ref='page' :style="{background:'url('+wishes[index].bg+') no-repeat center bottom',backgroundSize:backgroundSize}">
+			<h1 style="height:10vh;"></h1>
 			<div class='zmiti-share-info'>
-				<div>这是一张来自</div>
-				<div>{{province}} {{city}}的祝福</div>
 				<div class='zmiti-wish-img'>
 					<img :src="wishes[index].img" alt="">
 				</div>
-				<div>这是发往脱贫战场的第<span>{{pv}}</span>份祝福</div>
+				<div>这是发往脱贫一线的第<span>{{pv}}</span>份祝福</div>
+				<div>来自{{province}}{{city}}</div>
 			</div>
-			<div class='zmiti-share-logo'  v-if='false'>
-				<div>
-					<img :src="imgs.logo" alt="">
-				</div>
+			<div class='zmiti-share-logo'>
 				<div>
 					<img :src="imgs.qrcode" alt="">
 				</div>
 			</div>
 
-			<div class='zmiti-subtitle' v-if='false'>
+			<div class='zmiti-subtitle' >
 				<img :src="imgs.subtitle" alt="">
 			</div>
 
@@ -35,56 +32,10 @@
 	@import './share.scss';
 	$color:#320101;
 
-	.zmiti-share1-ui{
-		.active{
-			z-index: -1;
-			transform: scale(1);
-			transform-origin:left top;
-			width: 500px;
-			height: 804px;
-			$viewW:500px;
-			.zmiti-share-info{
-				width:1*$viewW;
-				margin: .1*$viewW auto;
-				font-size:.45* $viewW/10;
-				&>div{
-					//font-size:30px !important;
-					margin: .2rem auto ;
-					width:100%;
-					text-align: center;
-					&.zmiti-wish-img{
-						margin-top:6vh;
-					}
-
-				}
-				color:$color;
-				 
-			}
-			.zmiti-share-logo{
-				position: absolute;
-				width:$viewW * .15;
-				left: $viewW*.05;
-				bottom:$viewW*.05;
-				z-index: 1;
-				&>div{
-					margin: .2rem 0;
-					&:nth-of-type(2){
-						padding:$viewW*.005;
-						background: #fff;
-					}
-				}
-			}
-			.zmiti-subtitle{
-				position: absolute;
-				width: $viewW*.2;
-				right: $viewW * .04;
-				bottom:$viewW*.05;
-			}
-		}
-	}
+	 
 	.zmiti-share-info{
 		width: 10rem;
-		margin: 10vh auto;
+		margin:0  auto 10vh;
 		font-size:.45rem;
 		&>div{
 			margin: .2rem auto;
@@ -114,8 +65,8 @@
 	.zmiti-share-logo{
 		position: absolute;
 		width: 1.5rem;
-		left: .5rem;
-		bottom: 1rem;
+		right: .4rem;
+		bottom: 10px;
 		z-index: 1;;
 		&>div{
 			margin: .2rem 0;
@@ -125,12 +76,6 @@
 
 			}
 		}
-	}
-	.zmiti-subtitle{
-		position: absolute;
-		width: 2rem;
-		right: .4rem;
-		bottom: .5rem;
 	}
 </style>
 
@@ -145,6 +90,7 @@
 				imgs:window.imgs,
 				wishes:window.config.wishes,
 				createImg:'',
+				backgroundSize:'cover'
 			}
 		},
 		methods: {
@@ -183,7 +129,11 @@
 			var {obserable} = this;
 			obserable.on('createImg',()=>{
 				if(this.isPage){
-					this.html2img()
+					this.backgroundSize = 'contain';
+					setTimeout(() => {
+						this.backgroundSize = 'cover';
+						this.html2img()
+					}, 0);
 				}
 			})
 			

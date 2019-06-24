@@ -2,10 +2,13 @@
 .zmiti-share1-ui{
 	height: 100vh;
 	@include pos(r);
-	z-index: 2001;
-	&.active{
-		z-index: 2000;
-	}
+	
+}
+.zmiti-subtitle{
+	left:.4rem;
+	bottom:20px;
+	@include pos(a);
+	width: 2rem;
 }
 .zmiti-copyright{
 	width: 100%;

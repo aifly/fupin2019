@@ -2,36 +2,41 @@
   logo: "./assets/images/logo1.png",
   main:'./assets/images/main-bg.jpg',
   play: "./assets/images/play.png",
+  play1: "./assets/images/play1.png",
   arrow: "./assets/images/arrow.png",
   tip:'./assets/images/tip2.png',
   title:'./assets/images/title1.png',
   video:"./assets/images/video.png",
-  qrcode:"./assets/images/qrcode.png",
-  text1:"./assets/images/text_1_1.png",
-  text2:"./assets/images/text_2_1.png",
-  text3:"./assets/images/text_3_1.png",
-  text4:"./assets/images/text_4_1.png",
-  text5:"./assets/images/text_5_1.png",
-  text6:"./assets/images/text_6_1.png",
-  text7:"./assets/images/text_7_1.png",
-  text8:"./assets/images/text_8_1.png",
-  text9:"./assets/images/text_9_1.png",
+  subtitle:"./assets/images/subtitle.png",
+  info:"./assets/images/info.png",
+  qrcode:"./assets/images/qrcode.jpg",
+  text1:"./assets/images/text_1_2.png",
+  text2:"./assets/images/text_2_2.png",
+  text3:"./assets/images/text_3_2.png",
+  text4:"./assets/images/text_4_2.png",
+  text5:"./assets/images/text_5_2.png",
+  text6:"./assets/images/text_6_2.png",
+  text7:"./assets/images/text_7_2.png",
+  text8:"./assets/images/text_8_2.png",
+  text9:"./assets/images/text_9_2.png",
   shareBg:'./assets/images/share-bg.jpg',
   
-  shareBg1: './assets/images/bg1-2.jpg',
-  shareBg2: './assets/images/bg2-2.jpg',
-  shareBg3: './assets/images/bg3-2.jpg',
-  shareBg4: './assets/images/bg4-2.jpg',
-  shareBg5: './assets/images/bg5-2.jpg',
-  shareBg6: './assets/images/bg6-2.jpg',
-  shareBg7: './assets/images/bg7-2.jpg',
-  shareBg8: './assets/images/bg8-2.jpg',
-  shareBg9: './assets/images/bg9-2.jpg',
+  mark1:'./assets/images/mark1.png',
+  mark2:'./assets/images/mark2.png',
+  mark3:'./assets/images/mark3.png',
+  shareBg1: './assets/images/bg1_4.jpg',
+  shareBg2: './assets/images/bg2_4.jpg',
+  shareBg3: './assets/images/bg3_4.jpg',
+  shareBg4: './assets/images/bg4_4.jpg',
+  shareBg5: './assets/images/bg5_4.jpg',
+  shareBg6: './assets/images/bg6_4.jpg',
+  shareBg7: './assets/images/bg7_4.jpg',
+  shareBg8: './assets/images/bg8_4.jpg',
+  shareBg9: './assets/images/bg9_4.jpg',
   
   loadingGif:'./assets/images/loading.gif',
+  bg:'./assets/images/bg.jpg',
   share:'./assets/images/share.jpg',
-  
-  
 
 };
 
@@ -47,22 +52,22 @@ for (var attr in imgs) {
    indexvideo: './assets/video/index1.mp4',
    baseUrl: "https://testxlive.xinhuaapp.com",
 
-	 host:"https://testactivity.xhsxmt.com", //正式域名：https://testxlive.xinhuaapp.com
+	host:"https://testactivity.xhsxmt.com", //正式域名：https://testxlive.xinhuaapp.com
    secretKey: "e9469538b0623783f38c585821459454",
 	 anm:'2019扶贫贺卡',
 	 get_weixinConfig: 'https://testopen.xinhuaapp.com/xhs-security-wechat/wx/getWXConfig',
    wishes:[
 	   {
-		   text: "扶贫路上你最美",
+		   text: "我理解在这个世界上 有人比我更需要你",
 		   img:imgs.text1,
 		   bg:imgs.shareBg1
 	   },
 	   {
-		   text: "我理解你的每一滴眼泪每一个脚印谢谢你的付出",
+		   text: "感谢你无私的付出让我坚信这世界依然美好",
 		   img:imgs.text2,
 		   bg:imgs.shareBg2
 	   },{
-		   text: "你是凡人亦是英雄",
+		   text: "我不认识你但我想谢谢你",
 		   img:imgs.text3,
 		   bg:imgs.shareBg3
 	   },{
@@ -70,11 +75,11 @@ for (var attr in imgs) {
 		   img:imgs.text4,
 		   bg:imgs.shareBg4
 	   },{
-		   text: "希望你能平安健康一切顺利",
+		   text: "不知如何表达只能道一句珍重辛苦！",
 		   img:imgs.text5,
 		   bg:imgs.shareBg5
 	   },{
-		   text: "我知道在这个世界上有人比我更需要你",
+		   text: "你是凡人亦是英雄",
 		   img:imgs.text6,
 		   bg:imgs.shareBg6
 	   },{
@@ -82,7 +87,7 @@ for (var attr in imgs) {
 		   img:imgs.text7,
 		   bg:imgs.shareBg7
 	   },{
-		   text: "既然选择远方就注定风雨兼程加油！",
+		   text: "相隔千里万里远方一直有人给你加油！",
 		   img:imgs.text8,
 		   bg:imgs.shareBg8
 	   },  {
@@ -115,25 +120,11 @@ for (var attr in imgs) {
 var musics = {
 	music: {
 		src: './assets/music/bg2.mp3',
-		autoplay: false,
+		autoplay: true,
 		name: 'bg2',
 		loop: true
 	},
-  alert: {
-    src: './assets/music/alert.mp3',
-    autoplay: true,
-    name: 'alert',
-  },
-  error: {
-    src: './assets/music/error.mp3',
-    autoplay: true,
-    name: 'error',
-  },
-  right: {
-    src: './assets/music/right.mp3',
-    autoplay: true,
-    name: 'right',
-  }
+  
 };
 
  (function () {

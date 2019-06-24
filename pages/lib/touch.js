@@ -11,8 +11,8 @@ function vueTouch(el, binding, type) {
     };
     this.vueMoves = true;
     this.vueLeave = true;
-    this.longTouch = true;
-    this.vueCallBack = typeof(binding.value) == "object" ? binding.value.fn : binding.value;
+	this.longTouch = true;
+	this.vueCallBack = typeof(binding.value) == "object" ? binding.value.fn : binding.value;
     this.obj.addEventListener("touchstart", function(e) {
         _this.start(e);
     }, false);
@@ -79,6 +79,7 @@ Vue.directive("swipe", {
 });
 Vue.directive("swipeleft", {
     bind: function(el, binding) {
+		
         new vueTouch(el, binding, "swipeleft");
     }
 });

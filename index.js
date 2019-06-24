@@ -41,8 +41,9 @@ new Vue({
 		nickname: '',
 		host: window.config.host, 
 		src:'',
+		scale:1,
 		headimgurl: '',
-		shareBg:'./assets/images/share.jpg',
+		shareBg:window.imgs.bg,
 		playStyle: {
 
 		}
@@ -57,16 +58,16 @@ new Vue({
 		<Upload :pv='pv' :nickname='nickname' :headimgurl='headimgurl'   v-if='show && !isShare'  :obserable='obserable'></Upload>
 		<Loading v-if='!show' :width='width' :obserable='obserable'></Loading>
 		
-		<Music :obserable='obserable'></Music>
 		<Main :width='width' :obserable='obserable'></Main>
 		*/
 		template: `<div id='app1'>
+		<Music :obserable='obserable'></Music>
 		<Loading :width='width' :obserable='obserable' v-if='!loaded'></Loading>
 		<Index :pv='pv' :nickname='nickname' v-if='!isShare && loaded' :headimgurl='headimgurl'  :obserable='obserable'></Index>
 		
 		<Main :width='width' :obserable='obserable' v-if='!isShare &&loaded'></Main>
 		<div class='lt-full zmiti-share-page' v-if='isShare　&&loaded' :style="{background:'url('+shareBg+') no-repeat center',backgroundSize:'cover'}">
-			<div class='zmiti-share-img' :style="{WebkitTransform:'scale('+(viewH/800)+')'}">
+			<div class='zmiti-share-img' :style="{WebkitTransform:'scale('+(scale)+')'}">
 				<img :src='src' v-if='src' />
 			</div>
 			<div id='pos'></div>
@@ -244,6 +245,8 @@ new Vue({
 		zmitiUtil.wxConfig(document.title, document.title,url);
 		if (this.isShare) {
 			s.initPos();
+			
+		 
 			arr = [arr.pop()];
 			axios({
 				headers: {
@@ -261,7 +264,13 @@ new Vue({
 				if (typeof dt === "string") {
 					dt = JSON.parse(dt);
 					console.log(dt);
+
 					s.src = dt.data.imgUrl;
+					var img = new Image();
+					img.onload = function(){
+						s.scale = s.viewH/this.height *0.7;
+					}
+					img.src = s.src;
 					
 				}
 			});

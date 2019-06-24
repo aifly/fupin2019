@@ -73,16 +73,38 @@
 				this.obserable.trigger({
 					type:'showMain'
 				})
+				this.obserable.trigger({
+					type:'toggleBgMusic',
+					data:true
+				});
+				this.obserable.trigger({
+					type:'togglePlay',
+					data:true
+				})
 			},
 			playVideo(){
 				clearInterval(this.t);
-				
+
+				let {obserable} = this;
 				this.$nextTick(()=>{
 					
+					obserable.trigger({
+						type:'toggleBgMusic',
+						data:false
+					})
 					this.$refs['video1'].play();
+					obserable.trigger({
+						type:'togglePlay',
+						data:false
+					})
+
 					this.showVideo = true;
 					this.$refs['video1'].addEventListener('ended',e=>{
 						this.showVideo = false;
+						obserable.trigger({
+							type:'toggleBgMusic',
+							data:true
+						})
 						this.obserable.trigger({
 							type:'showMain'
 						})
@@ -182,6 +204,7 @@
 		mounted() {
 			this.setSize();
 			this.initCanvas();
+			
 		}
 	
 	}

@@ -39,11 +39,13 @@
 .zmiti-share1-ui {
   height: 100vh;
   position: relative;
-  z-index: 2001;
 }
 
-.zmiti-share1-ui.active {
-  z-index: 2000;
+.zmiti-subtitle {
+  left: .4rem;
+  bottom: 20px;
+  position: absolute;
+  width: 2rem;
 }
 
 .zmiti-copyright {

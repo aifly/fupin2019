@@ -2,7 +2,7 @@
 	<div  class="lt-full zmiti-music-main-ui" :style='{height:"10vh"}'>
 		<audio ref='music' :key="i" v-for='(audio,i) in audios' :src='audio.src' :autoplay="audio.autoplay" :loop="audio.loop"></audio>
 
-		<div  @click='toggleMusic' class='zmiti-play' :class='{"":rotate}' :style="playStyle">
+		<div v-show='showPlay'  @click='toggleMusic' class='zmiti-play' :class='{"":rotate}' :style="playStyle">
 			<img  :src='imgs[rotate?"play":"play1"]'/>
 		</div>
 	</div>
@@ -23,6 +23,7 @@
 		data(){
 			return{
 				audios,
+				showPlay:true,
 				imgs:window.imgs,
 				rotate:false,
 				playStyle:{}
@@ -69,8 +70,8 @@
 
 			
 
-			/*len && audio.play();
-			audio.volume = .1;*/
+			len && audio.play();
+			audio.volume = .1;
 
 			this.playAudioMuted();
 
@@ -112,7 +113,7 @@
 			document.addEventListener("WeixinJSBridgeReady", function() {
 				WeixinJSBridge.invoke('getNetworkType', {}, function(e) {
 					//audio&&(audio.volume = .1);
-					//len && audio.play();
+					len && audio.play();
 					s.playAudioMuted();
 				});
 			}, false)
@@ -131,7 +132,7 @@
 
 			if (window.WeixinJSBridge) {
 				//audio&&(audio.volume = .1);
-				//len && audio.play();
+				len && audio.play();
 				s.playAudioMuted();
 			}
 			//weixin
@@ -149,6 +150,10 @@
 
 				var audio = this.$refs['music'][0];
 				audio[data ? 'play' : 'pause']();
+			});
+			obserable.on('togglePlay', (data) => {
+
+				this.showPlay = data;
 			});
 
 
