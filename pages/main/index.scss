@@ -3,371 +3,453 @@
 $baseColor: #fcffb4;
 $viewW: 750px;
 $bgColor: #f23426;
-input{
-	 -webkit-appearance: none;
+input {
+  -webkit-appearance: none;
 }
 
-
 .zmiti-main-ui {
-	 z-index: -1;
-	 opacity: 0;
-	 &.active{
-		 z-index: 102;
-		 opacity:1;
-	 }
-	.zmiti-next-btn{
-		width: 4rem;
-		height: 40px;
-		line-height: 40px;
-		background: #f23426;
-		color: #fff;
-		text-align: center;
-		position: absolute;
-		z-index: 1025;
-		bottom: 2rem;
-		left: 3rem;
-		@include br(4px);
+  z-index: -1;
+  opacity: 0;
+  &.active {
+    z-index: 102;
+    opacity: 1;
+  }
+  .zmiti-next-btn {
+    width: 4rem;
+    height: 40px;
+    line-height: 40px;
+    background: #f23426;
+    color: #fff;
+    text-align: center;
+    position: absolute;
+    z-index: 1025;
+    bottom: 2rem;
+    left: 3rem;
+    @include br(4px);
+    &:before {
+      content: "";
+      @include pos(a);
+      width: 100%;
+      height: 100%;
+      box-shadow: 0 0 10px rgba(242, 52, 38, 0.5);
+      left: 0;
+      top: 0;
+    }
+  }
+}
+#container,
+#container1,
+#smap {
+  width: 100%;
+  height: 400px;
+}
+#container {
+  height: 100%;
+  z-index: 120;
+  position: absolute !important;
+  left: 0;
+  top: 0;
+}
+
+.zmiti-tip {
+  z-index: 1213;
+  background: rgba(4, 19, 42, 0.9);
+  @include displayBox(horizontal);
+  img {
+    display: block;
+    height: 86vh;
+    margin-top: -6vh;
+    width: auto;
+  }
+
+  &.active {
+    z-index: 3000;
+  }
+
+  &:before {
+    content: "";
+    @include pos(a);
+    width: 100%;
+    height: 100%;
+    background: rgba(4, 19, 42, 0.6);
+    z-index: 9;
+  }
+
+  &.tip-enter-active,
+  &.tip-leave-active {
+    @include transition(0.4s);
+  }
+  &.tip-leave-to,
+  &.tip-enter {
+    @include transform(translateY(-100vh));
+  }
+
+  img.info {
+    width: 80px;
+    height: auto;
+    top: auto;
+    @include pos(a);
+    bottom: 11px;
+    left: 50%;
+    margin-left: -40px;
+    @include animation(info 1.2s infinite);
+  }
+
+  img {
+    @include pos(r);
+    z-index: 10;
+  }
+
+  .zmiti-tip-text {
+    @include pos(a);
+    width: 3.2rem;
+    left: 3.4rem;
+    top: 50%;
+    font-size: 0.4rem;
+    text-align: center;
+    z-index: 10;
+  }
+}
+.zmiti-wish-C {
+  width: 9rem;
+  @include pos(a);
+  bottom: 0%;
+  left: 0.5rem;
+  height: 5rem;
+  z-index: 1200;
+  background: rgba(4, 19, 42, 0.9);
+
+  &.form-enter-active,
+  &.form-leave-active {
+    @include transition(0.4s);
+  }
+
+  &.form-leave-to,
+  &.form-enter {
+    @include transform(translateY(7.8rem));
+  }
+  img {
+    width: 1rem;
+  }
+  .zmiti-wish-text {
+    color: #fff;
+    width: 5rem;
+    margin: 0.5rem auto 0;
+    font-size: 0.45rem;
+    text-align: center;
+  }
+  .zmiti-wish-form-input {
+    @include displayBox(horizontal);
+    width: 100%;
+  }
+  .zmiti-input-name {
+    width: 3.5rem;
+    margin: 1rem 0.5rem;
+    input {
+      height: 0.8rem;
+      @include br(4px);
+      width: 100%;
+      padding-left: 0.3rem;
+      box-sizing: border-box;
+      box-shadow: 0 0 10px rgba(49, 144, 234, 0.4) inset;
+    }
+  }
+  .zmiti-wish-btns {
+    @include displayBox(horizontal);
+    margin-top: 0rem;
+    div {
+      text-align: center;
+      color: #fff;
+      width: 4rem;
+      height: 1rem;
+      line-height: 1rem;
+      margin: 0 10px;
+      font-weight: bold;
+      @include br(0.1rem);
+      user-select: none;
+      -webkit-user-select: none;
+      &:nth-of-type(1) {
+        background: #ed8324;
+        img {
+          height: 0.45rem;
+          width: auto;
+        }
+      }
+      &:nth-of-type(2) {
+        background: #ed8324;
+        &.active {
+          background: #999;
+        }
+        img {
+          width: 0.45rem;
+          min-width: 0;
+        }
+      }
+      img {
+        margin-right: 0.6rem;
+        &.rotate {
+          @include animation(rotate 500ms linear);
+        }
+      }
+    }
+  }
+}
+.zmiti-share-ui {
+  z-index: 2001;
+  background: rgba(4, 19, 42, 0.9);
+  &.hide {
+    left: 1000px;
+  }
+}
+.zmiti-search-C {
+  width: 9.1rem;
+  height: 1rem;
+  background: #fff;
+  @include pos(a);
+  z-index: 1220;
+
+  .zmiti-input-main {
+    border: 1px solid #3190ea;
+    width: 100%;
+    background: transparent;
+    overflow: hidden;
+    box-sizing: border-box;
+    input {
+      border: none;
+      background: transparent;
+    }
+  }
+  &.hide {
+    z-index: 1000;
+  }
+  left: 0.45rem;
+  top: 1rem;
+  div {
+    @include pos(r);
+    display: inline-block;
+    width: 1.2rem;
+    height: 1rem;
+    text-align: center;
+    background: #3190ea;
+    box-sizing: border-box;
+    color: #fff;
+    line-height: 1rem;
+    img {
+      width: 0.7rem;
+    }
+  }
+  input {
+    width: 8rem;
+    height: 1rem;
+    padding-left: 10px;
+    box-sizing: border-box;
+    outline: none;
+    font-size: 14px;
+    margin-right: -10px;
+    border: 2px solid #3190ea;
+  }
+  section {
+    height: 1rem;
+    line-height: 1rem;
+  }
+}
+
+.zmiti-mark-list {
+  width: 100vw;
+  height: 100vh;
+  z-index: 1214;
+  overflow: hidden;
+  ul {
+    height: 300vh;
+    @include transition(0.3s);
+  }
+  li {
+    width: 100vw;
+    height: 100vh;
+    @include pos(r);
+    img {
+      width: 80px;
+      @include pos(a);
+      bottom: 70px;
+      left: 50%;
+      margin-left: -40px;
+      @include animation(info 1.2s infinite);
+    }
+  }
+}
+@-webkit-keyframes info {
+  to {
+    @include transform(translateY(-30px));
+  }
+}
+
+.zmiti-createimg-C {
+  background: rgba(4, 19, 42, 0.9);
+  z-index: 1300;
+
+  &:before {
+    content: "";
+    @include pos(a);
+    width: 100%;
+    height: 100%;
+    background: rgba(4, 19, 42, 0.6);
+    z-index: 9;
+  }
+  .zmiti-createimg {
+    @include transformOrigin(center 20%);
+    @include pos(r);
+    z-index: 10;
+    @include transition(0.3s transform);
+    //box-shadow: 0 0 .2rem rgba(255,255,255,.8);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+
+    &.opacity {
+      @include transition(0.3s opacity);
+      opacity: 0.2;
+    }
+
+    &.create-enter-active,
+    &.create-leave-active {
+      @include transition(0.4s);
+    }
+
+    &.create-leave-to,
+    &.create-enter {
+      @include transform(scale(1));
+    }
+
+    span {
+      @include pos(a);
+      width: 0.4rem;
+      left: -0.5rem;
+      top: 0;
+      font-size: 0.4rem;
+      color: #fff;
+    }
+  }
+  .zmiti-wish-btns {
+    @include displayBox(horizontal);
+    width: 90%;
+    z-index: 12;
+    @include pos(a);
+
+    left: 5%;
+    -webkit-box-pack: center;
+    bottom: 1rem;
+    div {
+      text-align: center;
+      z-index: 1020;
+      color: #fff;
+      width: 2.5rem;
+      height: 1rem;
+      font-size: 0.4rem;
+      line-height: 1rem;
+      margin: 0 0.8rem;
+      font-weight: bold;
+      @include br(0.1rem);
+      &:nth-of-type(1) {
+        background: #ed8324;
+        img {
+          height: 0.45rem;
+          width: auto;
+        }
+      }
+      &:nth-of-type(2) {
+        background: #3190ea;
+        img {
+          width: 0.45rem;
+          min-width: 0;
+        }
+      }
+      img {
+        margin-right: 0.3rem;
+      }
+    }
+  }
+}
+
+.zmiti-wish-list {
+  z-index: 1212;
+  &.active{
+	  z-index: 1214;
+  }
+  @include displayBox(vertical);
+  .zmiti-wish-text {
+    width: 7rem;
+    margin: 0vh auto 0;
+    height: 15vh;
+    line-height: 15vh;
+  }
+  ul {
+    -webkit-box-flex: 1;
+    overflow: hidden;
+    width: 90%;
+    margin: 0 auto;
+    @include displayFlex(row);
+    -webkit-flex-wrap: wrap;
+    justify-content: space-around;
+    -webkit-justify-content: space-around;
+    align-items: center;
+    -webkit-align-items: center;
+  }
+  li {
+	height: 20vh;
+	@include pos(r);
+
+	overflow: hidden;
+
+	
+	
+	border:3px solid rgba(255,125,0,.3);
+	box-sizing: border-box;
+	&.active{
+		border:3px solid #f90;
 		&:before{
-			content:"";
+			content:'';
 			@include pos(a);
 			width: 100%;
 			height: 100%;
-			box-shadow: 0 0 10px rgba(242,52,38,0.5);
 			left: 0;
 			top: 0;
-		}	
-
-	}
-}
-#container,#container1,#smap{
-	width: 100%;
-	height: 400px;
-
-}
-#container{
-	height: 100%;
-	z-index: 120;
-	position: absolute !important;
-	left: 0;
-	top: 0;
-}
-.zmiti-tip{
-	z-index: 1213;
-	background: rgba(4,19,42,0.9);
-	@include displayBox(horizontal);
-	img{
-		display:block;
-		width: 5rem;
-	}
-
-	&.active{
-		z-index: 3000;
-	}
-
-	&:before{
-		content:'';
-		@include pos(a);
-		width: 100%;
-		height: 100%;
-		background: rgba(4,19,42,0.6);
-		z-index: 9;
-	}
-	
-	&.tip-enter-active,
-    &.tip-leave-active {
-        @include transition(.4s);
-    }
-    &.tip-leave-to,
-    &.tip-enter {
-        @include transform(translateY(-100vh));
-	}
-
-	img.info{
-		width: 80px;
-		@include pos(a);
-		bottom: 70px;
-		left: 50%;
-		margin-left: -40px;
-		@include animation(info 1.2s infinite);
-	}
-
-	img{
-		@include pos(r);
-		z-index: 10;
-	}
-	
-	.zmiti-tip-text{
-		@include pos(a);
-		width: 3.2rem;
-		left: 3.4rem;
-		top: 50%;
-		font-size:.4rem;
-		text-align: center;
-		z-index: 10;
-
-	
-	}
-}
-.zmiti-wish-C{
-	width: 9rem;;
-	@include pos(a);
-	bottom: 0%;
-	left:.5rem;
-	height:5rem;
-	z-index:1200;
-	background: rgba(4,19,42,0.9);
-	 
-    &.form-enter-active,
-    &.form-leave-active {
-        @include transition(.4s);
-    }
-
-
-    &.form-leave-to,
-    &.form-enter {
-        @include transform(translateY(7.8rem));
-	}
-	img{
-		width:1rem;
-	}
-	.zmiti-wish-text{
-		color:#fff;
-		width: 5rem;
-		margin: .5rem auto 0;
-		font-size:.45rem;
-		text-align: center;
-	}
-	.zmiti-wish-form-input{
-		@include displayBox(horizontal);
-		width: 100%;
-	}
-	.zmiti-input-name{
-		width: 3.5rem;
-		margin: 1rem .5rem;
-		input{
-			height: .8rem;
-			@include br(4px);
-			width: 100%;
-			padding-left: .3rem;
-			box-sizing: border-box;
-			box-shadow: 0 0 10px rgba(49,144,234,.4) inset;
+			box-shadow: 0 0 0 3px #F90;
 		}
-	}
-	.zmiti-wish-btns{
-		@include displayBox(horizontal);
-		margin-top:0rem;
-		div{
-			text-align: center;
-			color:#fff;
-			width: 4rem;
-			height:1rem;
-			line-height: 1rem;
-			margin: 0 10px;
-			font-weight: bold;
-			@include br(.1rem);
-			user-select: none;
-			-webkit-user-select: none;
-			&:nth-of-type(1){
-				background:#ed8324;
-				img{
-					height: .45rem;;
-					width: auto;
-				}
-			}
-			&:nth-of-type(2){
-				background:#ed8324;
-				&.active{
-					background: #999;
-				}
-				img{
-					width:.45rem;
-					min-width: 0;
-				}
-			}
-			img{
-				
-				margin-right: .6rem;
-				&.rotate{
-					@include animation(rotate 500ms linear);
-				}
-			}
-		}
-	}
-}
-.zmiti-share-ui{
-	z-index: 2001;
-	background: rgba(4,19,42,0.9);
-	&.hide{
-		left:1000px;
-	}
-
-}
-.zmiti-search-C{
-	width: 9.1rem;
-	height:1rem;
-	background: #fff;
-	@include pos(a);
-	z-index: 1220;
-
-	.zmiti-input-main{
-		border:1px solid #3190ea;
-		width: 100%;
-		background: transparent;
-		overflow: hidden;
-		box-sizing: border-box;
-		input{
-			border: none;
-			background: transparent;
-		}
-
-	}
-	&.hide{
-		z-index: 1000;
-	}
-	left: .45rem;
-	top: 1rem;
-	div{
-		@include pos(r);
-		display: inline-block;
-		width: 1.2rem;
-		height: 1rem;
-		text-align: center;
-		background:#3190ea;
-		box-sizing: border-box;
-		color:#ffF;
-		line-height: 1rem;
 		img{
-			width: .7rem;
+			@include transform(scale(1))
 		}
+
 	}
-	input{
-		width: 8rem;
-		height: 1rem;
-		padding-left: 10px;
-		box-sizing: border-box;
-		outline: none;
-		font-size:14px;
-		margin-right: -10px;;
-		border:2px solid #3190ea;
-	}
-	section{
-		height: 1rem;
-		line-height: 1rem;
-	}
+    img {
+		@include transform(scale(1.05));
+	  width: auto;
+	  @include transition(.2s);
+      height: 100%;
+    }
+  }
+  .zmiti-wish-btn {
+    height: 10vh;
+    font-size: 0.5rem;
+    @include displayBox(horizontal);
+    div {
+      @include br(10px);
+      line-height: 1rem;
+      width: 4rem;
+      height: 1rem;
+      background: #ed8324;
+      color: #fff;
+      text-align: center;
+    }
+  }
 }
 
-.zmiti-mark-list{
-	width: 100vw;
-	height: 100vh;
-	z-index: 1214;
-	overflow: hidden;
-	ul{
-		height: 300vh;
-		@include transition(.3s);
-	}
-	li{
-		width: 100vw;
-		height: 100vh;
-		@include pos(r);
-		img{
-			width: 80px;
-			@include pos(a);
-			bottom: 70px;
-			left: 50%;
-			margin-left: -40px;
-			@include animation(info 1.2s infinite);
-		}
-	}
+@media all and (max-height: 1109px) {
+  .zmiti-wish-list {
+    li {
+      height: 22vh;
+      img {
+        width: auto;
+        height: 100%;
+      }
+    }
+    
+  }
 }
-@-webkit-keyframes info{
-	to{
-		@include transform(translateY(-30px));
-	}
-}
-
-.zmiti-createimg-C{
-	background: rgba(4,19,42,0.9);
-	z-index: 1300;
-
-	&:before{
-		content:'';
-		@include pos(a);
-		width: 100%;
-		height: 100%;
-		background: rgba(4,19,42,0.6);
-		z-index: 9;
-	}
-	.zmiti-createimg{
-		@include transformOrigin(center 20%);
-		@include pos(r);
-		z-index: 10;
-		@include transition(.3s transform);
-		//box-shadow: 0 0 .2rem rgba(255,255,255,.8);
-		border:1px solid rgba(255,255,255,.8);
-
-		&.opacity{
-			@include transition(.3s opacity);
-			opacity:.2;
-		}
-
-		&.create-enter-active,
-		&.create-leave-active {
-			@include transition(.4s);
-		}
-
-
-		&.create-leave-to,
-		&.create-enter {
-			@include transform(scale(1));
-		}
-
-		span{
-			@include pos(a);
-			width: .4rem;
-			left: -.5rem;
-			top: 0;
-			font-size:.4rem;
-			color:#fff;
-		}
-	}
-	.zmiti-wish-btns{
-		@include displayBox(horizontal);
-		width: 90%;
-		z-index: 12;
-		@include pos(a);
-		
-		left: 5%;
-		-webkit-box-pack:center;
-		bottom: 1rem;
-		div{
-			text-align: center;
-			z-index: 1020;
-			color:#fff;
-			width: 2.5rem;
-			height:1rem;
-			font-size:.40rem;
-			line-height: 1rem;
-			margin: 0 .8rem;
-			font-weight: bold;
-			@include br(.1rem);
-			&:nth-of-type(1){
-				background:#ed8324;
-				img{
-					height: .45rem;;
-					width: auto;
-				}
-			}
-			&:nth-of-type(2){
-				background:#3190ea;
-				img{
-					width:.45rem;
-					min-width: 0;
-				}
-			}
-			img{
-				margin-right: .3rem;
-			}
-		}
-	}
-}
- 

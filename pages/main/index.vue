@@ -11,8 +11,8 @@
 
 			<div class='zmiti-mark-list lt-full' v-swipeup='swipeup' v-swipedown='swipedown'  >
 				<ul :style="{transform:'translateY('+-(markIndex*viewH)+'px)'}">
-					<li v-for='(mark,i) in markList' :key="i" :style="{background:'url('+mark+') no-repeat center center',backgroundSize:'cover'}">
-						<img :src="imgs.info" alt="">				
+					<li v-for='(mark,i) in markList' :key="i" :style="{background:'url('+mark+') no-repeat center 80%',backgroundSize:'cover'}">
+						<img style='bottom:10px' :src="imgs.info" alt="">				
 					</li>
 				</ul>
 			</div>
@@ -22,6 +22,20 @@
 					<img :src="imgs.info" alt="" class="info">
 				</div>
 			</transition>
+
+			<div class='zmiti-wish-list lt-full' :class="{'active':!showTip}" :style="{background:'url('+imgs.wishBg+') no-repeat center top',backgroundSize:'cover'}">
+				<div class='zmiti-wish-text'>
+					<img :src="imgs.text" alt="">
+				</div>
+				<ul>
+					<li v-tap='[changeWishItem,i]' :class="{'active':currentWishIndex === i}" v-for='(wish,i) in wishes' :key="i">
+						<img :src='wish.icon' />
+					</li>
+				</ul>
+				<div  class='zmiti-wish-btn' v-press>
+					<div v-tap='[createWish]'>确定</div>
+				</div>
+			</div>
 			 
 			<div class='zmiti-share-ui lt-full' v-if="showShare" :class='{"hide":createImg}'>
 				<Share :pv='pv' :obserable='obserable'  :isPage='true' :province='myPositionData.addressComponent.province' :city='myPositionData.addressComponent.city||myPositionData.addressComponent.district'  :index='currentWishIndex'></Share>
@@ -98,6 +112,7 @@ export default {
 			window.imgs.mark1,
 			window.imgs.mark2,
 			window.imgs.mark3,
+			window.imgs.mark4,
 		],
 				
 		wishes:window.config.wishes,
@@ -136,6 +151,9 @@ export default {
 			  setTimeout(() => {
 			  	 this.scale =  .7;
 			  }, 2002);
+		  }else{
+			  this.scale =  1;
+			  this.showCreateImg = false;
 		  }
 	  }
   },
@@ -156,7 +174,13 @@ export default {
 		}
 		this.markIndex--;
 	},
+	changeWishItem(index){
+		this.currentWishIndex = index;
+	},
 	changeWish(){
+		this.createImg = this.lastImg = '';
+		this.showShare = false;
+		return;
 		this.currentWishIndex++;
 		this.currentWishIndex %= this.wishes.length;
 
@@ -209,30 +233,10 @@ export default {
 	},
 	hideTip(){
 		this.showTip = false;
-		var time = 1000;//1000
-		this.createWish();
-
+		
 		return;
-
-		var p = new Promise((resolve,reject)=>{
-			setTimeout(() => {
-				this.hideSearchBox = false;
-				this.showTip1 = true;
-				resolve();
-			}, 100);
-		}).then(()=>{
-
-			return new Promise((resolve,reject)=>{
-				setTimeout(() => {
-					this.showDrag = true;
-					resolve();
-				}, time);
-			})
-		}).then(()=>{
-			setTimeout(() => {
-				this.showTip1 = false;
-			}, time*2);
-		})
+		this.createWish();
+ 
 	},
 	next(){
 		this.showForm = true;
@@ -287,7 +291,8 @@ export default {
 				var cardid = dt.data.id;//获取到的贺卡的id.
 				var url = window.location.href.split('#')[0];
 				url = zmitiUtil.changeURLPar(url,'id',cardid);
-				zmitiUtil.wxConfig('这是发往脱贫战场的第'+s.pv+'份祝福','这是发往脱贫战场的第'+s.pv+'份祝福',url);
+				//
+				zmitiUtil.wxConfig('这是发往脱贫一线的第'+s.pv+'份祝福','这这是发往脱贫一线的第'+s.pv+'份祝福',url);
 			}
 			else{
 				console.log(dt,'保存接口出错了');

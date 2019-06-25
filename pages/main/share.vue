@@ -1,5 +1,5 @@
 <template>
-	<section class='zmiti-share1-ui' >
+	<section class='zmiti-share1-ui' @touchstart='touchstart'>
 		<div class='lt-full ' ref='page' :style="{background:'url('+wishes[index].bg+') no-repeat center bottom',backgroundSize:backgroundSize}">
 			<h1 style="height:10vh;"></h1>
 			<div class='zmiti-share-info'>
@@ -94,10 +94,18 @@
 			}
 		},
 		methods: {
+			touchstart(e){
+				e.preventDefault();
+				return false;
+			},
+			
 			html2img(ref = 'page'){
 				var s = this;
 
 				var {obserable} = this;
+				obserable.trigger({
+					type:'removeAudio'
+				})
 
 				setTimeout(()=>{
 					//this.showLoading = true;
@@ -112,6 +120,10 @@
 								type:'getCreateImg',
 								data:src
 							}); 
+
+							obserable.trigger({
+								type:'initAudio'
+							})
 					      },
 					      width: dom.clientWidth,
 					      height:dom.clientHeight
@@ -130,6 +142,7 @@
 			obserable.on('createImg',()=>{
 				if(this.isPage){
 					this.backgroundSize = 'contain';
+					
 					setTimeout(() => {
 						this.backgroundSize = 'cover';
 						this.html2img()

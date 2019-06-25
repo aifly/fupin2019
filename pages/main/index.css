@@ -74,7 +74,9 @@ input {
   top: 0;
 }
 
-#container, #container1, #smap {
+#container,
+#container1,
+#smap {
   width: 100%;
   height: 400px;
 }
@@ -98,7 +100,9 @@ input {
 
 .zmiti-tip img {
   display: block;
-  width: 5rem;
+  height: 86vh;
+  margin-top: -6vh;
+  width: auto;
 }
 
 .zmiti-tip.active {
@@ -106,7 +110,7 @@ input {
 }
 
 .zmiti-tip:before {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
@@ -126,8 +130,10 @@ input {
 
 .zmiti-tip img.info {
   width: 80px;
+  height: auto;
+  top: auto;
   position: absolute;
-  bottom: 70px;
+  bottom: 11px;
   left: 50%;
   margin-left: -40px;
   -webkit-animation: info 1.2s infinite;
@@ -144,7 +150,7 @@ input {
   width: 3.2rem;
   left: 3.4rem;
   top: 50%;
-  font-size: .4rem;
+  font-size: 0.4rem;
   text-align: center;
   z-index: 10;
 }
@@ -153,7 +159,7 @@ input {
   width: 9rem;
   position: absolute;
   bottom: 0%;
-  left: .5rem;
+  left: 0.5rem;
   height: 5rem;
   z-index: 1200;
   background: rgba(4, 19, 42, 0.9);
@@ -176,8 +182,8 @@ input {
 .zmiti-wish-C .zmiti-wish-text {
   color: #fff;
   width: 5rem;
-  margin: .5rem auto 0;
-  font-size: .45rem;
+  margin: 0.5rem auto 0;
+  font-size: 0.45rem;
   text-align: center;
 }
 
@@ -191,14 +197,14 @@ input {
 
 .zmiti-wish-C .zmiti-input-name {
   width: 3.5rem;
-  margin: 1rem .5rem;
+  margin: 1rem 0.5rem;
 }
 
 .zmiti-wish-C .zmiti-input-name input {
-  height: .8rem;
+  height: 0.8rem;
   border-radius: 4px;
   width: 100%;
-  padding-left: .3rem;
+  padding-left: 0.3rem;
   box-sizing: border-box;
   box-shadow: 0 0 10px rgba(49, 144, 234, 0.4) inset;
 }
@@ -229,7 +235,7 @@ input {
 }
 
 .zmiti-wish-C .zmiti-wish-btns div:nth-of-type(1) img {
-  height: .45rem;
+  height: 0.45rem;
   width: auto;
 }
 
@@ -242,12 +248,12 @@ input {
 }
 
 .zmiti-wish-C .zmiti-wish-btns div:nth-of-type(2) img {
-  width: .45rem;
+  width: 0.45rem;
   min-width: 0;
 }
 
 .zmiti-wish-C .zmiti-wish-btns div img {
-  margin-right: .6rem;
+  margin-right: 0.6rem;
 }
 
 .zmiti-wish-C .zmiti-wish-btns div img.rotate {
@@ -270,7 +276,7 @@ input {
   background: #fff;
   position: absolute;
   z-index: 1220;
-  left: .45rem;
+  left: 0.45rem;
   top: 1rem;
 }
 
@@ -299,12 +305,12 @@ input {
   text-align: center;
   background: #3190ea;
   box-sizing: border-box;
-  color: #ffF;
+  color: #fff;
   line-height: 1rem;
 }
 
 .zmiti-search-C div img {
-  width: .7rem;
+  width: 0.7rem;
 }
 
 .zmiti-search-C input {
@@ -365,7 +371,7 @@ input {
 }
 
 .zmiti-createimg-C:before {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
@@ -386,7 +392,7 @@ input {
 .zmiti-createimg-C .zmiti-createimg.opacity {
   -webkit-transition: 0.3s opacity;
   transition: 0.3s opacity;
-  opacity: .2;
+  opacity: 0.2;
 }
 
 .zmiti-createimg-C .zmiti-createimg.create-enter-active, .zmiti-createimg-C .zmiti-createimg.create-leave-active {
@@ -401,10 +407,10 @@ input {
 
 .zmiti-createimg-C .zmiti-createimg span {
   position: absolute;
-  width: .4rem;
-  left: -.5rem;
+  width: 0.4rem;
+  left: -0.5rem;
   top: 0;
-  font-size: .4rem;
+  font-size: 0.4rem;
   color: #fff;
 }
 
@@ -427,9 +433,9 @@ input {
   color: #fff;
   width: 2.5rem;
   height: 1rem;
-  font-size: .40rem;
+  font-size: 0.4rem;
   line-height: 1rem;
-  margin: 0 .8rem;
+  margin: 0 0.8rem;
   font-weight: bold;
   border-radius: 0.1rem;
 }
@@ -439,7 +445,7 @@ input {
 }
 
 .zmiti-createimg-C .zmiti-wish-btns div:nth-of-type(1) img {
-  height: .45rem;
+  height: 0.45rem;
   width: auto;
 }
 
@@ -448,10 +454,109 @@ input {
 }
 
 .zmiti-createimg-C .zmiti-wish-btns div:nth-of-type(2) img {
-  width: .45rem;
+  width: 0.45rem;
   min-width: 0;
 }
 
 .zmiti-createimg-C .zmiti-wish-btns div img {
-  margin-right: .3rem;
+  margin-right: 0.3rem;
+}
+
+.zmiti-wish-list {
+  z-index: 1212;
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-box-orient: vertical;
+}
+
+.zmiti-wish-list.active {
+  z-index: 1214;
+}
+
+.zmiti-wish-list .zmiti-wish-text {
+  width: 7rem;
+  margin: 0vh auto 0;
+  height: 15vh;
+  line-height: 15vh;
+}
+
+.zmiti-wish-list ul {
+  -webkit-box-flex: 1;
+  overflow: hidden;
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  -webkit-flex-wrap: wrap;
+  justify-content: space-around;
+  -webkit-justify-content: space-around;
+  align-items: center;
+  -webkit-align-items: center;
+}
+
+.zmiti-wish-list li {
+  height: 20vh;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid rgba(255, 125, 0, 0.3);
+  box-sizing: border-box;
+}
+
+.zmiti-wish-list li.active {
+  border: 3px solid #f90;
+}
+
+.zmiti-wish-list li.active:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  box-shadow: 0 0 0 3px #F90;
+}
+
+.zmiti-wish-list li.active img {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+.zmiti-wish-list li img {
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
+  width: auto;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  height: 100%;
+}
+
+.zmiti-wish-list .zmiti-wish-btn {
+  height: 10vh;
+  font-size: 0.5rem;
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-box-orient: horizontal;
+}
+
+.zmiti-wish-list .zmiti-wish-btn div {
+  border-radius: 10px;
+  line-height: 1rem;
+  width: 4rem;
+  height: 1rem;
+  background: #ed8324;
+  color: #fff;
+  text-align: center;
+}
+
+@media all and (max-height: 1109px) {
+  .zmiti-wish-list li {
+    height: 22vh;
+  }
+  .zmiti-wish-list li img {
+    width: auto;
+    height: 100%;
+  }
 }

@@ -4,7 +4,7 @@
   play: "./assets/images/play.png",
   play1: "./assets/images/play1.png",
   arrow: "./assets/images/arrow.png",
-  tip:'./assets/images/tip2.png',
+  tip:'./assets/images/tip5.png',
   title:'./assets/images/title1.png',
   video:"./assets/images/video.png",
   subtitle:"./assets/images/subtitle.png",
@@ -20,10 +20,23 @@
   text8:"./assets/images/text_8_2.png",
   text9:"./assets/images/text_9_2.png",
   shareBg:'./assets/images/share-bg.jpg',
+
+  text:'./assets/images/text2.png',
+  wishBg:'./assets/images/wish-bg.jpg',
+  icon1:'./assets/images/icon1.png',
+  icon2:'./assets/images/icon2.png',
+  icon3:'./assets/images/icon3.png',
+  icon4:'./assets/images/icon4.png',
+  icon5:'./assets/images/icon5.png',
+  icon6:'./assets/images/icon6.png',
+  icon7:'./assets/images/icon7.png',
+  icon8:'./assets/images/icon8.png',
+  icon9:'./assets/images/icon9.png',
   
-  mark1:'./assets/images/mark1.png',
-  mark2:'./assets/images/mark2.png',
-  mark3:'./assets/images/mark3.png',
+  mark1:'./assets/images/mask1-1.jpg',
+  mark2:'./assets/images/mask2-1.jpg',
+  mark3:'./assets/images/mask3-1.jpg',
+  mark4:'./assets/images/mask4-1.jpg',
   shareBg1: './assets/images/bg1_4.jpg',
   shareBg2: './assets/images/bg2_4.jpg',
   shareBg3: './assets/images/bg3_4.jpg',
@@ -49,7 +62,7 @@ for (var attr in imgs) {
 }
 
  window.config = {
-   indexvideo: './assets/video/index1.mp4',
+   indexvideo: './assets/video/6.mp4',
    baseUrl: "https://testxlive.xinhuaapp.com",
 
 	host:"https://testactivity.xhsxmt.com", //正式域名：https://testxlive.xinhuaapp.com
@@ -60,40 +73,49 @@ for (var attr in imgs) {
 	   {
 		   text: "我理解在这个世界上 有人比我更需要你",
 		   img:imgs.text1,
-		   bg:imgs.shareBg1
+		   bg:imgs.shareBg1,
+		   icon:imgs.icon1
 	   },
 	   {
 		   text: "感谢你无私的付出让我坚信这世界依然美好",
 		   img:imgs.text2,
-		   bg:imgs.shareBg2
+		   bg:imgs.shareBg2,
+		   icon:imgs.icon2
 	   },{
 		   text: "我不认识你但我想谢谢你",
 		   img:imgs.text3,
-		   bg:imgs.shareBg3
+		   bg:imgs.shareBg3,
+		   icon:imgs.icon3
 	   },{
 		   text: "因为你在那片土地每天都有新变化",
 		   img:imgs.text4,
-		   bg:imgs.shareBg4
+		   bg:imgs.shareBg4,
+		   icon:imgs.icon4
 	   },{
 		   text: "不知如何表达只能道一句珍重辛苦！",
 		   img:imgs.text5,
-		   bg:imgs.shareBg5
+		   bg:imgs.shareBg5,
+		   icon:imgs.icon5
 	   },{
 		   text: "你是凡人亦是英雄",
 		   img:imgs.text6,
-		   bg:imgs.shareBg6
+		   bg:imgs.shareBg6,
+		   icon:imgs.icon6
 	   },{
 		   text: "不忘初心不负荣光",
 		   img:imgs.text7,
-		   bg:imgs.shareBg7
+		   bg:imgs.shareBg7,
+		   icon:imgs.icon7
 	   },{
 		   text: "相隔千里万里远方一直有人给你加油！",
 		   img:imgs.text8,
-		   bg:imgs.shareBg8
+		   bg:imgs.shareBg8,
+		   icon:imgs.icon8
 	   },  {
 		   text: "你说过的话你做过的事有人一辈子记得",
 		   img: imgs.text9,
-		   bg: imgs.shareBg9
+		   bg:imgs.shareBg9,
+		   icon:imgs.icon9
 	   }
    ],
    points:[
@@ -119,7 +141,7 @@ for (var attr in imgs) {
   
 var musics = {
 	music: {
-		src: './assets/music/bg2.mp3',
+		src: './assets/music/bg3.mp3',
 		autoplay: true,
 		name: 'bg2',
 		loop: true

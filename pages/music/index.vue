@@ -71,7 +71,7 @@
 			
 
 			len && audio.play();
-			audio.volume = .1;
+			audio.volume = 1;
 
 			this.playAudioMuted();
 
@@ -112,7 +112,7 @@
 			var s = this;
 			document.addEventListener("WeixinJSBridgeReady", function() {
 				WeixinJSBridge.invoke('getNetworkType', {}, function(e) {
-					//audio&&(audio.volume = .1);
+					//audio&&(audio.volume = 1);
 					len && audio.play();
 					s.playAudioMuted();
 				});
@@ -126,12 +126,12 @@
 				document.removeEventListener("YixinJSBridgeReady", play);
 				s.playAudioMuted();
 				len && audio.play();
-				//audio&&(audio.volume = .1);
+				//audio&&(audio.volume = 1);
 				
 			};
 
 			if (window.WeixinJSBridge) {
-				//audio&&(audio.volume = .1);
+				//audio&&(audio.volume = 1);
 				len && audio.play();
 				s.playAudioMuted();
 			}
@@ -154,6 +154,20 @@
 			obserable.on('togglePlay', (data) => {
 
 				this.showPlay = data;
+			});
+
+			obserable.on('removeAudio',(key)=>{
+				this.audios.length = 1;
+				this.audios = this.audios.concat([]);
+				console.log(this.audios,'removeAudio....')
+			});
+
+			obserable.on('initAudio',(key)=>{
+				var audios = [];
+				for (var music in window.musics){
+					audios.push(musics[music])
+				}
+				this.audios = audios;
 			});
 
 

@@ -1,10 +1,10 @@
-(function(){
+(function () {
 	var mapUtil = {
-		init:function(){
+		init: function () {
 			this.getAllPoints();
 			this.initMap();
 		},
-		initMap:function(){
+		initMap: function () {
 			var map = new AMap.Map('map', {
 				zoom: 4
 			});
@@ -66,73 +66,76 @@
 				var flyRoutes = [];
 
 
-				var d = _this.getData();
+				_this.getAllPoints(d => {
 
-				d.push.apply(d, flyRoutes);
 
-				pathSimplifierIns.setData(d);
+					d.push.apply(d, flyRoutes);
 
-				//创建一个巡航器
-				var navg1 = pathSimplifierIns.createPathNavigator(0, {
-					loop: true,
-					speed: 1000000,
-					pathNavigatorStyle: {
-						width: 24,
-						height: 24,
-						//使用图片
-						content: PathSimplifier.Render.Canvas.getImageContent('./assets/images/plane.png', onload, onerror),
-						strokeStyle: null,
-						fillStyle: null,
-						//经过路径的样式
-						pathLinePassedStyle: {
-							lineWidth: 4,
-							strokeStyle: 'black',
-							dirArrowStyle: {
-								stepSpace: 15,
-								strokeStyle: 'red'
+					pathSimplifierIns.setData(d);
+
+					//创建一个巡航器
+					var navg1 = pathSimplifierIns.createPathNavigator(10, {
+						loop: true,
+						speed: 1000000,
+						pathNavigatorStyle: {
+							width: 24,
+							height: 24,
+							//使用图片
+							content: PathSimplifier.Render.Canvas.getImageContent('./assets/images/plane.png', onload, onerror),
+							strokeStyle: null,
+							fillStyle: null,
+							//经过路径的样式
+							pathLinePassedStyle: {
+								lineWidth: 4,
+								strokeStyle: 'black',
+								dirArrowStyle: {
+									stepSpace: 15,
+									strokeStyle: 'red'
+								}
 							}
 						}
-					}
-				});
+					});
 
-				navg1.start();
+					navg1.start();
 
-				var navg1 = pathSimplifierIns.createPathNavigator(1, {
-					loop: true,
-					speed: 1000000,
-					pathNavigatorStyle: {
-						width: 24,
-						height: 24,
-						//使用图片
-						content: PathSimplifier.Render.Canvas.getImageContent('./assets/images/plane.png', onload, onerror),
-						strokeStyle: null,
-						fillStyle: null,
-						//经过路径的样式
-						pathLinePassedStyle: {
-							lineWidth: 4,
-							strokeStyle: 'black',
-							dirArrowStyle: {
-								stepSpace: 15,
-								strokeStyle: 'red'
+					var navg1 = pathSimplifierIns.createPathNavigator(16, {
+						loop: true,
+						speed: 1000000,
+						pathNavigatorStyle: {
+							width: 24,
+							height: 24,
+							//使用图片
+							content: PathSimplifier.Render.Canvas.getImageContent('./assets/images/plane.png', onload, onerror),
+							strokeStyle: null,
+							fillStyle: null,
+							//经过路径的样式 
+							pathLinePassedStyle: {
+								lineWidth: 2,
+								strokeStyle: 'black',
+								dirArrowStyle: {
+									stepSpace: 15,
+									strokeStyle: 'red'
+								}
 							}
 						}
-					}
-				});
+					});
 
-				navg1.start();
+					navg1.start();
+
+				});
 			});
 		},
-		points:[],
+		points: [],
 		host: "https://testactivity.xhsxmt.com",
 		secretKey: "e9469538b0623783f38c585821459454",
 		anm: '2019扶贫贺卡',
 		get_weixinConfig: 'https://testopen.xinhuaapp.com/xhs-security-wechat/wx/getWXConfig',
 
-		getData:function(){
-			var data =[
+		getData: function () {
+			var data = [
 				{
-					"name":"北京 -> 乌鲁木齐",
-					"path":[
+					"name": "北京 -> 乌鲁木齐",
+					"path": [
 						[116.405289, 39.904987], [87.61792, 43.793308]
 					]
 				},
@@ -145,8 +148,8 @@
 			];
 			return data;
 		},
-		
-		getAllPoints:function() {
+
+		getAllPoints: function (fn) {
 			var s = this;
 			axios({
 				headers: {
@@ -163,12 +166,9 @@
 				if (typeof dt === "string") {
 					dt = JSON.parse(dt);
 					if (dt.rc * 1 === 0) {
-						s.points = dt.data.points.filter(item => {
-							return item.slat && item.slgt && item.rlat && item.rlgt;
-						});
-						console.log(s.points)
+						s.points = dt.data.points;
 						//s.createPoint();
-						////console.log(dt.data.points);
+						fn && fn(s.points);
 					}
 
 				}
