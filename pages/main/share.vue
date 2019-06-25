@@ -39,14 +39,14 @@
 		font-size:.45rem;
 		&>div{
 			margin: .2rem auto;
-			width:80%;
+			width:90%;
 			text-align: center;
 
 			&.zmiti-wish-img{
 				///margin-top:6vh;
 			}
 			span{
-				font-size:1rem;
+				font-size:.6rem;
 				font-family: Georgia;
 			}
 		}
