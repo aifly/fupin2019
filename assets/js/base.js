@@ -47,7 +47,7 @@
   shareBg8: './assets/images/bg8_4.jpg',
   shareBg9: './assets/images/bg9_4.jpg',
   
-  loadingGif:'./assets/images/loading.gif',
+  //loadingGif:'./assets/images/loading.gif',
   bg:'./assets/images/bg.jpg',
   share:'./assets/images/share.jpg',
 
@@ -63,12 +63,12 @@ for (var attr in imgs) {
 
  window.config = {
    indexvideo: './assets/video/6.mp4',
-   baseUrl: "https://testxlive.xinhuaapp.com",
+   baseUrl: "https://xlive.xinhuaapp.com",
 
-	host:"https://testactivity.xhsxmt.com", //正式域名：https://testxlive.xinhuaapp.com
+	host:"https://activity.xhsxmt.com", //正式域名：https://testxlive.xinhuaapp.com
    secretKey: "e9469538b0623783f38c585821459454",
-	 anm:'2019扶贫贺卡',
-	 get_weixinConfig: 'https://testopen.xinhuaapp.com/xhs-security-wechat/wx/getWXConfig',
+	anm:'2019扶贫贺卡',
+	get_weixinConfig: 'https://open.xinhuaapp.com/xhs-security-wechat/wx/getWXConfig',
    wishes:[
 	   {
 		   text: "我理解在这个世界上 有人比我更需要你",
@@ -174,4 +174,4 @@ var musics = {
  			});
  		});
  	}
- })();
+ })(); 

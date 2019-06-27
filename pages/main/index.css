@@ -43,9 +43,15 @@ input {
 .zmiti-main-ui {
   z-index: -1;
   opacity: 0;
+  -webkit-transform: translateY(50vh);
+  transform: translateY(50vh);
 }
 
 .zmiti-main-ui.active {
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
   z-index: 102;
   opacity: 1;
 }
@@ -337,7 +343,6 @@ input {
 }
 
 .zmiti-mark-list ul {
-  height: 300vh;
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }

@@ -10,7 +10,10 @@ input {
 .zmiti-main-ui {
   z-index: -1;
   opacity: 0;
+  @include transform(translateY(50vh));
   &.active {
+	@include transition(.3s);
+	@include transform(translateY(0));
     z-index: 102;
     opacity: 1;
   }
@@ -260,7 +263,6 @@ input {
   z-index: 1214;
   overflow: hidden;
   ul {
-    height: 300vh;
     @include transition(0.3s);
   }
   li {

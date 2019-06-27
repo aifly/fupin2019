@@ -4,8 +4,15 @@ $baseColor: #fcffb4;
 $viewW: 750px;
 $bgColor: #fcfff8;
 $color: #fffb88;
+@-webkit-keyframes info {
+  to {
+    @include transform(translateY(-30px));
+  }
+}
 
 .zmiti-main-ui {
+
+	z-index: 103;
     
     &.main-enter-active,
     &.main-leave-active {
@@ -15,10 +22,20 @@ $color: #fffb88;
 
     &.main-leave-to,
     &.main-enter {
-        opacity: 0;
+		opacity: 0;
+		@include transform(translate3d(0,-120vh,0));
 	}
 	@include displayBox(horizontal);
-	
+	.zmiti-info{
+		 width: 80px;
+		height: auto;
+		top: auto;
+		@include pos(a);
+		bottom: 11px;
+		left: 50%;
+		margin-left: -40px;
+		@include animation(info 1.2s infinite);
+	}
 	.zmiti-title{
 		height:70vh;
 

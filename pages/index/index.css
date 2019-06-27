@@ -36,7 +36,15 @@
   }
 }
 
+@-webkit-keyframes info {
+  to {
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+}
+
 .zmiti-main-ui {
+  z-index: 103;
   display: -webkit-box;
   -webkit-box-align: center;
   -webkit-box-pack: center;
@@ -59,6 +67,20 @@
 
 .zmiti-main-ui.main-leave-to, .zmiti-main-ui.main-enter {
   opacity: 0;
+  -webkit-transform: translate3d(0, -120vh, 0);
+  transform: translate3d(0, -120vh, 0);
+}
+
+.zmiti-main-ui .zmiti-info {
+  width: 80px;
+  height: auto;
+  top: auto;
+  position: absolute;
+  bottom: 11px;
+  left: 50%;
+  margin-left: -40px;
+  -webkit-animation: info 1.2s infinite;
+  animation: info 1.2s infinite;
 }
 
 .zmiti-main-ui .zmiti-title {

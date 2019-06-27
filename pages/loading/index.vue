@@ -3,14 +3,14 @@
 		<section v-if='show' class="lt-full zmiti-loading1">
 			 <div class="zmiti-loading">
 				 	<div>
-						<img :src='imgs.loadingGif'/>
+						<img :src='imgs.logo'/>
 					 </div>
 					<div class='zmiti-loading-bar'>
 						<span :style="{WebkitTransform:'translateX('+(width-100)+'%)'}"></span>
 					</div>
 					<div>{{width}}%</div>
 			</div>
-			<div class='zmiti-loading-logo'>
+			<div class='zmiti-loading-logo' v-if='false'>
 				<img :src="imgs.logo" alt="">
 			</div>
 		</section>

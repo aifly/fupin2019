@@ -9,9 +9,9 @@
 
 			<div id='container' class='lt-full'></div>
 
-			<div class='zmiti-mark-list lt-full' v-swipeup='swipeup' v-swipedown='swipedown'  >
-				<ul :style="{transform:'translateY('+-(markIndex*viewH)+'px)'}">
-					<li v-for='(mark,i) in markList' :key="i" :style="{background:'url('+mark+') no-repeat center 80%',backgroundSize:'cover'}">
+			<div class='zmiti-mark-list lt-full' :style="{width:viewW+'px',height:viewH+'px'}" v-swipeup='swipeup' v-swipedown='swipedown'  >
+				<ul :style="{transform:'translateY('+-(markIndex*viewH)+'px)',height:viewH*markList.length+'px'}">
+					<li  v-for='(mark,i) in markList' :key="i" :style="{width:viewW+'px',height:viewH+'px',background:'url('+mark+') no-repeat center 80%',backgroundSize:'cover'}">
 						<img style='bottom:10px' :src="imgs.info" alt="">				
 					</li>
 				</ul>
@@ -109,10 +109,10 @@ export default {
 		showTip1:false,
 		markIndex:0,
 		markList:[
+			window.imgs.mark4,
 			window.imgs.mark1,
 			window.imgs.mark2,
 			window.imgs.mark3,
-			window.imgs.mark4,
 		],
 				
 		wishes:window.config.wishes,
