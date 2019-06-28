@@ -58,6 +58,13 @@
 				</div>
 			</div>
 
+			<div class='zmiti-waiting lt-full' v-if='showWaiting'>
+				<div>
+					<img :src="imgs.waiting" alt="">
+					<img :src="imgs.point" alt="">
+				</div>
+			</div>
+
 			<div class='zmiti-mask' v-if='showMask' @touchstart='showMask=false'>
 				<img :src="imgs.arrow" alt="">
 			</div>
@@ -128,6 +135,7 @@ export default {
 			pos: "",
 			pos1:"请选择收信人的位置",
 		},
+		showWaiting:false,
 		sPositionData:{
 			addressComponent:{}
 		},
@@ -191,7 +199,8 @@ export default {
 		
 		this.showForm = false;
 		this.showShare = true;
-		this.showCreateImg = true;
+		
+		this.showWaiting = true;
 		
 		setTimeout(() => {
 			
@@ -281,6 +290,7 @@ export default {
 			})
 		  }).then((data)=>{
 			  var dt;
+			  s.showWaiting = false;
 			if(typeof data.data === 'string'){
 				dt = JSON.parse(data.data);
 			}else{
@@ -292,7 +302,16 @@ export default {
 				var url = window.location.href.split('#')[0];
 				url = zmitiUtil.changeURLPar(url,'id',cardid);
 				//
+				
+				
 				zmitiUtil.wxConfig('这是发往脱贫一线的第'+s.pv+'份祝福','这这是发往脱贫一线的第'+s.pv+'份祝福',url);
+				s.lastImg = s.createImg;
+				
+				setTimeout(() => {
+					s.lastImg = dt.data.imgUrl;
+				}, 100);
+
+				
 			}
 			else{
 				console.log(dt,'保存接口出错了');
@@ -528,7 +547,7 @@ export default {
 	  var {obserable} = this;
 	  obserable.on('getCreateImg',data=>{
 		  this.createImg = data;
-		  this.lastImg = data;
+		  //this.lastImg = data;
 		  this.saveGiftCard();
 	  });
 

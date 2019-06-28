@@ -1,7 +1,6 @@
 (function () {
 	var mapUtil = {
 		init: function () {
-			this.getAllPoints();
 			this.initMap();
 		},
 		initMap: function () {
@@ -27,6 +26,8 @@
 						return pathData.path;
 					},
 					getHoverTitle: function (pathData, pathIndex, pointIndex) {
+
+						return '';
 
 						if (pointIndex >= 0) {
 							//point 
@@ -74,7 +75,7 @@
 					pathSimplifierIns.setData(d);
 
 					//创建一个巡航器
-					var navg1 = pathSimplifierIns.createPathNavigator(10, {
+					var navg1 = pathSimplifierIns.createPathNavigator(24, {
 						loop: true,
 						speed: 1000000,
 						pathNavigatorStyle: {
@@ -98,7 +99,7 @@
 
 					navg1.start();
 
-					var navg1 = pathSimplifierIns.createPathNavigator(16, {
+					var navg1 = pathSimplifierIns.createPathNavigator(26, {
 						loop: true,
 						speed: 1000000,
 						pathNavigatorStyle: {
@@ -167,6 +168,7 @@
 					dt = JSON.parse(dt);
 					if (dt.rc * 1 === 0) {
 						s.points = dt.data.points;
+						console.log(s.points )
 						//s.createPoint();
 						fn && fn(s.points);
 					}

@@ -335,6 +335,41 @@ input {
   line-height: 1rem;
 }
 
+.zmiti-waiting {
+  z-index: 3000;
+  background: rgba(0, 0, 0, 0.7);
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-box-orient: horizontal;
+}
+
+.zmiti-waiting div {
+  position: relative;
+  width: 4rem;
+  height: 4rem;
+}
+
+.zmiti-waiting div img {
+  position: absolute;
+  width: auto;
+  height: auto;
+  left: 50%;
+  top: 50%;
+}
+
+.zmiti-waiting div img:nth-of-type(1) {
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.zmiti-waiting div img:nth-of-type(2) {
+  margin-left: -12px;
+  margin-top: -58px;
+  -webkit-animation: rotate 0.5s linear infinite;
+  animation: rotate 0.5s linear infinite;
+}
+
 .zmiti-mark-list {
   width: 100vw;
   height: 100vh;

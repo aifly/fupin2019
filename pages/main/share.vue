@@ -95,8 +95,8 @@
 		},
 		methods: {
 			touchstart(e){
-				e.preventDefault();
-				return false;
+				/* e.preventDefault();
+				return false; */
 			},
 			
 			html2img(ref = 'page'){
