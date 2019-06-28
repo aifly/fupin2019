@@ -153,23 +153,23 @@
 				var startX = canvas.width/2- .8*this.rem;
 				var startX1 = canvas.width /2 +  .8*this.rem;
 
-				var startY = 0;
+				var startY = -4;
 				context.moveTo(startX,0);
 				context.strokeStyle = '#fff';
 				var i = 0 ;
 				var j = 0;
-				var iNow = 0;
+				var iNow = -4;
 				var iNow1 = width;
-				var speed = 4;
+				var speed = 8;
 
 				this.t = setInterval(() => {
 					i+=speed;
-					if(startX-i>=0){
+					if(startX-i>=-4){
 						this.drawCircle(context,startX-i,0);
 						
 					}
 					j+=speed;
-					if(startX1+j<=width){
+					if(startX1+j<=width+4){
 						this.drawCircle(context,startX1+j,0);
 						
 					}
@@ -177,34 +177,41 @@
 						startY+=speed;
 						if(startY<=height *.88){
 							}
-						this.drawCircle(context,0,startY);
-						this.drawCircle(context,width,startY);
+						this.drawCircle(context,0,startY,true);
+						this.drawCircle(context,width-4,startY,true);
 
 						if(startY>=height){
 							iNow1-=speed;
-							if(iNow1>=width/3*1.9){
-								this.drawCircle(context,iNow1,height);
+							if(iNow1>=width/3*2){
+								this.drawCircle(context,iNow1,height-4);
 							}
 							else{
-								clearInterval(this.t);
+								
 							}
 							iNow+=speed;
 							if(iNow<=width/2  - this.rem*.6){
-								
-								}
-							this.drawCircle(context,iNow,height);
+									
+							}else{
+								clearInterval(this.t);
+							}
+							this.drawCircle(context,iNow,height-4);
 						}
 					}
 				}, 20);
 
 
 			},
-			drawCircle(context,x,y){
+			drawCircle(context,x,y,isLine){
 				context.fillStyle='#fff';
 				context.beginPath();
 				context.save();
-				context.lineTo(x,y);
-				context.arc(x,y,2,0,Math.PI*2,false);
+				if(!isLine){
+					context.fillRect(x,y,8,4);
+				}
+				else{
+					context.fillRect(x,y,4,8);
+				}
+				//context.arc(x,y,2,0,Math.PI*2,false);
 				context.closePath();
 				context.stroke();
 				context.restore();
