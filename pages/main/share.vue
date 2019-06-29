@@ -1,7 +1,8 @@
 <template>
 	<section class='zmiti-share1-ui' @touchstart='touchstart'>
+		<div style='width:100%;opacity:0;'>{{wishes}}</div>
 		<div class='lt-full ' ref='page' :style="{background:'url('+wishes[index].bg+') no-repeat center bottom',backgroundSize:backgroundSize}">
-			<h1 style="height:10vh;"></h1>
+			<h1 style="height:10vh;width:100%"></h1>
 			<div class='zmiti-share-info'>
 				<div class='zmiti-wish-img'>
 					<img :src="wishes[index].img" alt="">
@@ -19,9 +20,8 @@
 				<img :src="imgs.subtitle" alt="">
 			</div>
 
-			<div class='zmiti-copyright'  v-if='false'>
-				<span>新华社客户端</span>
-				<span>出品</span>
+			<div class='zmiti-copyright'  >
+				<img :src="imgs.copyright" alt="">
 			</div>
 		</div>
 		 

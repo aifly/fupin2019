@@ -11,14 +11,33 @@
 
 			<div class='zmiti-mark-list lt-full' :style="{width:viewW+'px',height:viewH+'px'}" v-swipeup='swipeup' v-swipedown='swipedown'  >
 				<ul :style="{transform:'translateY('+-(markIndex*viewH)+'px)',height:viewH*markList.length+'px'}">
-					<li  v-for='(mark,i) in markList' :key="i" :style="{width:viewW+'px',height:viewH+'px',background:'url('+mark+') no-repeat center 80%',backgroundSize:'cover'}">
-						<img style='bottom:10px' :src="imgs.info" alt="">				
+					<li  v-for='(mark,i) in markList' :key="i" :style="{width:viewW+'px',height:viewH+'px',background:'url('+mark.bg+') no-repeat center 80%',backgroundSize:'cover'}">
+						<img style='bottom:10px' class='info' :src="imgs.info" alt="">
+						<div  class='zmiti-mark-user' :style="{webkitTransform:'translate('+transX+'px,'+transY+'px)'}">
+							<img :src="mark.text" alt="" :class="{'active':markIndex === i}" >
+						</div>				
 					</li>
 				</ul>
 			</div>
 			<transition name='tip'>
 				<div :style="{background:'url('+imgs.bg+') no-repeat center center',backgroundSize:'cover'}" :class="{'active':tipActive}" class='zmiti-tip lt-full' v-if='showTip' v-swipeup='hideTip'>
-					<img :src="imgs.tip" alt="">
+					<section class='lt-full' :class="{'active':showTipItem}">
+						<div>
+							<img :src="imgs.remark1" alt="">
+						</div>
+						<div>
+							<img :src="imgs.remark2" alt="">
+						</div>
+						<div>
+							<img :src="imgs.remark3" alt="">
+						</div>
+						<div>
+							<img :src="imgs.remark4" alt="">
+						</div>
+						<div>
+							<img :src="imgs.remark5" alt="">
+						</div>
+					</section>
 					<img :src="imgs.info" alt="" class="info">
 				</div>
 			</transition>
@@ -27,11 +46,11 @@
 				<div class='zmiti-wish-text'>
 					<img :src="imgs.text" alt="">
 				</div>
-				<ul>
-					<li v-tap='[changeWishItem,i]' :class="{'active':currentWishIndex === i}" v-for='(wish,i) in wishes' :key="i">
+				<transition-group name="list"  tag='ul'>
+					<li :style="{position:position,left:(wishPos[i].left||0)+'px',top:(wishPos[i].top||0)+'px'}" ref='wish' v-tap='[changeWishItem,i]' :class="{'active':currentWishIndex === i}" v-for='(wish,i) in wishes' :key="i">
 						<img :src='wish.icon' />
 					</li>
-				</ul>
+				</transition-group>
 				<div  class='zmiti-wish-btn' v-press>
 					<div v-tap='[createWish]'>确定</div>
 				</div>
@@ -95,12 +114,14 @@ export default {
   data() {
     return {
 		showForm:false,
+		position:'relative',
 		isPage:true,
 		errorMsg:"",
 		imgs: window.imgs,
 		showCreateImg:false,
 		showShare:false,
 		pv:12023,
+		showTipItem:false,
 		isOpacity:false,
 		lastImg:'',
 		secretKey: "e9469538b0623783f38c585821459454",
@@ -110,16 +131,29 @@ export default {
 		showTip:true,
 		showMask:false,
 		scale:1,
+		transX:0,
+		transY:0,
 		currentWishIndex:0,
 		hideSearchBox:true,
 		show:false,
 		showTip1:false,
-		markIndex:0,
+		markIndex:-1,
 		markList:[
-			window.imgs.mark4,
-			window.imgs.mark1,
-			window.imgs.mark2,
-			window.imgs.mark3,
+			{
+				bg:window.imgs.mark4,
+				text:window.imgs.huangwenxiu
+			},{
+				bg:window.imgs.mark1,
+				text:window.imgs.xieliang
+			},{
+				bg:window.imgs.mark2,
+				text:window.imgs.yuewenqiu
+			},{
+				bg:window.imgs.mark3,
+				text:window.imgs.guanyanping
+			}
+			
+			
 		],
 				
 		wishes:window.config.wishes,
@@ -127,6 +161,11 @@ export default {
 		fresh:false,
 		province:"",
 		city:'',
+		wishPos:[
+			{},{},{},
+			{},{},{},
+			{},{},{},
+		],
 		tipActive:false,
 		createMarkers:[],
 		createImg:"",
@@ -170,6 +209,7 @@ export default {
 	swipeup(){
 		if(this.markIndex>=this.markList.length-1){
 			this.markerIndex = this.markList.length -1;
+			this.showTipItem = true;
 			setTimeout(() => {
 				this.tipActive = true;
 			}, 400);
@@ -184,6 +224,7 @@ export default {
 	},
 	changeWishItem(index){
 		this.currentWishIndex = index;
+		
 	},
 	changeWish(){
 		this.createImg = this.lastImg = '';
@@ -201,6 +242,19 @@ export default {
 		this.showShare = true;
 		
 		this.showWaiting = true;
+		var s = this;
+		clearInterval(this.wishTimer);
+		
+		var url = window.location.href.split('#')[0];
+		url = zmitiUtil.changeURLPar(url,'wishid',s.currentWishIndex);
+		url = zmitiUtil.changeURLPar(url,'province',encodeURI(s.myPositionData.addressComponent.province||''));
+		url = zmitiUtil.changeURLPar(url,'city',encodeURI(s.myPositionData.addressComponent.city || s.myPositionData.addressComponent.district||''));
+		url = zmitiUtil.changeURLPar(url,'pv',s.pv);
+
+		
+		
+		zmitiUtil.wxConfig('这是发往脱贫一线的第'+s.pv+'份祝福','这这是发往脱贫一线的第'+s.pv+'份祝福',url);
+
 		
 		setTimeout(() => {
 			
@@ -242,7 +296,6 @@ export default {
 	},
 	hideTip(){
 		this.showTip = false;
-		
 		return;
 		this.createWish();
  
@@ -267,7 +320,7 @@ export default {
 				sender:myName,
 				swnm:"",//微信昵称
 				swid:'',
-				imgData:base64.replace('data:image/png;base64,',''),
+				//imgData:base64.replace('data:image/png;base64,',''),
 				sLongitudes:myPositionData.position.lng,
 				sLatitudes:myPositionData.position.lat,
 				sProvince:myPositionData.addressComponent.province,
@@ -290,7 +343,7 @@ export default {
 			})
 		  }).then((data)=>{
 			  var dt;
-			  s.showWaiting = false;
+			s.showWaiting = false;
 			if(typeof data.data === 'string'){
 				dt = JSON.parse(data.data);
 			}else{
@@ -299,24 +352,29 @@ export default {
 			console.log(dt,'dt....');
 			if(dt.rc*1 === 0){
 				var cardid = dt.data.id;//获取到的贺卡的id.
+				
 				var url = window.location.href.split('#')[0];
 				url = zmitiUtil.changeURLPar(url,'id',cardid);
-				//
+				url = zmitiUtil.changeURLPar(url,'wishid',s.currentWishIndex+'');
+				url = zmitiUtil.changeURLPar(url,'province',encodeURI(s.myPositionData.addressComponent.province||''));
+				url = zmitiUtil.changeURLPar(url,'city',encodeURI(s.myPositionData.addressComponent.city || s.myPositionData.addressComponent.district||''));
+				url = zmitiUtil.changeURLPar(url,'pv',s.pv);
 				
 				
 				zmitiUtil.wxConfig('这是发往脱贫一线的第'+s.pv+'份祝福','这这是发往脱贫一线的第'+s.pv+'份祝福',url);
-				s.lastImg = s.createImg;
 				
-				setTimeout(() => {
+				/* var img = new Image();
+				img.onload = ()=>{
 					s.lastImg = dt.data.imgUrl;
-				}, 100);
-
-				
+				}
+				img.src =dt.data.imgUrl */
 			}
 			else{
 				console.log(dt,'保存接口出错了');
 			}
-		  })
+		  }).catch(e=>{
+			  s.showWaiting = false;
+		  });
 		
 	},
 	getAllPoints(){
@@ -436,10 +494,7 @@ export default {
 				AMap.event.addListener(geolocation, "complete", data=>{
 					 
 					 s.myPositionData  = data;
-					 
-					 s.formUser[c==='container'? 'pos':'pos1'] = data.formattedAddress;
-					 var gps = [data.position.lng,data.position.lat];
-					 s.p1 = gps;
+					 window.localStorage.setItem('zmitipos',JSON.stringify(s.myPositionData));
 			 
 				});
 				AMap.event.addListener(geolocation, "error", data=>{
@@ -532,6 +587,7 @@ export default {
 				if(typeof data.data === 'string'){
 					var res = JSON.parse(data.data);
 					s.pv = res.data.num;
+
 					zmitiUtil.wxConfig(document.title,'这是发往脱贫战场的第'+s.pv+'份祝福');
 				}
 			}
@@ -540,22 +596,76 @@ export default {
 	
 	
   },
-  mounted() { 
-	  this.getPv();
-	  this.initPos();
-	  this.getAllPoints();
-	  var {obserable} = this;
-	  obserable.on('getCreateImg',data=>{
-		  this.createImg = data;
-		  //this.lastImg = data;
-		  this.saveGiftCard();
-	  });
+	mounted() { 
+		this.getPv();
+		var positionData = window.localStorage.getItem('zmitipos');
+		if(positionData){
+			this.myPositionData = JSON.parse(positionData);
+		}else{
+			this.initPos();
+		}
+		
+		this.getAllPoints();
+		var {obserable} = this;
+		obserable.on('getCreateImg',data=>{
+			this.createImg = data;
+			this.lastImg = data;
+			this.saveGiftCard();
+		});
 
-	  obserable.on('showMain',()=>{
-		  this.show = true;
-		  
-		 
-	  });
+		/* this.$refs['wish'].forEach((wish,i)=>{
+			var left = wish.offsetLeft,
+				top = wish.offsetTop;
+			this.position = 'absolute';
+			this.wishPos[i].left = left;
+			this.wishPos[i].top = top;
+		}); */
+
+
+		
+		var i = 0;
+		var max = Math.random()* this.wishes.length |0;
+		max = this.wishes.length;
+		this.wishTimer = setInterval(() => {
+			if(this.showTip){
+				return;
+			}
+			this.currentWishIndex++;
+			//this.currentWishIndex %= this.wishes.length
+			if(this.currentWishIndex >= this.wishes.length){
+				this.currentWishIndex = 0;
+				clearInterval(this.wishTimer);
+			}
+			
+		},400);
+
+		
+		
+
+		window.addEventListener('deviceorientation',(e)=>{
+			return;
+			this.transY = e.beta;
+			this.transX = e.gamma;
+
+
+			var k = 100;
+
+			this.transX = Math.max(-k,this.transX);
+			this.transX = Math.min(k,this.transX);
+
+			this.transY = Math.max(-k,this.transY);
+			this.transY = Math.min(k,this.transY);
+
+			//document.title = this.transY.toFixed(2)+ ','+this.transX.toFixed(2)+','+e.gamma.toFixed(2);
+
+
+		});
+
+		obserable.on('showMain',()=>{
+			this.show = true;
+
+			this.markIndex = 0;
+		});
 	 
   }
 };

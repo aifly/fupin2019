@@ -13,6 +13,9 @@ $color: #fffb88;
 .zmiti-main-ui {
 
 	z-index: 103;
+	box-sizing: border-box;
+	position: fixed !important;
+	width: 100vw !important;
     
     &.main-enter-active,
     &.main-leave-active {
@@ -47,6 +50,13 @@ $color: #fffb88;
 		img{
 			height: 100%;
 			width: auto;
+			@include transform(scale(.1));
+			opacity:0;
+			&.active{
+				opacity:1;
+				@include transition(1s .2s);
+				@include transform(scale(1));
+			}
 		}
 		@include pos(r);
 		canvas{
@@ -61,6 +71,13 @@ $color: #fffb88;
 			margin-left: .1rem;
 			letter-spacing: .3rem;
 			margin-left:.25rem;
+			@include transform(translate3d(0,1rem,0));
+			opacity:0;
+			&.active{
+				opacity:1;
+				@include transition(1s 1s);
+				@include transform(translate3d(0,0,0))
+			}
 		}
 
 		&>span{

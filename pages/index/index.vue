@@ -3,11 +3,11 @@
 		<div v-swipeup='playVideo' class='zmiti-main-ui lt-full' ref='scene'  v-if='show' :style="{background:'url('+imgs.main+') no-repeat center top',backgroundSize:'cover',height:viewH+'px'}" >
 		 	 
 			<div class='zmiti-title' >
-				<img :src="imgs.title" alt="">
+				<img :src="imgs.title" alt="" :class="{'active':showTitle}">
 				<template  >
 					 
 					<canvas  ref='canvas' :width="506/1133*(viewH*.7)" :height="viewH*.7-2*rem"></canvas>
-					<div>
+					<div :class="{'active':showTitle}">
 						<div>新华社客户端</div>
 						<div>出品</div>
 					</div>
@@ -58,6 +58,7 @@
 				videoUrl:window.config.indexvideo,
 				videoWidth:window.innerWidth,
 				videoHeight:window.innerHeight,
+				showTitle:false,
 				
 			}
 		},
@@ -147,29 +148,34 @@
 			},
 
 			initCanvas(){
+
+				this.showTitle = true;
 				const canvas = this.$refs['canvas'];
 				const context = canvas.getContext('2d');
 				var {width,height } = canvas;
 				var startX = canvas.width/2- .8*this.rem;
 				var startX1 = canvas.width /2 +  .8*this.rem;
 
-				var startY = -4;
+
+				var k = 4;
+				this.k = k;
+				var startY = -k;
 				context.moveTo(startX,0);
 				context.strokeStyle = '#fff';
 				var i = 0 ;
 				var j = 0;
-				var iNow = -4;
+				var iNow = -k;
 				var iNow1 = width;
-				var speed = 8;
+				var speed = 2*k;
 
 				this.t = setInterval(() => {
 					i+=speed;
-					if(startX-i>=-4){
+					if(startX-i>=-k){
 						this.drawCircle(context,startX-i,0);
 						
 					}
 					j+=speed;
-					if(startX1+j<=width+4){
+					if(startX1+j<=width+k){
 						this.drawCircle(context,startX1+j,0);
 						
 					}
@@ -178,12 +184,12 @@
 						if(startY<=height *.88){
 							}
 						this.drawCircle(context,0,startY,true);
-						this.drawCircle(context,width-4,startY,true);
+						this.drawCircle(context,width-k,startY,true);
 
 						if(startY>=height){
 							iNow1-=speed;
 							if(iNow1>=width/3*2){
-								this.drawCircle(context,iNow1,height-4);
+								this.drawCircle(context,iNow1,height-k);
 							}
 							else{
 								
@@ -194,7 +200,7 @@
 							}else{
 								clearInterval(this.t);
 							}
-							this.drawCircle(context,iNow,height-4);
+							this.drawCircle(context,iNow,height-k);
 						}
 					}
 				}, 20);
@@ -204,12 +210,13 @@
 			drawCircle(context,x,y,isLine){
 				context.fillStyle='#fff';
 				context.beginPath();
+				var {k } = this;
 				context.save();
 				if(!isLine){
-					context.fillRect(x,y,8,4);
+					context.fillRect(x,y,k*2,k);
 				}
 				else{
-					context.fillRect(x,y,4,8);
+					context.fillRect(x,y,k,k*2);
 				}
 				//context.arc(x,y,2,0,Math.PI*2,false);
 				context.closePath();

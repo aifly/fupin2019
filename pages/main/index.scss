@@ -10,6 +10,7 @@ input {
 .zmiti-main-ui {
   z-index: -1;
   opacity: 0;
+  overflow: hidden;
   @include transform(translateY(50vh));
   &.active {
 	@include transition(.3s);
@@ -57,8 +58,51 @@ input {
 .zmiti-tip {
   z-index: 1213;
   background: rgba(4, 19, 42, 0.9);
-  @include displayBox(horizontal);
-  img {
+  @include displayBox(vertical);
+	-webkit-box-pack:justify;
+
+	section{
+		@include displayBox(vertical);
+		-webkit-box-pack:justify;
+		height: 85vh !important;
+		margin-top: 2vh;
+		z-index: 12;
+		&.active{
+			div{
+				
+				opacity: 1;
+				&:nth-of-type(2n),&:nth-of-type(2n+1){
+					@include transform(translate3d(0,0,0));
+				}
+				
+			}
+		}
+		div{
+			width: 60%;
+			overflow: hidden;
+			img{
+				height: auto;
+				width: auto;
+				max-height: 100%;
+				max-width: 100%;
+			}
+			opacity:0;
+			&:nth-of-type(2n){
+				@include transform(translate3d(200px,0,0));
+			}
+			&:nth-of-type(2n+1){
+				@include transform(translate3d(-200px,0,0));
+			}
+			
+			@for $i from 1 to 6 {
+				&:nth-of-type(#{$i}){
+				   @include transition(1s .5s *( $i - 1));
+				}
+			}
+		}
+	}
+
+  img.info {
     display: block;
     height: 86vh;
     margin-top: -6vh;
@@ -302,8 +346,29 @@ input {
   li {
     width: 100vw;
     height: 100vh;
-    @include pos(r);
-    img {
+	@include pos(r);
+	.zmiti-mark-user{
+		@include pos(a);
+		width: 7rem;
+		bottom:16vh;
+		left: 1.5rem;
+		border:1px solid rgba(0,0,0,0);
+		overflow: hidden;
+		
+		@include transition(.1s);
+		img{
+			@include transform(scale(0));
+		}
+		
+		img{
+			&.active{
+				@include  transition(1.5s);
+				@include transform(scale(1));
+			}
+		}
+
+	}
+    img.info{
       width: 80px;
       @include pos(a);
       bottom: 70px;
@@ -418,7 +483,6 @@ input {
   }
   ul {
     -webkit-box-flex: 1;
-    overflow: hidden;
     width: 90%;
     margin: 0 auto;
     @include displayFlex(row);
@@ -431,15 +495,15 @@ input {
   li {
 	height: 20vh;
 	@include pos(r);
-
-	overflow: hidden;
-
+	 
 	
-	
-	border:3px solid rgba(255,125,0,.3);
+	border:3px solid rgba(255,125,0,0);
 	box-sizing: border-box;
+	@include transition(.35s);
 	&.active{
-		border:3px solid #f90;
+		border:3px solid #dd671f;
+		@include transform(scale(1.1));
+		
 		&:before{
 			content:'';
 			@include pos(a);
@@ -447,15 +511,16 @@ input {
 			height: 100%;
 			left: 0;
 			top: 0;
-			box-shadow: 0 0 0 3px #F90;
+			z-index: 102;;
+			box-shadow: 0 0  24px #dd671f ;
 		}
 		img{
-			@include transform(scale(1))
+			//@include transform(scale(1))
 		}
 
 	}
     img {
-		@include transform(scale(1.05));
+		//@include transform(scale(1.05));
 	  width: auto;
 	  @include transition(.2s);
       height: 100%;
