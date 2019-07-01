@@ -396,7 +396,7 @@ input {
   z-index: 1300;
   user-select: none;
   -webkit-user-select: none;
-  
+  position: fixed !important;
   &:before {
     content: "";
     @include pos(a);

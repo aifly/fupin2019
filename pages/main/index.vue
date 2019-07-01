@@ -1,5 +1,5 @@
 <template>
-	<div class="lt-full zmiti-main-ui" :class="{'active':show}">
+	<div class="lt-full zmiti-main-ui" :style="{width:viewW+'px',height:viewH+'px'}" :class="{'active':show}">
 		<div class="zmiti-input-C">
 			<div class='zmiti-search-C' :class="{'hide':hideSearchBox}">
 				<div class='zmiti-input-main'>
