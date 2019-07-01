@@ -3,7 +3,7 @@
 		<section v-if='show' class="lt-full zmiti-loading1">
 			 <div class="zmiti-loading">
 				 	<div>
-						<img :src='imgs.logo'/>
+						<img :src='imgs.loadingLogo'/>
 					 </div>
 					<div class='zmiti-loading-bar'>
 						<span :style="{WebkitTransform:'translateX('+(width-100)+'%)'}"></span>
@@ -43,6 +43,7 @@
 				e.preventDefault(); 
 			},
 			entryIndex(){
+
 				clearInterval(this.timer);
 				this.obserable.trigger({
 					type:'toggleBgMusic',

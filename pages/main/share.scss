@@ -2,16 +2,18 @@
 .zmiti-share1-ui{
 	height: 100vh;
 	@include pos(r);
+	width:10rem;
 	
 }
 .zmiti-subtitle{
 	left:.4rem;
 	bottom:20px;
 	@include pos(a);
-	width: 2rem;
+	width: 1.2rem;
 }
 .zmiti-copyright{
-	width: 100%;
+	width: 30%;
+	left: 35%;
 	text-align: center;
 	@include pos(a);
 	bottom: .5rem;

@@ -3,90 +3,27 @@ $baseColor: #fcffb4;
 $viewW: 750px;
 $bgColor: #4081dd;
 $color:#ca141f;
-.zmiti-share-main-ui {
-	overflow: hidden;
-	width:750px;
-	left: 50% !important;
-	margin-left: -$viewW/2;
-	background: $bgColor;
-	.zmiti-share-subtitle{
-		@include pos(a);
-		left: 50%;
-		width: 700px;
-		@include transform(translate3d(-50%,0,0));
-	}
-	background:#ecf7ff;
-	@include displayBox(horizontal);
-
-	opacity:0;
-	z-index: -1;
-
-	&.show{
-		opacity: 1;
-		z-index: 1010;
-	}
-
-	.zmiti-share-main{
-		width: 89vw;
-		height: 80vh;
-		background:#ecf7ff;
-		
-		@include pos(r);
-		z-index: 10;
-		@include br(10px);
-
-		&::before{
-			content:'';
-
-		}
-	}
- 	
-
- 	.zmiti-share-btns{
-		height: 2.1rem;
-		color:#fff;
-		width: 66%;
-		left: 17%;
-		bottom: 0rem;
-		text-align: center;
-		@include pos(a);
-		@include displayBox(horizontal);
-		-webkit-box-pack:justify;
-		-webkit-box-align:start;
-
-		&.restart{
-			-webkit-box-pack:center
-
-		}
-
-		.zmiti-team{
+.zmiti-share-page{
+	&>.lt-full{
+		@include transformOrigin(center 30%);
+		@include transform(scale(.77));
+		&:before{
+			content:"";
 			@include pos(a);
-			text-decoration: underline;
-			left: 50%;
-			@include transform(translate(-50%,0));
-			bottom: .3rem;
-			color:$color;
-		}
-
-		&>div{
-			background: $color;
-			line-height: .9rem;
-			@include br(6px);
-			width: 2.5rem;
-			font-size: .45rem;
-		}
-
-		&.btn-enter-active, &.btn-leave-active {
-			@include transition(.4s);
-		}
-
-		&.btn-enter, &.btn-leave-to {
-			
-			opacity:0;
+			box-shadow: 0 0  14px #dd671f ;
+			width:100%;
+			height: 100%;
+			left: 0;
+			top: 0;
 		}
 	}
+}
 
-	
-
-
+.zmiti-share-btn{
+	a{
+		display: block;
+		width: 100%;
+		height: 100%;
+		color:#fff;
+	}
 }

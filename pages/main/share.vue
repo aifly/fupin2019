@@ -1,7 +1,8 @@
 <template>
-	<section class='zmiti-share1-ui' @touchstart='touchstart'>
+	<section class='zmiti-share1-ui' @touchstart='touchstart' :style="{height:viewH+'px'}">
+		<div style='width:100%;opacity:0;'>{{wishes}}</div>
 		<div class='lt-full ' ref='page' :style="{background:'url('+wishes[index].bg+') no-repeat center bottom',backgroundSize:backgroundSize}">
-			<h1 style="height:10vh;"></h1>
+			<h1 style="height:10vh;width:100%"></h1>
 			<div class='zmiti-share-info'>
 				<div class='zmiti-wish-img'>
 					<img :src="wishes[index].img" alt="">
@@ -19,9 +20,8 @@
 				<img :src="imgs.subtitle" alt="">
 			</div>
 
-			<div class='zmiti-copyright'  v-if='false'>
-				<span>新华社客户端</span>
-				<span>出品</span>
+			<div class='zmiti-copyright'  >
+				<img :src="imgs.copyright" alt="">
 			</div>
 		</div>
 		 
@@ -85,6 +85,7 @@
 		props:['rName','myName','index','city','province','isPage','obserable','pv'],
 		data(){
 			return {
+				isXuexi:/Xuexi/i.test(window.navigator.userAgent),
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				imgs:window.imgs,
@@ -113,7 +114,7 @@
 					html2canvas(dom,{
 						useCORS: true,
 						onrendered: function(canvas) {
-					        var src = canvas.toDataURL();
+					        var src = canvas.toDataURL('image/jpeg');
 							//s.mergeImg = '';
 							//s.createImg = src;
 							obserable.trigger({

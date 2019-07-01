@@ -3,12 +3,14 @@ import './pages/css/index.css';
 import Index from './pages/index/index';
 import Loading from './pages/loading/index';
 import Music from './pages/music/index';
+import Share from './pages/share/index';
 import Main from './pages/main/index';
 import Obserable from './pages/lib/obserable';
 
 import zmitiUtil from './pages/lib/util'
 import './pages/lib/touch.js'
 import vueTap from 'vue-js-tap';
+import { decode } from "iconv-lite";
 Vue.use(vueTap);
 
 
@@ -64,15 +66,9 @@ new Vue({
 		<Music :obserable='obserable'></Music>
 		<Loading :width='width' :obserable='obserable' v-if='!loaded'></Loading>
 		<Index :pv='pv' :nickname='nickname' v-if='!isShare && loaded' :headimgurl='headimgurl'  :obserable='obserable'></Index>
-		
 		<Main :width='width' :obserable='obserable' v-if='!isShare &&loaded'></Main>
-		<div class='lt-full zmiti-share-page' v-if='isShare　&&loaded' :style="{background:'url('+shareBg+') no-repeat center',backgroundSize:'cover'}">
-			<div class='zmiti-share-img' :style="{WebkitTransform:'scale('+(scale)+')'}">
-				<img :src='src' v-if='src' />
-			</div>
-			<div id='pos'></div>
-			<div class='zmiti-share-btn' v-press v-tap='[restart]'>我也要送祝福</div>
-		</div>
+		<Share :wishid='wishid' :city='city' :province='province' :pv='pv'  v-if='isShare && loaded'  :obserable='obserable'></Share>
+		
 	</div>`,
 	methods: {	
 
@@ -119,10 +115,9 @@ new Vue({
 					'content-type': 'application/json'
 				},
 				method: 'post',
-				url: s.host + "/xhs-security-activity/activity/num/updateNum",
+				url: s.host + "/activity/num/updateNum",
 				data: JSON.stringify(data)
 			}).then(data => {
-				console.log(data);
 				var dt = data.data;
 				if (typeof dt === "string") {
 					dt = JSON.parse(dt);
@@ -132,11 +127,20 @@ new Vue({
 		restart(){
 			window.location.href = window.location.href.split('?')[0];
 		},
+		zmitiPV(){
+			axios.post('https://newapi.zmiti.com:50293/api/viewdata',{
+				h5id:"fupin",
+				appsecret:'c9GxtUre3kOJCgvp',
+				sign:1
+			}).then(()=>{
+
+			})
+		},
 		updateGiftCard() {
 			var s = this;
 			
-			var { isShare, myName, rName, province, wishes, currentWishIndex, sPositionData, myPositionData, createImg } = this;
-			if (!isShare){
+			var { isShare,id, myName, rName, province, wishes, currentWishIndex, sPositionData, myPositionData, createImg } = this;
+			if (!isShare || !id){
 				return;
 			}
 			
@@ -145,10 +149,10 @@ new Vue({
 					'content-type': 'application/json'
 				},
 				method: 'post',
-				url: s.host + '/xhs-security-activity/activity/giftcard/updateGiftCard',
+				url: s.host + '/activity/giftcard/updateGiftCard',
 				data: JSON.stringify({
 					secretKey: window.config.secretKey, // 请求秘钥
-					id: isShare,
+					id,
 					/* swnm: "",//微信昵称
 					swid: '',
 					sLongitudes: myPositionData.position.lng,
@@ -215,7 +219,7 @@ new Vue({
 					AMap.event.addListener(geolocation, "complete", data => {
 
 						s.myPositionData = data;
-						
+						window.localStorage.setItem('sharePosition',JSON.stringify(data))
 						s.updateGiftCard();
 
 						
@@ -234,47 +238,34 @@ new Vue({
 		Index,
 		Loading,
 		Music,
-		Main
+		Main,
+		Share
 	},
 	created(){
-		
+
 		var s = this;
 		s.updatePv();
+		this.zmitiPV();
 		var url = window.location.href.split('#')[0];
 		url = zmitiUtil.changeURLPar(url, 'time', new Date().getTime());
 		zmitiUtil.wxConfig(document.title, document.title,url);
+
+		var wishid = zmitiUtil.getQueryString('wishid');
+		var province = decodeURI(zmitiUtil.getQueryString('province'));
+		var city = decodeURI(zmitiUtil.getQueryString('city'));
+		var pv = zmitiUtil.getQueryString('pv');
+		var id = zmitiUtil.getQueryString('id');
+
+		this.wishid = wishid;
+		this.province = province;
+		this.city = city;
+		this.pv = pv;
+		this.id = id;
+
+		this.isShare = wishid && pv;
+
 		if (this.isShare) {
 			s.initPos();
-			
-		 
-			arr = [arr.pop()];
-			axios({
-				headers: {
-					'content-type': 'application/json'
-				},
-				method: 'post',
-				url: s.host + "/xhs-security-activity/activity/giftcard/getGiftCardByIdAndAnm",
-				data: JSON.stringify({
-					secretKey: window.config.secretKey,  // 请求秘钥(string, 必填)
-					id : s.isShare,   //贺卡ID (long, 必填)
-					anm: window.config.anm // 活动标识（string, 必填）
-				})
-			}).then(data => {
-				var dt = data.data;
-				if (typeof dt === "string") {
-					dt = JSON.parse(dt);
-					console.log(dt);
-
-					s.src = dt.data.imgUrl;
-					var img = new Image();
-					img.onload = function(){
-						s.scale = s.viewH/this.height *0.7;
-					}
-					img.src = s.src;
-					
-				}
-			});
-			
 		}
 		s.loading(arr, (scale) => {
 			s.width = scale * 100 | 0;
@@ -291,6 +282,8 @@ new Vue({
 
 
 		
+
+	 
 		
 
 		//zmitiUtil.getOauthurl(obserable);

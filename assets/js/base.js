@@ -3,14 +3,20 @@
   main:'./assets/images/main-bg.jpg',
   play: "./assets/images/play.png",
   play1: "./assets/images/play1.png",
-  arrow: "./assets/images/arrow.png",
-  point: "./assets/images/point.png",
-  waiting: "./assets/images/waiting2.png",
-  tip:'./assets/images/tip5.png',
+  arrow: "./assets/images/arrow1.png",
+  //point: "./assets/images/point.png",
+  //waiting: "./assets/images/waiting2.png",
+  remark1:'./assets/images/remark1-1.png',
+  remark2:'./assets/images/remark2-1.png',
+  remark3:'./assets/images/remark3-1.png',
+  remark4:'./assets/images/remark4-1.png',
+  remark5:'./assets/images/remark5-2.png',
+ 
   title:'./assets/images/title1.png',
   video:"./assets/images/video.png",
   subtitle:"./assets/images/subtitle.png",
   info:"./assets/images/info.png",
+  copyright:"./assets/images/copyright2.png",
   qrcode:"./assets/images/qrcode.jpg",
   text1:"./assets/images/text_1_2.png",
   text2:"./assets/images/text_2_2.png",
@@ -24,36 +30,45 @@
   shareBg:'./assets/images/share-bg.jpg',
 
   text:'./assets/images/text2.png',
-  wishBg:'./assets/images/wish-bg.jpg',
-  icon1:'./assets/images/icon1.png',
-  icon2:'./assets/images/icon2.png',
-  icon3:'./assets/images/icon3.png',
-  icon4:'./assets/images/icon4.png',
-  icon5:'./assets/images/icon5.png',
-  icon6:'./assets/images/icon6.png',
-  icon7:'./assets/images/icon7.png',
-  icon8:'./assets/images/icon8.png',
-  icon9:'./assets/images/icon9.png',
+  wishBg:'./assets/images/wish-bg1.jpg',
+  icon1:'./assets/images/icon1-1.png',
+  icon2:'./assets/images/icon2-1.png',
+  icon3:'./assets/images/icon3-1.png',
+  icon4:'./assets/images/icon4-1.png',
+  icon5:'./assets/images/icon5-1.png',
+  icon6:'./assets/images/icon6-1.png',
+  icon7:'./assets/images/icon7-1.png',
+  icon8:'./assets/images/icon8-1.png',
+  icon9:'./assets/images/icon9-1.png',
   
-  mark1:'./assets/images/mask1-2.jpg',
-  mark2:'./assets/images/mask2-2.jpg',
-  mark3:'./assets/images/mask3-2.jpg',
-  mark4:'./assets/images/mask4-2.jpg',
-  shareBg1: './assets/images/bg1_4.jpg',
-  shareBg2: './assets/images/bg2_4.jpg',
-  shareBg3: './assets/images/bg3_4.jpg',
-  shareBg4: './assets/images/bg4_4.jpg',
-  shareBg5: './assets/images/bg5_4.jpg',
-  shareBg6: './assets/images/bg6_4.jpg',
-  shareBg7: './assets/images/bg7_4.jpg',
-  shareBg8: './assets/images/bg8_4.jpg',
-  shareBg9: './assets/images/bg9_4.jpg',
+  mark1:'./assets/images/mask1-3.jpg',
+  mark2:'./assets/images/mask2-3.jpg',
+  mark3:'./assets/images/mask3-3.jpg',
+  mark4:'./assets/images/mask4-3.jpg',
+  huangwenxiu:'./assets/images/huangwenxiu.png',
+  xieliang:'./assets/images/xieliang.png',
+  yuewenqiu:'./assets/images/yuewenqiu.png',
+  guanyanping:'./assets/images/guanyanping1.png',
+  shareBg1: './assets/images/bg1_5.jpg',
+  shareBg2: './assets/images/bg2_5.jpg',
+  shareBg3: './assets/images/bg3_5.jpg',
+  shareBg4: './assets/images/bg4_5.jpg',
+  shareBg5: './assets/images/bg5_5.jpg',
+  shareBg6: './assets/images/bg6_5-1.jpg',
+  shareBg7: './assets/images/bg7_5.jpg',
+  shareBg8: './assets/images/bg8_5.jpg',
+  shareBg9: './assets/images/bg9_5.jpg',
+
+	loadingLogo:'./assets/images/loading-logo.png',
   
   //loadingGif:'./assets/images/loading.gif',
-  bg:'./assets/images/bg.jpg',
+  bg:'./assets/images/bg1.jpg',
   share:'./assets/images/share.jpg',
 
 };
+
+
+window.h5name = 'fupin';
 
  
 var arr = [];
@@ -65,12 +80,12 @@ for (var attr in imgs) {
 
  window.config = {
    indexvideo: './assets/video/6.mp4',
-   baseUrl: "https://testxlive.xinhuaapp.com",
+   baseUrl: "https://xlive.xinhuaapp.com",
 
-	host:"https://testactivity.xhsxmt.com", //正式域名：https://xlive.xinhuaapp.com
+	host:"https://activity.xhsxmt.com", //正式域名：https://xlive.xinhuaapp.com
    secretKey: "e9469538b0623783f38c585821459454",
 	anm:'2019扶贫贺卡',
-	get_weixinConfig: 'https://testopen.xinhuaapp.com/xhs-security-wechat/wx/getWXConfig',
+	get_weixinConfig: 'https://open.xinhuaapp.com/xhs-security-wechat/wx/getWXConfig',
    wishes:[
 	   {
 		   text: "我理解在这个世界上 有人比我更需要你",
@@ -143,7 +158,7 @@ for (var attr in imgs) {
   
 var musics = {
 	music: {
-		src: './assets/music/bg3.mp3',
+		src: './assets/music/bg_1.mp3',
 		autoplay: true,
 		name: 'bg2',
 		loop: true
@@ -177,3 +192,4 @@ var musics = {
  		});
  	}
  })(); 
+
