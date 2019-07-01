@@ -115,10 +115,9 @@ new Vue({
 					'content-type': 'application/json'
 				},
 				method: 'post',
-				url: s.host + "/xhs-security-activity/activity/num/updateNum",
+				url: s.host + "/activity/num/updateNum",
 				data: JSON.stringify(data)
 			}).then(data => {
-				console.log(data);
 				var dt = data.data;
 				if (typeof dt === "string") {
 					dt = JSON.parse(dt);
@@ -127,6 +126,15 @@ new Vue({
 		},
 		restart(){
 			window.location.href = window.location.href.split('?')[0];
+		},
+		zmitiPV(){
+			axios.post('https://newapi.zmiti.com:50293/api/viewdata',{
+				h5id:"fupin",
+				appsecret:'c9GxtUre3kOJCgvp',
+				sign:1
+			}).then(()=>{
+
+			})
 		},
 		updateGiftCard() {
 			var s = this;
@@ -141,7 +149,7 @@ new Vue({
 					'content-type': 'application/json'
 				},
 				method: 'post',
-				url: s.host + '/xhs-security-activity/activity/giftcard/updateGiftCard',
+				url: s.host + '/activity/giftcard/updateGiftCard',
 				data: JSON.stringify({
 					secretKey: window.config.secretKey, // 请求秘钥
 					id,
@@ -234,9 +242,10 @@ new Vue({
 		Share
 	},
 	created(){
-		
+
 		var s = this;
 		s.updatePv();
+		this.zmitiPV();
 		var url = window.location.href.split('#')[0];
 		url = zmitiUtil.changeURLPar(url, 'time', new Date().getTime());
 		zmitiUtil.wxConfig(document.title, document.title,url);
@@ -256,14 +265,7 @@ new Vue({
 		this.isShare = wishid && pv;
 
 		if (this.isShare) {
-			let positionData = window.localStorage.getItem('sharePosition');
-			if(positionData){
-				this.myPositionData = JSON.parse(positionData); 
-				s.updateGiftCard();
-			}else{
-				s.initPos();
-				
-			}
+			s.initPos();
 		}
 		s.loading(arr, (scale) => {
 			s.width = scale * 100 | 0;
@@ -280,6 +282,8 @@ new Vue({
 
 
 		
+
+	 
 		
 
 		//zmitiUtil.getOauthurl(obserable);

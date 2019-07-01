@@ -52,3 +52,10 @@
   left: 0;
   top: 0;
 }
+
+.zmiti-share-btn a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+}

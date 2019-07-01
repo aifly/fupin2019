@@ -3,20 +3,20 @@
   main:'./assets/images/main-bg.jpg',
   play: "./assets/images/play.png",
   play1: "./assets/images/play1.png",
-  arrow: "./assets/images/arrow.png",
-  point: "./assets/images/point.png",
-  waiting: "./assets/images/waiting2.png",
-  remark1:'./assets/images/remark1.png',
-  remark2:'./assets/images/remark2.png',
-  remark3:'./assets/images/remark3.png',
-  remark4:'./assets/images/remark4.png',
-  remark5:'./assets/images/remark5.png',
+  arrow: "./assets/images/arrow1.png",
+  //point: "./assets/images/point.png",
+  //waiting: "./assets/images/waiting2.png",
+  remark1:'./assets/images/remark1-1.png',
+  remark2:'./assets/images/remark2-1.png',
+  remark3:'./assets/images/remark3-1.png',
+  remark4:'./assets/images/remark4-1.png',
+  remark5:'./assets/images/remark5-2.png',
  
   title:'./assets/images/title1.png',
   video:"./assets/images/video.png",
   subtitle:"./assets/images/subtitle.png",
   info:"./assets/images/info.png",
-  copyright:"./assets/images/copyright.png",
+  copyright:"./assets/images/copyright2.png",
   qrcode:"./assets/images/qrcode.jpg",
   text1:"./assets/images/text_1_2.png",
   text2:"./assets/images/text_2_2.png",
@@ -48,7 +48,7 @@
   huangwenxiu:'./assets/images/huangwenxiu.png',
   xieliang:'./assets/images/xieliang.png',
   yuewenqiu:'./assets/images/yuewenqiu.png',
-  guanyanping:'./assets/images/guanyanping.png',
+  guanyanping:'./assets/images/guanyanping1.png',
   shareBg1: './assets/images/bg1_5.jpg',
   shareBg2: './assets/images/bg2_5.jpg',
   shareBg3: './assets/images/bg3_5.jpg',
@@ -58,12 +58,17 @@
   shareBg7: './assets/images/bg7_5.jpg',
   shareBg8: './assets/images/bg8_5.jpg',
   shareBg9: './assets/images/bg9_5.jpg',
+
+	loadingLogo:'./assets/images/loading-logo.png',
   
   //loadingGif:'./assets/images/loading.gif',
   bg:'./assets/images/bg1.jpg',
   share:'./assets/images/share.jpg',
 
 };
+
+
+window.h5name = 'fupin';
 
  
 var arr = [];
@@ -187,3 +192,4 @@ var musics = {
  		});
  	}
  })(); 
+

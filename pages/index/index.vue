@@ -2,7 +2,7 @@
 	<transition name='main'>
 		<div v-swipeup='playVideo' class='zmiti-main-ui lt-full' ref='scene'  v-if='show' :style="{background:'url('+imgs.main+') no-repeat center top',backgroundSize:'cover',height:viewH+'px'}" >
 		 	 
-			<div class='zmiti-title' >
+			<div class='zmiti-title' :style="{height:viewH*.7+'px'}">
 				<img :src="imgs.title" alt="" :class="{'active':showTitle}">
 				<template  >
 					 

@@ -2,6 +2,7 @@
 .zmiti-share1-ui{
 	height: 100vh;
 	@include pos(r);
+	width:10rem;
 	
 }
 .zmiti-subtitle{
@@ -18,7 +19,6 @@
 	bottom: .5rem;
 	color:#fff;
 	letter-spacing: .2rem;
-	
 }
 .zmiti-wish-btns{
 		@include displayBox(horizontal);

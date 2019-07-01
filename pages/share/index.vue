@@ -4,7 +4,9 @@
 			<div class='lt-full'>
 				<Share :pv='pv' :obserable='obserable'  :province='province' :city='city'  :index='wishid'></Share>
 			</div>
-			<div class='zmiti-share-btn' v-press v-tap='[restart]'>我也要送祝福</div>
+			<div class='zmiti-share-btn' v-press>
+				<a :href='href'>我也要送祝福</a>
+			</div>
 		</div>
 </template>
 
@@ -21,7 +23,7 @@
 				imgs,
 				show:true,
 				shareBg:window.imgs.bg,
-				
+				href:window.location.href.split('?')[0],
 				viewW:document.documentElement.clientWidth,
 				showBtns:false,
 				viewH:document.documentElement.clientHeight,
@@ -40,6 +42,7 @@
 				e.preventDefault();
 			},
 			restart(){
+
 				window.location.href = window.location.href.split('?')[0];
 			},
 			 

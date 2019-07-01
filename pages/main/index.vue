@@ -21,7 +21,7 @@
 			</div>
 			<transition name='tip'>
 				<div :style="{background:'url('+imgs.bg+') no-repeat center center',backgroundSize:'cover'}" :class="{'active':tipActive}" class='zmiti-tip lt-full' v-if='showTip' v-swipeup='hideTip'>
-					<section class='lt-full' :class="{'active':showTipItem}">
+					<section :style="{height:viewH*.75+'px',marginTop:.06*viewH+'px'}" class='lt-full' :class="{'active':showTipItem}">
 						<div>
 							<img :src="imgs.remark1" alt="">
 						</div>
@@ -43,12 +43,12 @@
 			</transition>
 
 			<div class='zmiti-wish-list lt-full' :class="{'active':!showTip}" :style="{background:'url('+imgs.wishBg+') no-repeat center top',backgroundSize:'cover'}">
-				<div class='zmiti-wish-text'>
+				<div class='zmiti-wish-text' :style="{height:.15*viewH+'px',lineHeight:.15*viewH+'px'}">
 					<img :src="imgs.text" alt="">
 				</div>
 				<transition-group name="list"  tag='ul'>
-					<li :style="{position:position,left:(wishPos[i].left||0)+'px',top:(wishPos[i].top||0)+'px'}" ref='wish' v-tap='[changeWishItem,i]' :class="{'active':currentWishIndex === i}" v-for='(wish,i) in wishes' :key="i">
-						<img :src='wish.icon' />
+					<li :style="{height:viewH*.20+'px'}" ref='wish' v-tap='[changeWishItem,i]' :class="{'active':currentWishIndex === i}" v-for='(wish,i) in wishes' :key="i">
+						<div><img :src='wish.icon' /></div>
 					</li>
 				</transition-group>
 				<div  class='zmiti-wish-btn' v-press>
@@ -64,7 +64,7 @@
 				<transition name='create'>
 					<div :class="{'opacity':isOpacity}" class='zmiti-createimg' v-if='showCreateImg' :style="{transform:'scale('+scale+')'}">
 						<img :src="lastImg" alt="">
-						<span>长按保存图片</span>
+						<span v-if='!(isXuexi && isAndroid)'>长按保存图片</span>
 					</div>
 				</transition>
 				<div class='zmiti-wish-btns'>
@@ -77,7 +77,7 @@
 				</div>
 			</div>
 
-			<div class='zmiti-waiting lt-full' v-if='showWaiting'>
+			<div class='zmiti-waiting lt-full' v-if='showWaiting && false'>
 				<div>
 					<img :src="imgs.waiting" alt="">
 					<img :src="imgs.point" alt="">
@@ -119,6 +119,8 @@ export default {
 		errorMsg:"",
 		imgs: window.imgs,
 		showCreateImg:false,
+		isAndroid :navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1,
+		isXuexi:/Xuexi/i.test(window.navigator.userAgent),
 		showShare:false,
 		pv:12023,
 		showTipItem:false,
@@ -312,7 +314,7 @@ export default {
 			  'content-type': 'application/json'
 		  },
 		  method:'post',
-		  url:s.host+'/xhs-security-activity/activity/giftcard/saveGiftCard',
+		  url:s.host+'/activity/giftcard/saveGiftCard',
 		  data:JSON.stringify({
 				secretKey: s.secretKey, // 请求秘钥
 				anm: window.config.anm,// 活动某组图片点赞标识 或者活动某组图片浏览量标识 标识由更新接口定义
@@ -384,7 +386,7 @@ export default {
 					'content-type': 'application/json'
 				},
 				method: 'post',
-				url: s.host + "/xhs-security-activity/activity/giftcard/getAllGiftCardPoints",
+				url: s.host + "/activity/giftcard/getAllGiftCardPoints",
 				data: JSON.stringify({
 					secretKey: window.config.secretKey,  // 请求秘钥(string, 必填)
 					///anm: window.config.anm // 活动标识（string, 必填）
@@ -492,10 +494,7 @@ export default {
 	
 				geolocation.getCurrentPosition();
 				AMap.event.addListener(geolocation, "complete", data=>{
-					 
 					 s.myPositionData  = data;
-					 window.localStorage.setItem('zmitipos',JSON.stringify(s.myPositionData));
-			 
 				});
 				AMap.event.addListener(geolocation, "error", data=>{
 					console.log("获取位置出错了");	
@@ -578,7 +577,7 @@ export default {
 				'content-type': 'application/json'
 			},
 			method: 'post',
-			url: s.host + "/xhs-security-activity/activity/num/getNum",
+			url: s.host + "/activity/num/getNum",
 			data: JSON.stringify(data)
 		}).then(data => {
 			var dt = data.data;
@@ -598,14 +597,10 @@ export default {
   },
 	mounted() { 
 		this.getPv();
-		var positionData = window.localStorage.getItem('zmitipos');
-		if(positionData){
-			this.myPositionData = JSON.parse(positionData);
-		}else{
-			this.initPos();
-		}
+	
+		this.initPos();
 		
-		this.getAllPoints();
+		//this.getAllPoints();
 		var {obserable} = this;
 		obserable.on('getCreateImg',data=>{
 			this.createImg = data;
