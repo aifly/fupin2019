@@ -128,7 +128,7 @@ new Vue({
 			window.location.href = window.location.href.split('?')[0];
 		},
 		zmitiPV(){
-			axios.post('https://newapi.zmiti.com:50293/api/viewdata',{
+			axios.post('https://newapi.zmiti.com:50295/api/viewdata',{
 				h5id:"fupin",
 				appsecret:'c9GxtUre3kOJCgvp',
 				sign:1
